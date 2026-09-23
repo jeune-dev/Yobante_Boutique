@@ -211,6 +211,7 @@ const Faq = ({ variant = 'rek' }) => {
           .faq-number { min-width: 38px; height: 38px; border-radius: 10px; font-size: 13px; }
           .faq-answer { padding: 0 18px 18px 18px; }
           .faq-icon { min-width: 34px; width: 34px; height: 34px; }
+          .faq-question { font-size: 14px; }
         }
       `}</style>
     </section>

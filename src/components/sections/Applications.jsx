@@ -301,6 +301,9 @@ const Applications = ({ variant = 'rek' }) => {
         @media (max-width: 930px) {
           .apps-grid { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; }
           .section-header { margin-bottom: 48px; }
+          .card-inner { padding: 26px 20px 0; }
+          .download-buttons { padding: 0 20px !important; }
+          .app-logo { max-width: 78%; }
         }
 
         @media (max-width: 520px) {

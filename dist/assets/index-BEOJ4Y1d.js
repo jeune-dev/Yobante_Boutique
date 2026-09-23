@@ -321,6 +321,12 @@ Error generating stack: `+e.message+`
           .footer-right { align-items: flex-start; }
           .footer-trust { justify-content: flex-start; }
         }
+
+        @media (max-width: 480px) {
+          .container { padding: 0 16px; }
+          .logo-img { height: 66px; }
+          .footer-links { flex-wrap: wrap; gap: 10px 16px; }
+        }
       `})]}),Je=()=>(0,C.jsxs)(C.Fragment,{children:[(0,C.jsx)(`a`,{href:`https://wa.me/33600000000`,className:`whatsapp-float`,target:`_blank`,rel:`noopener noreferrer`,children:(0,C.jsx)(`svg`,{width:`28`,height:`28`,viewBox:`0 0 24 24`,fill:`white`,children:(0,C.jsx)(`path`,{d:`M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z`})})}),(0,C.jsx)(`style`,{jsx:!0,children:`
         .whatsapp-float {
           position: fixed;
@@ -736,6 +742,16 @@ Error generating stack: `+e.message+`
           .hero-stats { width: 100%; max-width: 320px; justify-content: center; gap: 36px; }
           .stat-number { font-size: 26px; }
           .hero-image img { max-width: 200px; }
+        }
+
+        @media (max-width: 380px) {
+          .hero-container { padding-left: 12px; padding-right: 12px; }
+          .hero-badge { max-width: 100%; text-align: left; font-size: 11px; padding: 7px 12px; }
+          .hero-title { font-size: 27px; }
+          .shipping-methods { max-width: 290px; }
+          .hero-stats { gap: 20px; }
+          .stat-number { font-size: 22px; }
+          .stat-label { font-size: 11px; }
         }
 
       `})]})},xd=[{icon:(0,C.jsx)(Be,{size:18,strokeWidth:1.8,color:`white`}),text:`Livraison France → Sénégal`},{icon:(0,C.jsx)(Oe,{size:18,strokeWidth:1.8,color:`white`}),text:`Support en ligne`},{icon:(0,C.jsx)(Te,{size:18,strokeWidth:1.8,color:`white`}),text:`Paiement 100% sécurisé`},{icon:(0,C.jsx)(Ie,{size:18,strokeWidth:1.8,color:`white`}),text:`Application iOS & Android`},{icon:(0,C.jsx)(We,{size:18,strokeWidth:1.8,color:`white`}),text:`Expédition rapide`}],Sd=()=>(0,C.jsxs)(`section`,{className:`trust-wrapper`,children:[(0,C.jsx)(`div`,{className:`top-gradient`}),(0,C.jsx)(`div`,{className:`container`,children:(0,C.jsxs)(`div`,{className:`trust-bar`,children:[(0,C.jsx)(`div`,{className:`glow glow-left`}),(0,C.jsx)(`div`,{className:`glow glow-right`}),(0,C.jsx)(`div`,{className:`trust-track`,children:[...xd,...xd].map((e,t)=>(0,C.jsxs)(`div`,{className:`trust-item`,children:[(0,C.jsx)(`div`,{className:`icon-box`,children:e.icon}),(0,C.jsx)(`span`,{className:`trust-text`,children:e.text})]},t))})]})}),(0,C.jsx)(`style`,{jsx:!0,children:`
@@ -1298,6 +1314,9 @@ Error generating stack: `+e.message+`
           .section { padding: 80px 0; }
           .promo-box { max-width: 100%; }
           .card-left { padding: 26px 20px; }
+          .service-card-wrapper { border-radius: 22px; }
+          .promo-side { padding: 16px; }
+          .card-title-row { align-items: flex-start; }
 
           .steps-row { flex-direction: column; align-items: center; }
           .step-wrapper { width: 100%; flex-direction: column; }
@@ -1320,6 +1339,11 @@ Error generating stack: `+e.message+`
           .promo-box { padding: 32px 22px; gap: 20px; }
           .promo-desc { font-size: 15px; }
           .promo-btn { max-width: 220px; font-size: 13px; padding: 12px 18px; }
+          .card-icon-circle { width: 52px; height: 52px; border-radius: 16px; }
+          .inner-tag { font-size: 9px; }
+          .pricing-card { max-width: 100%; }
+          .category-pill { min-width: 0; padding: 12px 6px; }
+          .cat-label { font-size: 10px; line-height: 1.25; }
         }
       `})]})},kd=[{id:`expedition`,logo:`/assets/Logo%20Yobante%20Rek%20-%20fond%20blanc-CtSZFV8v.PNG`,alt:`Yobanté Expédition`,chipIcon:(0,C.jsx)(ke,{size:14,strokeWidth:1.8}),chipText:`Expédition & Suivi`,chipClass:`expedition`,title:`YOBANTÉ Expédition`,description:`Gérez vos envois entre la France et le Sénégal de manière rapide, sécurisée et transparente.`,features:[`Simulez votre envoi`,`Payez en toute sécurité`,`Suivez l'acheminement de votre envoi`],iosUrl:`https://apps.apple.com`,androidUrl:`https://play.google.com`},{id:`boutique`,logo:x,alt:`Yobanté Boutique`,chipIcon:(0,C.jsx)(Fe,{size:14,strokeWidth:1.8}),chipText:`Boutique en ligne`,chipClass:`boutique`,title:`YOBANTÉ Boutique`,description:`Achetez vos produits préférés à prix discount et faites-les livrer directement au Sénégal.`,features:[`Produits authentiques`,`Possibilité d'achat en gros`,`Expérience d'achat simple et pratique`],iosUrl:`https://apps.apple.com`,androidUrl:`https://play.google.com`}],Ad=({variant:e=`rek`})=>{let t=kd.filter(t=>e===`rek`?t.id===`expedition`:t.id===`boutique`);return(0,C.jsxs)(`section`,{id:`apps`,className:`apps-section`,children:[(0,C.jsx)(`div`,{className:`bg-glow glow-1`}),(0,C.jsx)(`div`,{className:`bg-glow glow-2`}),(0,C.jsxs)(`div`,{className:`container`,children:[(0,C.jsx)(`div`,{className:`section-header sr`,children:(0,C.jsxs)(`div`,{className:`section-badge`,children:[(0,C.jsx)(`span`,{className:`tag-line`}),`Notre Application mobile`]})}),(0,C.jsx)(`div`,{className:`apps-grid`,children:t.map((e,t)=>(0,C.jsxs)(`div`,{id:`app-${e.id}`,className:`app-card sr sr-d${t+1}`,children:[(0,C.jsx)(`div`,{className:`card-glow`}),(0,C.jsxs)(`div`,{className:`card-inner`,children:[(0,C.jsx)(`div`,{className:`app-logo-container`,children:(0,C.jsx)(`img`,{src:e.logo,alt:e.alt,className:`app-logo`})}),(0,C.jsxs)(`div`,{className:`app-chip ${e.chipClass}`,children:[e.chipIcon,e.chipText]}),(0,C.jsx)(`p`,{children:e.description}),(0,C.jsx)(`ul`,{className:`app-features`,children:e.features.map((e,t)=>(0,C.jsx)(`li`,{children:e},t))})]}),(0,C.jsxs)(`div`,{className:`download-buttons`,style:{padding:`0 34px`},children:[(0,C.jsxs)(`button`,{className:`download-btn ios`,onClick:()=>window.open(e.iosUrl,`_blank`),children:[(0,C.jsx)(`svg`,{viewBox:`0 0 24 24`,fill:`currentColor`,width:`16`,height:`16`,style:{marginRight:`7px`,verticalAlign:`middle`},children:(0,C.jsx)(`path`,{d:`M18.71,19.5C17.88,20.74 17,21.95 15.66,22c-1.31,0.05-1.73,-0.75-3.23,-0.75c-1.49,0-1.96,0.73,-3.22,0.78c-1.33,0.05-2.29,-1.32-3.13,-2.53C4.37,17.18 3.05,12.35 4.81,9.31c0.88,-1.52 2.45,-2.48 4.16,-2.51c1.3,-0.02 2.53,0.88 3.32,0.88c0.79,0 2.27,-1.07 3.82,-0.91c0.65,0.03 2.47,0.26 3.64,1.98c-0.09,0.06 -2.17,1.28 -2.15,3.81c0.03,3.02 2.65,4.03 2.68,4.04c-0.03,0.07 -0.42,1.44 -1.38,2.83M15.97,4.17C16.63,3.37 17.07,2.28 16.95,1c-1.09,0.04 -2.41,0.72 -3.19,1.63c-0.67,0.77 -1.25,1.88 -1.09,3.14c1.21,0.09 2.47,-0.6 3.3,-1.6`})}),`App Store`]}),(0,C.jsxs)(`button`,{className:`download-btn android`,onClick:()=>window.open(e.androidUrl,`_blank`),children:[(0,C.jsxs)(`svg`,{viewBox:`0 0 24 24`,fill:`currentColor`,width:`16`,height:`16`,style:{marginRight:`7px`,verticalAlign:`middle`},children:[(0,C.jsx)(`path`,{d:`M3,5.27V18.73c0,0.59,0.34,1.13,0.88,1.38L13.12,12l-9.24-8.11C3.34,4.14,3,4.68,3,5.27Z`,opacity:`0.15`}),(0,C.jsx)(`path`,{d:`M17.85,9.5L4.76,3.12C4.42,2.95,4.03,3,3.88,3.14L13.12,12Z`}),(0,C.jsx)(`path`,{d:`M13.12,12l4.73-2.5L20.4,11c0.41,0.22,0.6,0.69,0.44,1.12c-0.11,0.31-0.4,0.53-0.74,0.53c-0.09,0-0.18-0.02-0.26-0.05l-2.13-1.1Z`}),(0,C.jsx)(`path`,{d:`M13.12,12l-9.24,8.86c0.15,0.14,0.54,0.19,0.88,0.02l13.09-6.38Z`})]}),`Google Play`]})]})]},e.id))})]}),(0,C.jsx)(`style`,{jsx:!0,children:`
         .card-inner { padding: 34px 34px 0; display: flex; flex-direction: column; flex: 1; }
@@ -1513,6 +1537,9 @@ Error generating stack: `+e.message+`
         @media (max-width: 930px) {
           .apps-grid { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; }
           .section-header { margin-bottom: 48px; }
+          .card-inner { padding: 26px 20px 0; }
+          .download-buttons { padding: 0 20px !important; }
+          .app-logo { max-width: 78%; }
         }
 
         @media (max-width: 520px) {
@@ -1665,6 +1692,7 @@ Error generating stack: `+e.message+`
           .faq-number { min-width: 38px; height: 38px; border-radius: 10px; font-size: 13px; }
           .faq-answer { padding: 0 18px 18px 18px; }
           .faq-icon { min-width: 34px; width: 34px; height: 34px; }
+          .faq-question { font-size: 14px; }
         }
       `})]})},Fd=({variant:e=`rek`})=>{let t=e===`boutique`,[n,r]=(0,y.useState)({prenom:``,nom:``,email:``,telephone:``,sujet:``,message:``}),[i,a]=(0,y.useState)(`idle`),o=e=>r({...n,[e.target.name]:e.target.value});return(0,C.jsxs)(`section`,{id:`contact`,className:`contact-section`,children:[(0,C.jsx)(`div`,{className:`bg-glow glow-1`}),(0,C.jsx)(`div`,{className:`bg-glow glow-2`}),(0,C.jsx)(`div`,{className:`container`,children:(0,C.jsxs)(`div`,{className:`contact-grid`,children:[(0,C.jsxs)(`div`,{className:`contact-details sr-l`,children:[(0,C.jsxs)(`div`,{className:`section-tag`,children:[(0,C.jsx)(`span`,{className:`tag-line`}),`Contact`]}),(0,C.jsx)(`h2`,{className:`contact-title`,children:`Contactez-nous`}),(0,C.jsx)(`p`,{className:`contact-description`,children:t?`Notre équipe vous accompagne pour vos achats et vos livraisons au Sénégal.`:`Notre service client est disponible pour répondre à toutes vos questions.`}),(0,C.jsxs)(`div`,{className:`contact-info-list`,children:[(0,C.jsxs)(`div`,{className:`contact-item`,children:[(0,C.jsx)(`div`,{className:`contact-icon`,children:(0,C.jsx)(je,{size:22,strokeWidth:1.5,color:`#1e3a8a`})}),(0,C.jsxs)(`div`,{className:`contact-text`,children:[(0,C.jsx)(`strong`,{children:`Téléphone`}),(0,C.jsx)(`a`,{href:`tel:+33600000000`,children:`+33 6 00 00 00 00`})]})]}),(0,C.jsxs)(`div`,{className:`contact-item`,children:[(0,C.jsx)(`div`,{className:`contact-icon`,children:(0,C.jsx)(Oe,{size:22,strokeWidth:1.5,color:`#1e3a8a`})}),(0,C.jsxs)(`div`,{className:`contact-text`,children:[(0,C.jsx)(`strong`,{children:`WhatsApp`}),(0,C.jsx)(`a`,{href:`https://wa.me/33600000000`,target:`_blank`,rel:`noopener noreferrer`,children:`+33 6 00 00 00 00`})]})]}),(0,C.jsxs)(`div`,{className:`contact-item`,children:[(0,C.jsx)(`div`,{className:`contact-icon`,children:(0,C.jsx)(Ee,{size:22,strokeWidth:1.5,color:`#1e3a8a`})}),(0,C.jsxs)(`div`,{className:`contact-text`,children:[(0,C.jsx)(`strong`,{children:`Email`}),(0,C.jsx)(`a`,{href:`mailto:contact@yobanteboutique.com`,children:`contact@yobanteboutique.com`})]})]})]})]}),(0,C.jsxs)(`div`,{className:`form-wrapper sr-r`,children:[(0,C.jsx)(`div`,{className:`form-glow`}),(0,C.jsxs)(`form`,{className:`contact-form`,onSubmit:async e=>{e.preventDefault(),a(`sending`);try{(await(await fetch(`https://api.web3forms.com/submit`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({access_key:`a741136d-b23e-4891-a8b4-c6f4f8210215`,name:`${n.prenom} ${n.nom}`,email:n.email,telephone:n.telephone,subject:n.sujet,message:n.message})})).json()).success?(a(`success`),r({prenom:``,nom:``,email:``,telephone:``,sujet:``,message:``})):a(`error`)}catch{a(`error`)}},children:[(0,C.jsxs)(`div`,{className:`form-header`,children:[(0,C.jsx)(`h3`,{children:`Avez-vous une question ?`}),(0,C.jsx)(`p`,{children:`Notre équipe vous répondra dans les plus brefs délais.`})]}),(0,C.jsxs)(`div`,{className:`form-row`,children:[(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsx)(`input`,{type:`text`,name:`prenom`,placeholder:`Prénom`,value:n.prenom,onChange:o,required:!0})}),(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsx)(`input`,{type:`text`,name:`nom`,placeholder:`Nom`,value:n.nom,onChange:o,required:!0})})]}),(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsx)(`input`,{type:`email`,name:`email`,placeholder:`Votre adresse email`,value:n.email,onChange:o,required:!0})}),(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsxs)(`div`,{className:`phone-input-wrapper`,children:[(0,C.jsx)(`span`,{className:`phone-prefix`,children:(0,C.jsx)(je,{size:14,strokeWidth:2})}),(0,C.jsx)(`input`,{type:`tel`,name:`telephone`,placeholder:`Votre numéro de téléphone ou WhatsApp`,value:n.telephone,onChange:o,className:`phone-input`})]})}),(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsxs)(`select`,{name:`sujet`,value:n.sujet,onChange:o,required:!0,children:[(0,C.jsx)(`option`,{value:``,disabled:!0,hidden:!0,children:`Sélectionner un sujet`}),!t&&(0,C.jsxs)(C.Fragment,{children:[(0,C.jsx)(`option`,{value:`Demande de devis - Produit max 30kg`,children:`Demande de devis - Produit max 30kg`}),(0,C.jsx)(`option`,{value:`Demande de devis - Gros colis`,children:`Demande de devis - Gros colis`}),(0,C.jsx)(`option`,{value:`Envoi de documents`,children:`Envoi de documents`})]}),t&&(0,C.jsxs)(C.Fragment,{children:[(0,C.jsx)(`option`,{value:`Commande boutique`,children:`Commande boutique`}),(0,C.jsx)(`option`,{value:`Livraison au Sénégal`,children:`Livraison au Sénégal`}),(0,C.jsx)(`option`,{value:`Produit indisponible`,children:`Produit indisponible`})]}),(0,C.jsx)(`option`,{value:`Autres`,children:`Autres`})]})}),(0,C.jsx)(`div`,{className:`form-group`,children:(0,C.jsx)(`textarea`,{name:`message`,rows:`4`,placeholder:`Décrivez votre demande...`,value:n.message,onChange:o,required:!0})}),i===`success`&&(0,C.jsxs)(`div`,{className:`feedback success`,children:[(0,C.jsx)(fe,{size:15,strokeWidth:2,style:{marginRight:`7px`,verticalAlign:`middle`}}),`Message envoyé avec succès.`]}),i===`error`&&(0,C.jsxs)(`div`,{className:`feedback error`,children:[(0,C.jsx)(E,{size:15,strokeWidth:2,style:{marginRight:`7px`,verticalAlign:`middle`}}),`Une erreur s'est produite.`]}),(0,C.jsx)(`button`,{type:`submit`,className:`submit-btn`,disabled:i===`sending`,children:i===`sending`?`Envoi en cours...`:(0,C.jsxs)(C.Fragment,{children:[`Envoyer le message`,(0,C.jsx)(ue,{size:16,strokeWidth:2,style:{marginLeft:`8px`,verticalAlign:`middle`}})]})})]})]})]})}),(0,C.jsx)(`style`,{jsx:!0,children:`
         .contact-section {
@@ -1867,6 +1895,15 @@ Error generating stack: `+e.message+`
           .form-row { grid-template-columns: 1fr; }
           .contact-title { font-size: 38px; }
           .form-header h3 { font-size: 22px; }
+          .contact-item { padding: 14px; gap: 12px; }
+          .contact-icon { width: 46px; height: 46px; border-radius: 14px; }
+          .contact-text a, .contact-text span { font-size: 14px; overflow-wrap: anywhere; }
+        }
+
+        @media (max-width: 360px) {
+          .contact-section { padding: 64px 0; }
+          .form-wrapper { padding: 22px 14px; border-radius: 22px; }
+          .contact-title { font-size: 32px; }
         }
       `})]})},Id=({variant:e=`rek`})=>(0,C.jsxs)(`section`,{id:`about`,className:`about-section`,children:[(0,C.jsx)(`div`,{className:`about-bg-glow glow-1`}),(0,C.jsx)(`div`,{className:`about-bg-glow glow-2`}),(0,C.jsx)(`div`,{className:`about-quote-deco`,"aria-hidden":`true`,children:`"`}),(0,C.jsx)(`div`,{className:`container`,children:(0,C.jsx)(`div`,{className:`about-inner`,children:(0,C.jsxs)(`div`,{className:`about-header sr`,children:[(0,C.jsxs)(`div`,{className:`section-tag`,children:[(0,C.jsx)(`span`,{className:`tag-dot`}),`À propos`]}),(0,C.jsx)(`h2`,{className:`about-title`,children:`Qui sommes-nous ?`}),(0,C.jsx)(`div`,{className:`about-divider`}),(0,C.jsx)(`p`,{className:`about-description`,children:e===`boutique`?`YOBANTÉ Boutique facilite vos achats en France et leur livraison au Sénégal grâce à une sélection de produits fiables, accessibles et authentiques.`:`YOBANTÉ REK facilite l'envoi de colis entre la France et le Sénégal grâce à un service fiable, accessible et transparent.`}),(0,C.jsxs)(`div`,{className:`about-badges`,children:[(0,C.jsx)(`span`,{className:`about-badge`,children:`🇫🇷 France`}),(0,C.jsx)(`span`,{className:`about-badge-arrow`,children:`→`}),(0,C.jsx)(`span`,{className:`about-badge`,children:`🇸🇳 Sénégal`})]})]})})}),(0,C.jsx)(`style`,{jsx:!0,children:`
         .about-section {

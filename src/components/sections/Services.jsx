@@ -671,6 +671,9 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           .section { padding: 80px 0; }
           .promo-box { max-width: 100%; }
           .card-left { padding: 26px 20px; }
+          .service-card-wrapper { border-radius: 22px; }
+          .promo-side { padding: 16px; }
+          .card-title-row { align-items: flex-start; }
 
           .steps-row { flex-direction: column; align-items: center; }
           .step-wrapper { width: 100%; flex-direction: column; }
@@ -693,6 +696,11 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           .promo-box { padding: 32px 22px; gap: 20px; }
           .promo-desc { font-size: 15px; }
           .promo-btn { max-width: 220px; font-size: 13px; padding: 12px 18px; }
+          .card-icon-circle { width: 52px; height: 52px; border-radius: 16px; }
+          .inner-tag { font-size: 9px; }
+          .pricing-card { max-width: 100%; }
+          .category-pill { min-width: 0; padding: 12px 6px; }
+          .cat-label { font-size: 10px; line-height: 1.25; }
         }
       `}</style>
     </section>

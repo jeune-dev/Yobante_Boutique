@@ -371,6 +371,15 @@ const Contact = ({ variant = 'rek' }) => {
           .form-row { grid-template-columns: 1fr; }
           .contact-title { font-size: 38px; }
           .form-header h3 { font-size: 22px; }
+          .contact-item { padding: 14px; gap: 12px; }
+          .contact-icon { width: 46px; height: 46px; border-radius: 14px; }
+          .contact-text a, .contact-text span { font-size: 14px; overflow-wrap: anywhere; }
+        }
+
+        @media (max-width: 360px) {
+          .contact-section { padding: 64px 0; }
+          .form-wrapper { padding: 22px 14px; border-radius: 22px; }
+          .contact-title { font-size: 32px; }
         }
       `}</style>
     </section>

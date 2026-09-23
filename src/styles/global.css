@@ -69,6 +69,10 @@ body {
 /* ─── LAYOUT ─────────────────────────────────────────────────────── */
 html, body { overflow-x: hidden; }
 
+html { min-width: 320px; }
+img, svg { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+
 * { user-select: none; }
 input, textarea { user-select: text; }
 button, a, .clickable { cursor: pointer; }
@@ -128,4 +132,9 @@ button, a, .clickable { cursor: pointer; }
     box-shadow: inherit !important;
   }
   body { overflow-x: hidden; }
+}
+
+@media (max-width: 420px) {
+  .container { padding-left: 16px !important; padding-right: 16px !important; }
+  .section-tag, .section-badge, .faq-tag { max-width: calc(100vw - 32px); text-align: center; }
 }

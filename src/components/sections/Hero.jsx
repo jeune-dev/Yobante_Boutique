@@ -573,6 +573,16 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           .hero-image img { max-width: 200px; }
         }
 
+        @media (max-width: 380px) {
+          .hero-container { padding-left: 12px; padding-right: 12px; }
+          .hero-badge { max-width: 100%; text-align: left; font-size: 11px; padding: 7px 12px; }
+          .hero-title { font-size: 27px; }
+          .shipping-methods { max-width: 290px; }
+          .hero-stats { gap: 20px; }
+          .stat-number { font-size: 22px; }
+          .stat-label { font-size: 11px; }
+        }
+
       `}</style>
     </section>
   );

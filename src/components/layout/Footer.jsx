@@ -135,6 +135,12 @@ const Footer = ({ scrollTo }) => {
           .footer-right { align-items: flex-start; }
           .footer-trust { justify-content: flex-start; }
         }
+
+        @media (max-width: 480px) {
+          .container { padding: 0 16px; }
+          .logo-img { height: 66px; }
+          .footer-links { flex-wrap: wrap; gap: 10px 16px; }
+        }
       `}</style>
     </footer>
   );
