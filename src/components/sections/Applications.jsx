@@ -1,6 +1,9 @@
 // src/components/sections/Applications.jsx
+import { useEffect, useState } from 'react';
 import expeditionLogo from '../../assets/images/Logo Yobante Rek - fond blanc.PNG';
 import boutiqueLogo from '../../assets/images/Logo Yobante Boutique - Fond Blanc.PNG';
+import appli1 from '../../assets/images/Appli1.png';
+import appli2 from '../../assets/images/Appli2.png';
 import { Package, ShoppingBag } from 'lucide-react';
 
 const appsData = [
@@ -12,7 +15,7 @@ const appsData = [
     chipText: "Expédition & Suivi",
     chipClass: "expedition",
     title: "YOBANTÉ Expédition",
-    description: "Gérez vos envois entre la France et le Sénégal de manière rapide, sécurisée et transparente.",
+    description: "Gérez vos envois entre la France et le Sénégal de manière rapide, sécurisée et transparente. Simulez votre envoi, payez en ligne et suivez chaque étape depuis une seule application.",
     features: [
       "Simulez votre envoi",
       "Payez en toute sécurité",
@@ -29,7 +32,7 @@ const appsData = [
     chipText: "Boutique en ligne",
     chipClass: "boutique",
     title: "YOBANTÉ Boutique",
-    description: "Achetez vos produits préférés à prix discount et faites-les livrer directement au Sénégal.",
+    description: "Achetez vos produits préférés à prix discount et faites-les livrer directement au Sénégal. Découvrez une sélection de produits authentiques et profitez d’une expérience d’achat simple et pratique.",
     features: [
       "Produits authentiques",
       "Possibilité d'achat en gros",
@@ -41,7 +44,17 @@ const appsData = [
 ];
 
 const Applications = ({ variant = 'rek' }) => {
+  const [imageIndex, setImageIndex] = useState(0);
   const visibleApps = appsData.filter((app) => variant === 'rek' ? app.id === 'expedition' : app.id === 'boutique');
+  const appImages = [appli1, appli2];
+
+  useEffect(() => {
+    if (variant !== 'boutique') return undefined;
+    const timer = window.setInterval(() => {
+      setImageIndex((currentIndex) => (currentIndex + 1) % appImages.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [variant]);
   return (
     <section id="apps" className="apps-section">
       <div className="bg-glow glow-1"></div>
@@ -54,6 +67,11 @@ const Applications = ({ variant = 'rek' }) => {
             <span className="tag-line"></span>
             Notre Application mobile
           </div>
+          <p className="section-subtitle">
+            {variant === 'rek'
+              ? "Une application mobile pensée pour gérer vos expéditions en quelques gestes, du calcul du tarif au suivi de la livraison."
+              : "Une application mobile pensée pour découvrir vos produits, commander simplement et suivre vos achats jusqu'à la livraison."}
+          </p>
         </div>
 
         {/* CARDS */}
@@ -104,6 +122,10 @@ const Applications = ({ variant = 'rek' }) => {
                   Google Play
                 </button>
               </div>
+
+              <div className="app-visual">
+                <img key={appImages[imageIndex]} src={appImages[imageIndex]} alt={app.alt} />
+              </div>
             </div>
           ))}
         </div>
@@ -121,24 +143,20 @@ const Applications = ({ variant = 'rek' }) => {
 
         .container {
           position: relative; z-index: 5;
-          max-width: 1250px; margin: 0 auto; padding: 0 24px;
+          max-width: none; margin: 0 auto; padding: 0 24px;
         }
 
         .bg-glow {
           position: absolute; border-radius: 50%;
           filter: blur(120px); opacity: .3; pointer-events: none;
         }
-
         .glow-1 { width: 450px; height: 450px; background: #1E3A8A; top: -130px; left: -80px; }
         .glow-2 { width: 380px; height: 380px; background: #F5C518; bottom: -100px; right: -80px; }
-
-        /* HEADER */
-        .section-header { text-align: center; margin-bottom: 40px; }
 
         .section-badge {
           display: inline-flex; align-items: center; gap: 12px;
           margin-bottom: 18px; color: #1E3A8A;
-          font-size: 11px; font-weight: 800;
+          font-size: 18px; font-weight: 800;
           letter-spacing: 2px; text-transform: uppercase;
           background: rgba(30,58,138,0.06);
           padding: 9px 18px; border-radius: 999px;
@@ -147,9 +165,9 @@ const Applications = ({ variant = 'rek' }) => {
         .tag-line { width: 20px; height: 2px; background: #F5C518; border-radius: 2px; }
 
         .section-title {
-          font-size: clamp(30px, 4.5vw, 50px);
+          font-size: clamp(36px, 5vw, 64px);
           line-height: 1.12; font-weight: 900;
-          color: #1E3A8A; margin-bottom: 16px;
+          color: #1E3A8A; margin-bottom: 18px;
         }
 
         .section-subtitle {
@@ -160,23 +178,27 @@ const Applications = ({ variant = 'rek' }) => {
         /* GRID */
         .apps-grid {
           display: grid;
-          grid-template-columns: minmax(0, 580px);
+          grid-template-columns: minmax(0, 1fr);
           justify-content: center;
           gap: 30px;
-          max-width: 100%;
+          width: 100%;
+          max-width: none;
           margin: 0 auto;
         }
 
         /* CARD */
         .app-card {
           position: relative; overflow: hidden;
+          width: 100%;
           background: rgba(255,255,255,.9);
           backdrop-filter: blur(20px);
           border-radius: 28px;
           padding: 0 0 34px;
           border: 1px solid rgba(255,255,255,.7);
           box-shadow: 0 8px 40px rgba(30,58,138,.08);
-          display: flex; flex-direction: column;
+          display: grid;
+          grid-template-columns: minmax(230px, .8fr) minmax(0, 1.2fr);
+          grid-template-rows: 1fr auto;
           transition: box-shadow 0.32s ease, transform 0.32s ease;
         }
 
@@ -196,7 +218,8 @@ const Applications = ({ variant = 'rek' }) => {
 
         .card-inner {
           padding: 34px 34px 0;
-          display: flex; flex-direction: column; flex: 1;
+          display: flex; flex-direction: column;
+          grid-column: 2; grid-row: 1;
         }
 
         .card-glow {
@@ -263,6 +286,31 @@ const Applications = ({ variant = 'rek' }) => {
         /* BUTTONS */
         .download-buttons { display: flex; gap: 12px; margin-top: auto; }
 
+        .app-visual {
+          grid-column: 1; grid-row: 1 / span 2;
+          min-height: 520px;
+          display: flex; align-items: flex-end; justify-content: center;
+          padding: 34px 20px 0;
+          overflow: hidden;
+          background: linear-gradient(160deg, rgba(30,58,138,.08), rgba(245,197,24,.12));
+        }
+
+        .app-visual img {
+          width: 100%;
+          max-width: 410px;
+          height: 560px;
+          object-fit: cover;
+          object-position: center center;
+          filter: drop-shadow(0 22px 24px rgba(30,58,138,.2));
+          transform: rotate(-6deg) translate(-50px, -10px);
+          animation: app-photo-fade .7s ease both;
+        }
+
+        @keyframes app-photo-fade {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
         .boutique-download-wrap {
           background: white;
           border-radius: 18px;
@@ -299,7 +347,8 @@ const Applications = ({ variant = 'rek' }) => {
         @media (max-width: 1024px) { .container { padding: 0 28px; } .apps-grid { gap: 22px; } }
 
         @media (max-width: 930px) {
-          .apps-grid { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; }
+          .apps-grid { grid-template-columns: 1fr; max-width: 680px; margin: 0 auto; }
+          .app-card { grid-template-columns: minmax(180px, .7fr) minmax(0, 1.3fr); }
           .section-header { margin-bottom: 48px; }
           .card-inner { padding: 26px 20px 0; }
           .download-buttons { padding: 0 20px !important; }
@@ -309,7 +358,11 @@ const Applications = ({ variant = 'rek' }) => {
         @media (max-width: 520px) {
           .apps-section { padding: 70px 0; }
           .container { padding: 0 16px; }
-          .app-card { padding: 28px 18px; border-radius: 22px; }
+          .app-card { display: flex; flex-direction: column; padding: 0 0 28px; border-radius: 22px; }
+          .app-visual { order: 0; min-height: 340px; max-height: 360px; padding-top: 18px; }
+          .app-visual img { width: 290px; max-width: 290px; height: 340px; transform: rotate(-6deg) translate(-22px, -8px); }
+          .card-inner { order: 1; padding: 26px 18px 0; }
+          .download-buttons { order: 2; }
           .download-buttons { flex-direction: column; gap: 10px; }
           .download-btn { width: 100%; padding: 13px 18px; }
           .section-title { font-size: 28px; }

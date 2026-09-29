@@ -76,8 +76,6 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         animate={{ background: current.bgColor }}
         transition={{ duration: 0.6 }}
       />
-
-      {/* GLOW */}
       <div className="hero-glow"></div>
 
       {/* CONTENT */}
@@ -116,7 +114,19 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
               </div>
 
               <h1 className="hero-title" style={{ color: current.textColor }}>
-                {current.title}
+                {current.id === 2 ? (
+                  <>
+                    <span className="title-main">Achetez vos marques</span>
+                    <span className="title-brand">préférées</span>
+                    <span className="title-slogan">à prix discount !</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="title-main">Expédiez vos</span>
+                    <span className="title-line-rek"><span className="title-colis">colis</span><span className="title-brand rek-title-brand">depuis chez vous !</span></span>
+                    <span className="title-footer rek-title-footer"><span className="title-footer-ak">AK</span><span className="title-footer-name">YOBANTE REK</span></span>
+                  </>
+                )}
               </h1>
 
               {current.id === 1 && (
@@ -171,11 +181,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
             </div>
 
             {/* IMAGE */}
-            <motion.div
-              className="hero-image"
-              animate={isMobile ? {} : { y: [0, -16, 0] }}
-              transition={isMobile ? {} : { duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
+            <motion.div className="hero-image">
               <img src={current.image} alt="Application mobile" />
             </motion.div>
           </motion.div>
@@ -325,11 +331,88 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         }
 
         .hero-title {
-          font-size: clamp(34px, 4.5vw, 62px);
+          font-size: clamp(40px, 5.5vw, 76px);
           line-height: 1.07;
           font-weight: 900;
           margin-bottom: 26px;
           letter-spacing: -0.5px;
+        }
+
+        .title-main,
+        .title-context,
+        .title-brand,
+        .title-slogan {
+          display: block;
+          width: fit-content;
+        }
+
+        .title-main { color: #ffffff; }
+        .title-context {
+          margin: 0 0 -2px 18%;
+          padding: 2px 8px 3px;
+          background: #111111;
+          color: #ffffff;
+          font-size: .42em;
+          line-height: 1;
+          font-weight: 600;
+          letter-spacing: 0;
+        }
+        .title-line-rek .rek-title-brand {
+          margin-left: 18px;
+          padding: 0;
+          background: transparent;
+          color: #ffffff;
+        }
+        .title-footer {
+          display: block;
+          width: fit-content;
+          margin: 10px 0 0 16%;
+          padding: 0;
+          background: transparent;
+          color: #F5C518;
+          font-size: .42em;
+          font-weight: 800;
+          letter-spacing: .12em;
+        }
+        .title-footer { display: flex; align-items: center; gap: 8px; }
+        .title-footer-ak {
+          padding: 6px 16px 7px;
+          background: #F5C518;
+          color: #1E3A8A;
+          border: 3px solid #1E3A8A;
+          font-size: 1.65em;
+          font-weight: 900;
+          letter-spacing: .04em;
+        }
+        .title-footer-name { padding: 7px 16px 8px; background: #1E3A8A; }
+        .rek-title-brand {
+          display: inline;
+          margin-left: 18px;
+          padding: 0;
+          background: transparent;
+          color: #ffffff;
+        }
+        .title-line-rek { display: flex; align-items: baseline; width: max-content; max-width: 100%; white-space: nowrap; font-size: .78em; transform: translateX(-24px); }
+        .title-colis { color: #ffffff; }
+        .rek-title-footer { flex-direction: column; align-items: center; gap: 0; margin-left: 16%; }
+        .rek-title-footer .title-footer-ak { font-size: 1.35em; }
+        .title-brand {
+          margin-left: 24%;
+          padding: 0 12px 5px;
+          background: #F5C518;
+          color: #1E3A8A;
+          line-height: .88;
+          font-weight: 900;
+        }
+        .title-slogan {
+          margin: 4px 0 0 14%;
+          padding: 5px 12px 7px;
+          background: #F5C518;
+          color: #ffffff;
+          font-size: .52em;
+          line-height: 1;
+          font-weight: 900;
+          letter-spacing: 0;
         }
 
         .shipping-methods {
@@ -459,8 +542,10 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .hero-image img {
           width: 100%;
-          max-width: 400px;
+          max-width: 380px;
           filter: drop-shadow(0 28px 50px rgba(0,0,0,0.22));
+          transform: rotate(-8deg);
+          transform-origin: center center;
           position: relative;
           z-index: 1;
         }
@@ -519,7 +604,15 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
             align-items: center;
           }
 
-          .hero-title { font-size: 42px; }
+          .hero-title { font-size: 48px; }
+
+          .title-context { margin-left: 12%; }
+          .title-brand { margin-left: 17%; }
+          .title-slogan { margin-left: 8%; }
+          .title-footer { margin-left: 8%; }
+          .rek-title-brand { margin-left: 12px; }
+          .title-line-rek { font-size: .68em; transform: translateX(-10px); }
+          .rek-title-footer { margin-left: 8%; }
 
           .shipping-methods {
             grid-template-columns: repeat(2,1fr);
