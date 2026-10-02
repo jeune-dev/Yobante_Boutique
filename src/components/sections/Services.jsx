@@ -1,6 +1,5 @@
 // src/components/sections/Services.jsx
-import { useCallback } from "react";
-import React from "react";
+import { useCallback, useState } from "react";
 import rekLogo from "../../assets/images/Logo Yobante Rek.png";
 import boutiqueLogo from "../../assets/images/Logo Yobante Boutique.png";
 import {
@@ -84,34 +83,35 @@ const BOUTIQUE_STEPS = [
 ];
 
 const CATEGORIES = [
-  { icon: <Tag size={26} strokeWidth={1.5} color="white" />,            label: "Promotions" },
-  { icon: <MapPin size={26} strokeWidth={1.5} color="white" />,         label: "Produits Locaux" },
-  { icon: <Coffee size={26} strokeWidth={1.5} color="white" />,         label: "Cafés" },
-  { icon: <Shirt size={26} strokeWidth={1.5} color="white" />,          label: "Mode Locale" },
-  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Traiteur" },
-  { icon: <Home size={26} strokeWidth={1.5} color="white" />,           label: "Mobilier & Déco" },
-  { icon: <Apple size={26} strokeWidth={1.5} color="white" />,          label: "Fruits & Légumes" },
-  { icon: <Fish size={26} strokeWidth={1.5} color="white" />,           label: "Viande & Poissons" },
-  { icon: <Egg size={26} strokeWidth={1.5} color="white" />,            label: "Crèmerie & Laitiers" },
-  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Charcuterie" },
-  { icon: <Snowflake size={26} strokeWidth={1.5} color="white" />,      label: "Surgelés" },
-  { icon: <Baby size={26} strokeWidth={1.5} color="white" />,           label: "Bébé" },
-  { icon: <Cookie size={26} strokeWidth={1.5} color="white" />,         label: "Épicerie Sucrée" },
-  { icon: <FlaskConical size={26} strokeWidth={1.5} color="white" />,   label: "Épicerie Salée" },
-  { icon: <GlassWater size={26} strokeWidth={1.5} color="white" />,     label: "Boissons" },
-  { icon: <Wheat size={26} strokeWidth={1.5} color="white" />,          label: "Pains & Pâtisserie" },
-  { icon: <SprayCan size={26} strokeWidth={1.5} color="white" />,       label: "Entretien & Nettoyage" },
-  { icon: <Droplets size={26} strokeWidth={1.5} color="white" />,       label: "Hygiène & Beauté" },
-  { icon: <PawPrint size={26} strokeWidth={1.5} color="white" />,       label: "Animalerie" },
-  { icon: <Gamepad2 size={26} strokeWidth={1.5} color="white" />,       label: "Jeux Vidéo" },
-  { icon: <Smartphone size={26} strokeWidth={1.5} color="white" />,     label: "Smartphones & Connectés" },
-  { icon: <Laptop size={26} strokeWidth={1.5} color="white" />,         label: "Informatique & Bureau" },
-  { icon: <Tv size={26} strokeWidth={1.5} color="white" />,             label: "Image & Son" },
-  { icon: <Dumbbell size={26} strokeWidth={1.5} color="white" />,       label: "Sport" },
-  { icon: <ShoppingBag size={26} strokeWidth={1.5} color="white" />,    label: "Mode & Textile" },
+  { icon: <Tag size={26} strokeWidth={1.5} color="white" />, label: "Promotions", description: "Offres du moment et produits à prix réduits." },
+  { icon: <MapPin size={26} strokeWidth={1.5} color="white" />, label: "Produits Locaux", description: "Produits fabriqués ou cultivés au Sénégal et dans la région." },
+  { icon: <Coffee size={26} strokeWidth={1.5} color="white" />, label: "Cafés", description: "Cafés, grains, boissons chaudes et accessoires associés." },
+  { icon: <Shirt size={26} strokeWidth={1.5} color="white" />, label: "Mode Locale", description: "Vêtements et créations inspirés des styles locaux." },
+  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Traiteur", description: "Plats préparés, spécialités et produits traiteur." },
+  { icon: <Home size={26} strokeWidth={1.5} color="white" />, label: "Mobilier & Déco", description: "Meubles et objets pour aménager et décorer votre intérieur." },
+  { icon: <Apple size={26} strokeWidth={1.5} color="white" />, label: "Fruits & Légumes", description: "Fruits et légumes frais pour vos repas du quotidien." },
+  { icon: <Fish size={26} strokeWidth={1.5} color="white" />, label: "Viande & Poissons", description: "Viandes, poissons et produits de la mer." },
+  { icon: <Egg size={26} strokeWidth={1.5} color="white" />, label: "Crèmerie & Laitiers", description: "Lait, fromages, yaourts et autres produits laitiers." },
+  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Charcuterie", description: "Sélection de charcuteries et produits salés à partager." },
+  { icon: <Snowflake size={26} strokeWidth={1.5} color="white" />, label: "Surgelés", description: "Produits surgelés à conserver et préparer facilement." },
+  { icon: <Baby size={26} strokeWidth={1.5} color="white" />, label: "Bébé", description: "Essentiels, soins et accessoires pour les tout-petits." },
+  { icon: <Cookie size={26} strokeWidth={1.5} color="white" />, label: "Épicerie Sucrée", description: "Biscuits, confiseries, chocolat et douceurs." },
+  { icon: <FlaskConical size={26} strokeWidth={1.5} color="white" />, label: "Épicerie Salée", description: "Ingrédients, conserves et produits salés pour cuisiner." },
+  { icon: <GlassWater size={26} strokeWidth={1.5} color="white" />, label: "Boissons", description: "Eaux, jus et boissons pour toutes les occasions." },
+  { icon: <Wheat size={26} strokeWidth={1.5} color="white" />, label: "Pains & Pâtisserie", description: "Pains, viennoiseries et pâtisseries à déguster." },
+  { icon: <SprayCan size={26} strokeWidth={1.5} color="white" />, label: "Entretien & Nettoyage", description: "Produits et accessoires pour entretenir votre maison." },
+  { icon: <Droplets size={26} strokeWidth={1.5} color="white" />, label: "Hygiène & Beauté", description: "Soins, hygiène personnelle et produits de beauté." },
+  { icon: <PawPrint size={26} strokeWidth={1.5} color="white" />, label: "Animalerie", description: "Alimentation et accessoires pour vos animaux." },
+  { icon: <Gamepad2 size={26} strokeWidth={1.5} color="white" />, label: "Jeux Vidéo", description: "Jeux, consoles et accessoires de divertissement." },
+  { icon: <Smartphone size={26} strokeWidth={1.5} color="white" />, label: "Smartphones & Connectés", description: "Téléphones, objets connectés et accessoires mobiles." },
+  { icon: <Laptop size={26} strokeWidth={1.5} color="white" />, label: "Informatique & Bureau", description: "Ordinateurs, périphériques et fournitures de bureau." },
+  { icon: <Tv size={26} strokeWidth={1.5} color="white" />, label: "Image & Son", description: "Téléviseurs, équipements audio et accessoires multimédias." },
+  { icon: <Dumbbell size={26} strokeWidth={1.5} color="white" />, label: "Sport", description: "Équipements et accessoires pour bouger et s’entraîner." },
+  { icon: <ShoppingBag size={26} strokeWidth={1.5} color="white" />, label: "Mode & Textile", description: "Vêtements, chaussures et accessoires pour toute la famille." },
 ];
 
 const Services = ({ scrollTo, variant = 'rek' }) => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const handleClick = useCallback(() => { scrollTo("contact"); }, [scrollTo]);
 
   return (
@@ -239,12 +239,24 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
                 <span className="inner-tag-line gold-bg"></span>
                 NOS RAYONS
               </div>
+              {selectedCategory && (
+                <div className="category-info" role="status" aria-live="polite">
+                  <strong>{selectedCategory.label}</strong>
+                  <p>{selectedCategory.description}</p>
+                </div>
+              )}
               <div className="categories-grid">
                 {CATEGORIES.map((cat, i) => (
-                  <div key={i} className="category-pill">
+                  <button
+                    key={i}
+                    type="button"
+                    className={`category-pill ${selectedCategory?.label === cat.label ? "selected" : ""}`}
+                    aria-pressed={selectedCategory?.label === cat.label}
+                    onClick={() => setSelectedCategory(cat)}
+                  >
                     <span className="cat-icon">{cat.icon}</span>
                     <span className="cat-label">{cat.label}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -273,7 +285,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
 
       </div>
 
-      <style jsx>{`
+      <style>{`
         * { box-sizing: border-box; }
 
         .section {
@@ -561,6 +573,8 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
         }
 
         .category-pill {
+          width: 100%;
+          font: inherit;
           background: rgba(255,255,255,0.1);
           border: 1px solid rgba(255,255,255,0.16);
           border-radius: 18px;
@@ -568,12 +582,36 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           text-align: center;
           backdrop-filter: blur(12px);
           transition: all 0.25s ease;
-          cursor: default;
+          cursor: pointer;
         }
         .category-pill:hover {
           background: rgba(255,255,255,0.18);
           border-color: rgba(245,197,24,0.4);
           transform: translateY(-4px);
+        }
+
+        .category-pill.selected {
+          background: rgba(245,197,24,.24);
+          border-color: #F5C518;
+          box-shadow: 0 0 0 2px rgba(245,197,24,.18);
+        }
+
+        .category-info {
+          margin: 0 0 14px;
+          padding: 14px 18px;
+          border: 1px solid rgba(245,197,24,.55);
+          border-radius: 12px;
+          background: rgba(255,255,255,.96);
+          color: #1E3A8A;
+          animation: category-info-in .2s ease-out;
+        }
+
+        .category-info strong { display: block; margin-bottom: 4px; font-size: 15px; }
+        .category-info p { margin: 0; color: #475569; font-size: 13px; line-height: 1.5; }
+
+        @keyframes category-info-in {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .cat-icon {

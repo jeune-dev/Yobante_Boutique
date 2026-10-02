@@ -70,7 +70,7 @@ const Faq = ({ variant = 'rek' }) => {
 
       </div>
 
-      <style jsx>{`
+      <style>{`
         .faq-section {
           position: relative; overflow: hidden;
           padding: 90px 0;

@@ -57,6 +57,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
             className={`burger ${mobileMenuOpen ? 'active' : ''}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <span></span>
             <span></span>
@@ -65,7 +67,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+        <div id="mobile-menu" className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -85,7 +87,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
         </div>
       </nav>
 
-      <style jsx>{`
+      <style>{`
     .navbar {
   position: fixed;
   top: 0;

@@ -1,5 +1,4 @@
 // src/components/layout/TrustBar.jsx
-import React from 'react';
 import { Truck, MessageCircle, Lock, Smartphone, Zap } from 'lucide-react';
 
 const TRUST_ITEMS = [
@@ -51,7 +50,7 @@ const TrustBar = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         * {
           box-sizing: border-box;
         }

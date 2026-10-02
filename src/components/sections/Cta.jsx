@@ -1,5 +1,4 @@
 // src/components/sections/Cta.jsx
-import React from 'react';
 
 const Cta = ({ scrollTo }) => {
   return (
@@ -52,7 +51,7 @@ const Cta = ({ scrollTo }) => {
       </div>
 
       {/* Déplacé à l'intérieur de la balise <section> pour corriger l'erreur de parent unique */}
-      <style jsx>{`
+      <style>{`
         .cta-section {
           position: relative;
           overflow: hidden;

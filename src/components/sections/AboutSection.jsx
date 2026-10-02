@@ -39,7 +39,7 @@ const AboutSection = ({ variant = 'rek' }) => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .about-section {
           position: relative; overflow: hidden;
           padding: 100px 0;

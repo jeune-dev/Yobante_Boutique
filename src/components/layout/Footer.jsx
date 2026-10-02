@@ -1,5 +1,4 @@
 // src/components/layout/Footer.jsx
-import React from 'react';
 import { Zap, Lock, HeadphonesIcon, Smartphone } from 'lucide-react';
 import yobanteLogo from '../../assets/images/Logo Yobante Boutique.png';
 
@@ -10,7 +9,7 @@ const trustItems = [
   { icon: <Smartphone size={13} />, label: 'iOS & Android' },
 ];
 
-const Footer = ({ scrollTo }) => {
+const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-bg-glow glow-1"></div>
@@ -53,7 +52,7 @@ const Footer = ({ scrollTo }) => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         * { box-sizing: border-box; }
 
         .footer {

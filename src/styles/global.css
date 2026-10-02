@@ -139,3 +139,28 @@ button, a, .clickable { cursor: pointer; }
   .container { padding-left: 16px !important; padding-right: 16px !important; }
   .section-tag, .section-badge, .faq-tag { max-width: calc(100vw - 32px); text-align: center; }
 }
+
+/* Remove decorative dots and short divider strokes across the site. */
+.badge-dot, .tag-dot, .faq-dot, .tag-line, .inner-tag-line, .slide-dots { display: none !important; }
+.hero-badge, .section-badge, .section-tag, .faq-tag, .inner-tag { gap: 0 !important; }
+
+.scroll-top-button {
+  position: fixed;
+  right: 28px;
+  bottom: 104px;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: 50%;
+  background: #1E3A8A;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(30,58,138,.28);
+  cursor: pointer;
+  animation: scroll-top-appear .2s ease-out;
+}
+.scroll-top-button:hover { background: #152E70; transform: translateY(-2px); }
+@keyframes scroll-top-appear { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 768px) { .scroll-top-button { right: 20px; bottom: 100px; width: 44px; height: 44px; } }

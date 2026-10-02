@@ -1,11 +1,17 @@
 // src/components/sections/Hero.jsx
 
-import { useState, useEffect } from 'react';
-import { Package, ShoppingBag, Plane, Ship, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import {
+  Package, ShoppingBag, Plane, Ship, ArrowRight,
+  ShoppingCart, Smartphone, ShieldCheck, Truck, Headphones,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import deliveryPhone from '../../assets/images/mockeup.png';
 import deliveryPhone2 from '../../assets/images/mockeup2.png';
+import airpodsProduct from '../../assets/images/Airpods.png';
+import fridgeProduct from '../../assets/images/frigo.png';
+import microwaveProduct from '../../assets/images/micro-onde.png';
 
 const AppStoreIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -21,16 +27,6 @@ const PlayStoreIcon = () => (
 
 const Hero = ({ scrollTo, variant = 'rek' }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth <= 980 : false
-  );
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 980);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const slides = [
     {
       id: 1,
@@ -49,16 +45,16 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
     },
     {
       id: 2,
-      title: "Achetez vos marques préférées à prix discount !",
-      buttonText: "Explorer",
+      title: "Vos grandes marques, à prix réduits.",
+      buttonText: "Découvrir notre boutique",
       buttonLink: "app-boutique",
       image: deliveryPhone,
-      bgColor: "#1E3A8A",
+      bgColor: "linear-gradient(135deg, #0B2F9A 0%, #1E3A8A 60%, #12308A 100%)",
       textColor: "#ffffff",
       statColor: "#ffffff",
       labelColor: "rgba(255,255,255,0.65)",
-      badgeBg: "rgba(255,255,255,.15)",
-      badgeTextColor: "#ffffff",
+      badgeBg: "#F5C518",
+      badgeTextColor: "#1E3A8A",
       dotColor: "rgba(255,255,255,.3)",
       dotActiveColor: "#F5C518",
     },
@@ -77,6 +73,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         transition={{ duration: 0.6 }}
       />
       <div className="hero-glow"></div>
+      {current.id === 2 && <div className="bt-corner" aria-hidden="true" />}
 
       {/* CONTENT */}
       <div className="hero-container">
@@ -106,19 +103,29 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           >
             {/* TEXT */}
             <div className="hero-text">
-              <div className="hero-badge" style={{ background: current.badgeBg }}>
-                <span className="badge-dot"></span>
-                <span style={{ color: current.badgeTextColor }}>
-                  Expédition de colis - Boutique en ligne
-                </span>
-              </div>
 
-              <h1 className="hero-title" style={{ color: current.textColor }}>
+              {/* BADGE */}
+              {current.id === 2 ? (
+                <div className="hero-badge bt-badge">
+                  <ShoppingCart size={14} strokeWidth={2.2} />
+                  <span>Boutique officielle sur mobile</span>
+                </div>
+              ) : (
+                <div className="hero-badge" style={{ background: current.badgeBg }}>
+                  <span className="badge-dot"></span>
+                  <span style={{ color: current.badgeTextColor }}>
+                    Expédition de colis - Boutique en ligne
+                  </span>
+                </div>
+              )}
+
+              {/* TITLE */}
+              <h1 className={`hero-title ${current.id === 2 ? 'bt-title' : ''}`} style={{ color: current.textColor }}>
                 {current.id === 2 ? (
                   <>
-                    <span className="title-main">Achetez vos marques</span>
-                    <span className="title-brand">préférées</span>
-                    <span className="title-slogan">à prix discount !</span>
+                    <span className="bt-line">Vos grandes</span>
+                    <span className="bt-line">marques,</span>
+                    <span className="bt-line bt-accent">à prix réduits.</span>
                   </>
                 ) : (
                   <>
@@ -128,6 +135,13 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
                   </>
                 )}
               </h1>
+
+              {current.id === 2 && (
+                <p className="bt-sub">
+                  Retrouvez vos produits préférés, découvrez nos offres exclusives et
+                  commandez facilement depuis l'application YOBANTE.
+                </p>
+              )}
 
               {current.id === 1 && (
                 <div className="shipping-methods">
@@ -146,18 +160,32 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
                 </div>
               )}
 
-              {/* BUTTON */}
-              <button
-                className={`hero-btn ${current.id === 1 ? 'expedition' : ''}`}
-                onClick={() => scrollTo(current.buttonLink)}
-              >
-                {current.buttonText}
-                <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
-              </button>
+              {/* BUTTONS */}
+              {current.id === 2 ? (
+                <div className="bt-actions">
+                  <button className="hero-btn bt-btn-main" onClick={() => scrollTo(current.buttonLink)}>
+                    <ShoppingCart size={15} strokeWidth={2.2} style={{ marginRight: 8 }} />
+                    {current.buttonText}
+                    <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: 8 }} />
+                  </button>
+                  <button className="hero-btn bt-btn-outline" onClick={() => scrollTo('applications')}>
+                    <Smartphone size={15} strokeWidth={2} style={{ marginRight: 8 }} />
+                    Télécharger l'application
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={`hero-btn ${current.id === 1 ? 'expedition' : ''}`}
+                  onClick={() => scrollTo(current.buttonLink)}
+                >
+                  {current.buttonText}
+                  <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
+                </button>
+              )}
 
               {/* STORES */}
               <div className="store-buttons">
-                <a href="https://apps.apple.com" target="_blank" rel="noreferrer" className={`store-btn ${current.id === 1 ? 'appstore' : 'appstore-white'}`}>
+                <a href="https://apps.apple.com" target="_blank" rel="noreferrer" className={`store-btn ${current.id === 1 ? 'appstore' : 'store-black'}`}>
                   <AppStoreIcon />
                   <div className="store-text">
                     <small>Télécharger sur</small>
@@ -168,7 +196,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
                   href="https://play.google.com"
                   target="_blank"
                   rel="noreferrer"
-                  className={`store-btn ${current.id === 1 ? 'play-gold' : 'play-white'}`}
+                  className={`store-btn ${current.id === 1 ? 'play-gold' : 'store-black'}`}
                 >
                   <PlayStoreIcon />
                   <div className="store-text">
@@ -182,10 +210,50 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
             {/* IMAGE */}
             <motion.div className="hero-image">
-              <img src={current.image} alt="Application mobile" />
+              {current.id === 2 && (
+                <div className="boutique-scene" aria-hidden="true">
+                  <div className="bt-blob" />
+                  <div className="phone-frame">
+                    <img src={current.image} alt="Application mobile" />
+                  </div>
+
+                  <div className="boutique-product-scene">
+                    <img className="boutique-product product-airpods" src={airpodsProduct} alt="" />
+                    <img className="boutique-product product-microwave" src={microwaveProduct} alt="" />
+                    <img className="boutique-product product-fridge" src={fridgeProduct} alt="" />
+                    <span className="product-discount discount-airpods">-20%</span>
+                    <span className="product-discount discount-microwave">-10%</span>
+                    <span className="product-discount discount-fridge">-25%</span>
+                  </div>
+                </div>
+              )}
+
+              {current.id !== 2 && <img src={current.image} alt="Application mobile" />}
             </motion.div>
           </motion.div>
         </AnimatePresence>
+
+        {/* FEATURES BAR */}
+        {current.id === 2 && (
+          <div className="bt-features">
+            <div className="bt-feature">
+              <ShieldCheck size={30} color="#F5C518" strokeWidth={1.8} />
+              <div><strong>Produits de marque</strong><span>Les meilleures marques au meilleur prix</span></div>
+            </div>
+            <div className="bt-feature">
+              <Truck size={30} color="#F5C518" strokeWidth={1.8} />
+              <div><strong>Livraison rapide</strong><span>Partout au Sénégal</span></div>
+            </div>
+            <div className="bt-feature">
+              <ShieldCheck size={30} color="#F5C518" strokeWidth={1.8} />
+              <div><strong>Paiement sécurisé</strong><span>En toute confiance</span></div>
+            </div>
+            <div className="bt-feature">
+              <Headphones size={30} color="#F5C518" strokeWidth={1.8} />
+              <div><strong>Service client</strong><span>Toujours à votre écoute</span></div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* DOTS */}
@@ -202,7 +270,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .hero {
           position: relative;
           width: 100%;
@@ -281,20 +349,20 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           position: relative;
           z-index: 5;
           width: 100%;
-          max-width: 1250px;
-          padding: 200px 32px 90px;
+          max-width: 1400px;
+          padding: 140px 40px 52px;
         }
 
         .hero-content {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 48px;
+          gap: 24px;
         }
 
         .hero-text {
-          flex: 1;
-          max-width: 540px;
+          flex: 0 0 46%;
+          max-width: 560px;
           min-height: 490px;
           display: flex;
           flex-direction: column;
@@ -331,17 +399,16 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         }
 
         .hero-title {
-          font-size: clamp(40px, 5.5vw, 76px);
-          line-height: 1.07;
+          font-size: clamp(52px, 4.9vw, 112px);
+          line-height: 0.9;
           font-weight: 900;
           margin-bottom: 26px;
-          letter-spacing: -0.5px;
+          letter-spacing: -0.06em;
         }
 
         .title-main,
         .title-context,
-        .title-brand,
-        .title-slogan {
+        .title-brand {
           display: block;
           width: fit-content;
         }
@@ -404,16 +471,53 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           line-height: .88;
           font-weight: 900;
         }
-        .title-slogan {
-          margin: 4px 0 0 14%;
-          padding: 5px 12px 7px;
+
+        /* ───────── BOUTIQUE : fond ───────── */
+        .bt-corner {
+          position: absolute;
+          top: -260px;
+          right: -180px;
+          width: 620px;
+          height: 620px;
+          border-radius: 50%;
           background: #F5C518;
-          color: #ffffff;
-          font-size: .52em;
-          line-height: 1;
-          font-weight: 900;
-          letter-spacing: 0;
+          z-index: 1;
         }
+
+        /* ───────── BOUTIQUE : texte ───────── */
+        .bt-badge {
+          background: #F5C518;
+          color: #1E3A8A;
+          gap: 10px;
+          font-weight: 700;
+          font-size: 12px;
+        }
+        .hero-title.bt-title {
+          letter-spacing: -0.04em;
+          line-height: 1;
+          font-size: clamp(48px, 5.4vw, 84px);
+        }
+        .bt-line { display: block; color: #ffffff; }
+        .bt-accent { color: #F5C518; }
+        .bt-sub {
+          color: rgba(255,255,255,0.88);
+          font-size: 16px;
+          line-height: 1.55;
+          max-width: 440px;
+          margin: 0 0 26px;
+        }
+
+        /* ───────── BOUTIQUE : boutons ───────── */
+        .bt-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
+        .bt-actions .hero-btn { margin-bottom: 0; display: inline-flex; align-items: center; padding: 14px 22px; font-size: 14px; }
+        .bt-btn-main { background: #F5C518; color: #1E3A8A; }
+        .bt-btn-outline {
+          background: transparent;
+          color: #ffffff;
+          border: 1.5px solid rgba(255,255,255,0.7);
+          box-shadow: none;
+        }
+        .bt-btn-outline:hover { background: rgba(255,255,255,0.1); box-shadow: none; }
 
         .shipping-methods {
           display: grid;
@@ -503,10 +607,16 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           line-height: 1.1;
         }
 
-        .appstore       { background: #1E3A8A; color: white;   box-shadow: 0 6px 18px rgba(30,58,138,0.28); }
-        .appstore-white { background: white;   color: #1E3A8A; box-shadow: 0 6px 18px rgba(255,255,255,0.3);  border: 1px solid rgba(255,255,255,0.5); }
+        .appstore   { background: #1E3A8A; color: white;   box-shadow: 0 6px 18px rgba(30,58,138,0.28); }
         .play-gold  { background: #ffffff; color: #1E3A8A; box-shadow: 0 6px 18px rgba(0,0,0,0.14); }
-        .play-white { background: #F5C518; color: #1E3A8A; box-shadow: 0 6px 18px rgba(245,197,24,0.35); }
+        .store-black {
+          background: #000000;
+          color: #ffffff;
+          border: 1px solid rgba(255,255,255,0.35);
+          min-width: 140px;
+          padding: 9px 14px;
+          border-radius: 10px;
+        }
 
         .store-btn small { font-size: 10px; opacity: 0.65; }
         .store-btn strong { font-size: 14px; font-weight: 800; letter-spacing: 0.1px; }
@@ -526,29 +636,124 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           display: flex;
           justify-content: center;
           position: relative;
+          min-height: 610px;
+          margin-left: 12px;
+          overflow: visible;
         }
 
         .hero-image::before {
           content: '';
           position: absolute;
-          width: 340px; height: 340px;
+          width: 420px; height: 420px;
           border-radius: 50%;
-          background: rgba(255,255,255,0.14);
+          background: rgba(255,255,255,0.08);
           filter: blur(70px);
           top: 50%; left: 50%;
           transform: translate(-50%,-50%);
           pointer-events: none;
         }
 
-        .hero-image img {
+        .hero-image > img {
           width: 100%;
-          max-width: 380px;
-          filter: drop-shadow(0 28px 50px rgba(0,0,0,0.22));
+          max-width: 460px;
+          filter: drop-shadow(0 30px 55px rgba(0,0,0,0.28));
           transform: rotate(-8deg);
           transform-origin: center center;
           position: relative;
           z-index: 1;
         }
+
+        /* ───────── BOUTIQUE : scène produits ───────── */
+        .boutique-scene {
+          position: relative;
+          width: min(620px, 100%);
+          height: 610px;
+        }
+
+        .bt-blob {
+          position: absolute;
+          right: -40px;
+          top: 90px;
+          width: 460px;
+          height: 460px;
+          border-radius: 50%;
+          background: #F5C518;
+          z-index: 1;
+        }
+
+        .phone-frame {
+          position: absolute;
+          left: 50px;
+          top: 10px;
+          width: 330px;
+          z-index: 3;
+        }
+
+        .phone-frame img {
+          width: 100%;
+          display: block;
+          filter: drop-shadow(0 28px 54px rgba(0,0,0,0.4));
+          transform: rotate(5deg);
+          transform-origin: center center;
+        }
+
+        .boutique-product-scene {
+          position: absolute;
+          inset: 0;
+          z-index: 4;
+          pointer-events: none;
+        }
+
+        .boutique-product {
+          position: absolute;
+          display: block;
+          filter: drop-shadow(0 14px 18px rgba(7,27,69,0.28));
+          object-fit: contain;
+        }
+
+        .product-airpods   { width: 132px; left: -58px; top: 42px;     transform: rotate(-14deg); }
+        .product-microwave { width: 215px; right: -14px; top: -4px;    transform: rotate(5deg); }
+        .product-fridge    { width: 250px; right: -42px; bottom: -28px; transform: rotate(-2deg); }
+
+        .product-discount {
+          position: absolute;
+          z-index: 5;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 12px;
+          border-radius: 8px;
+          background: #F5C518;
+          color: #1E3A8A;
+          font-weight: 900;
+          font-size: 20px;
+          box-shadow: 0 6px 16px rgba(7,27,69,0.22);
+        }
+
+        .discount-airpods   { left: -12px;  top: 140px;    transform: rotate(-8deg); }
+        .discount-microwave { right: 120px; top: -12px;   transform: rotate(7deg); }
+        .discount-fridge    { right: 176px; bottom: 264px; transform: rotate(-5deg); }
+
+        /* ───────── BOUTIQUE : barre d'avantages ───────── */
+        .bt-features {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          margin-top: 36px;
+          padding-top: 8px;
+        }
+
+        .bt-feature {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 0 20px;
+          border-left: 1px solid rgba(255,255,255,0.2);
+          color: #ffffff;
+        }
+
+        .bt-feature:first-child { border-left: none; padding-left: 0; }
+        .bt-feature strong { display: block; font-size: 13px; font-weight: 700; }
+        .bt-feature span { display: block; font-size: 11px; opacity: 0.7; margin-top: 2px; }
 
         .slide-dots {
           position: absolute;
@@ -571,11 +776,11 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .dot.active { width: 30px; }
 
-        /* �"?�"?�"? RESPONSIVE �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"? */
+        /* ───────── RESPONSIVE ───────── */
         @media (max-width: 1024px) {
           .hero-container { padding: 190px 24px 74px; }
           .hero-content { gap: 28px; }
-          .hero-image img { max-width: 320px; }
+          .hero-image > img { max-width: 320px; }
         }
 
         @media (max-width: 980px) {
@@ -605,14 +810,21 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           }
 
           .hero-title { font-size: 48px; }
+          .hero-title.bt-title { font-size: 44px; }
 
           .title-context { margin-left: 12%; }
           .title-brand { margin-left: 17%; }
-          .title-slogan { margin-left: 8%; }
           .title-footer { margin-left: 8%; }
           .rek-title-brand { margin-left: 12px; }
           .title-line-rek { font-size: .68em; transform: translateX(-10px); }
           .rek-title-footer { margin-left: 8%; }
+
+          .bt-sub { margin-left: auto; margin-right: auto; }
+          .bt-actions { justify-content: center; }
+          .bt-features { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+          .bt-feature:nth-child(3) { border-left: none; padding-left: 0; }
+          .boutique-scene { height: 520px; }
+          .bt-corner { width: 420px; height: 420px; top: -200px; right: -160px; }
 
           .shipping-methods {
             grid-template-columns: repeat(2,1fr);
@@ -629,12 +841,13 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
           .store-buttons { justify-content: center; }
           .hero-stats { justify-content: center; }
-          .hero-image img { max-width: 280px; }
+          .hero-image > img { max-width: 280px; }
         }
 
         @media (max-width: 520px) {
           .hero-container { padding: 115px 16px 56px; }
           .hero-title { font-size: 30px; line-height: 1.17; margin-bottom: 20px; }
+          .hero-title.bt-title { font-size: 34px; line-height: 1.05; }
 
           .shipping-methods {
             width: 100%; max-width: 320px;
@@ -653,6 +866,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           }
 
           .hero-btn { width: 100%; max-width: 320px; padding: 13px 18px; font-size: 15px; margin-bottom: 18px; }
+          .bt-actions .hero-btn { justify-content: center; }
 
           .store-buttons {
             width: 100%; max-width: 320px;
@@ -663,13 +877,28 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
           .hero-stats { width: 100%; max-width: 320px; justify-content: center; gap: 36px; }
           .stat-number { font-size: 26px; }
-          .hero-image img { max-width: 200px; }
+          .hero-image > img { max-width: 200px; }
+
+          .boutique-scene { height: 420px; }
+          .product-airpods   { width: 76px; left: -24px; top: 36px; }
+          .product-microwave { width: 115px; right: -8px; top: 0; }
+          .phone-frame { width: 200px; left: 30px; }
+          .product-fridge    { width: 140px; right: -20px; bottom: -14px; }
+          .product-discount { font-size: 14px; padding: 5px 8px; }
+          .discount-airpods   { left: -12px; top: 96px; }
+          .discount-microwave { right: 58px; top: -10px; }
+          .discount-fridge    { right: 102px; bottom: 146px; }
+          .bt-blob { width: 300px; height: 300px; top: 80px; }
+          .bt-feature { padding: 0 10px; }
+          .bt-feature strong { font-size: 12px; }
+          .bt-feature span { display: none; }
         }
 
         @media (max-width: 380px) {
           .hero-container { padding-left: 12px; padding-right: 12px; }
           .hero-badge { max-width: 100%; text-align: left; font-size: 11px; padding: 7px 12px; }
           .hero-title { font-size: 27px; }
+          .hero-title.bt-title { font-size: 30px; }
           .shipping-methods { max-width: 290px; }
           .hero-stats { gap: 20px; }
           .stat-number { font-size: 22px; }
@@ -682,4 +911,3 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 };
 
 export default Hero;
-

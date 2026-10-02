@@ -1,5 +1,6 @@
 // src/App.js
 import { useState, useEffect } from 'react';
+import { ArrowUp } from 'lucide-react';
 import './styles/global.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -15,12 +16,14 @@ import AboutSection from './components/sections/AboutSection';
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     let lastY = window.scrollY;
     const handleScroll = () => {
       const currentY = window.scrollY;
       setScrolled(currentY > 20);
+      setShowScrollTop(currentY > 500);
       if (currentY > lastY && currentY > 80) {
         setHidden(true);
       } else {
@@ -69,8 +72,19 @@ function App() {
       <Faq variant="boutique" />
       <Contact scrollTo={scrollTo} variant="boutique" />
       <AboutSection variant="boutique" />
-      <Footer scrollTo={scrollTo} />
+      <Footer />
       <WhatsAppFloat />
+      {showScrollTop && (
+        <button
+          className="scroll-top-button"
+          type="button"
+          aria-label="Remonter en haut de la page"
+          title="Remonter en haut"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <ArrowUp size={22} strokeWidth={2.5} />
+        </button>
+      )}
     </div>
   );
 }

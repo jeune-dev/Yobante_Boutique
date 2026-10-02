@@ -1,9 +1,11 @@
 // src/components/sections/Contact.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Mail, MessageCircle, Phone, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
 
 const Contact = ({ variant = 'rek' }) => {
   const isBoutique = variant === 'boutique';
+  const phoneNumber = import.meta.env.VITE_CONTACT_PHONE;
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER?.replace(/\D/g, '');
   const [formData, setFormData] = useState({ prenom: '', nom: '', email: '', telephone: '', sujet: '', message: '' });
   const [status, setStatus] = useState('idle');
 
@@ -54,23 +56,23 @@ const Contact = ({ variant = 'rek' }) => {
             </p>
 
             <div className="contact-info-list">
-              <div className="contact-item">
+              {phoneNumber && <div className="contact-item">
                 <div className="contact-icon"><Phone size={22} strokeWidth={1.5} color="#1e3a8a" /></div>
                 <div className="contact-text">
                   <strong>Téléphone</strong>
-                  <a href="tel:+33600000000">+33 6 00 00 00 00</a>
+                  <a href={`tel:${phoneNumber.replace(/[^\d+]/g, '')}`}>{phoneNumber}</a>
                 </div>
-              </div>
+              </div>}
 
-              <div className="contact-item">
+              {whatsappNumber && <div className="contact-item">
                 <div className="contact-icon"><MessageCircle size={22} strokeWidth={1.5} color="#1e3a8a" /></div>
                 <div className="contact-text">
                   <strong>WhatsApp</strong>
-                  <a href="https://wa.me/33600000000" target="_blank" rel="noopener noreferrer">
-                    +33 6 00 00 00 00
+                  <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                    {import.meta.env.VITE_WHATSAPP_NUMBER}
                   </a>
                 </div>
-              </div>
+              </div>}
 
               <div className="contact-item">
                 <div className="contact-icon"><Mail size={22} strokeWidth={1.5} color="#1e3a8a" /></div>
@@ -94,17 +96,17 @@ const Contact = ({ variant = 'rek' }) => {
 
               <div className="form-row">
                 <div className="form-group">
-                  <input type="text" name="prenom" placeholder="Prénom"
+                  <input type="text" name="prenom" placeholder="Prénom" aria-label="Prénom"
                     value={formData.prenom} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <input type="text" name="nom" placeholder="Nom"
+                  <input type="text" name="nom" placeholder="Nom" aria-label="Nom"
                     value={formData.nom} onChange={handleChange} required />
                 </div>
               </div>
 
               <div className="form-group">
-                <input type="email" name="email" placeholder="Votre adresse email"
+                <input type="email" name="email" placeholder="Votre adresse email" aria-label="Adresse email"
                   value={formData.email} onChange={handleChange} required />
               </div>
 
@@ -117,6 +119,7 @@ const Contact = ({ variant = 'rek' }) => {
                     type="tel"
                     name="telephone"
                     placeholder="Votre numéro de téléphone ou WhatsApp"
+                    aria-label="Numéro de téléphone ou WhatsApp"
                     value={formData.telephone}
                     onChange={handleChange}
                     className="phone-input"
@@ -125,7 +128,7 @@ const Contact = ({ variant = 'rek' }) => {
               </div>
 
               <div className="form-group">
-                <select name="sujet" value={formData.sujet} onChange={handleChange} required>
+                <select name="sujet" aria-label="Sujet de votre demande" value={formData.sujet} onChange={handleChange} required>
                   <option value="" disabled hidden>Sélectionner un sujet</option>
                   {!isBoutique && <>
                     <option value="Demande de devis - Produit max 30kg">Demande de devis - Produit max 30kg</option>
@@ -142,7 +145,7 @@ const Contact = ({ variant = 'rek' }) => {
               </div>
 
               <div className="form-group">
-                <textarea name="message" rows="4" placeholder="Décrivez votre demande..."
+                <textarea name="message" rows="4" placeholder="Décrivez votre demande..." aria-label="Message"
                   value={formData.message} onChange={handleChange} required></textarea>
               </div>
 
@@ -170,7 +173,7 @@ const Contact = ({ variant = 'rek' }) => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .contact-section {
           position: relative; overflow: hidden;
           padding: 100px 0; background: #f8fbff;
