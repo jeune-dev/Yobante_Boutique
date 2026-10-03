@@ -1,7 +1,7 @@
 // src/components/sections/Services.jsx
 import { useCallback, useState } from "react";
-import rekLogo from "../../assets/images/Logo Yobante Rek.png";
-import boutiqueLogo from "../../assets/images/Logo Yobante Boutique.png";
+import rekLogo from "../../assets/images/Logo Yobante Rek.webp";
+import boutiqueLogo from "../../assets/images/Logo Yobante Boutique.webp";
 import {
   Mail, Package, Truck, ShoppingBag, ArrowRight,
   Tag, MapPin, Coffee, Shirt, UtensilsCrossed, Home,
@@ -123,10 +123,10 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
 
         {/* HEADER */}
         <div className="section-header sr">
-          <div className="section-tag">
+          <h2 className="section-tag">
             <span className="tag-line"></span>
             Nos services
-          </div>
+          </h2>
         </div>
 
         {/* ===== EXPEDITION ===== */}
@@ -196,7 +196,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           {/* RIGHT promo expédition */}
           <div className="card-right promo-side">
             <div className="promo-box expedition-gradient">
-              <img src={rekLogo} alt="Yobanté Rek" className="promo-logo" />
+              <img src={rekLogo} alt="Yobanté Rek" className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
               <p className="promo-desc expedition-desc">
                 Envoyez vos colis depuis la France vers le Sénégal avec collecte à domicile ou dépôt en point relais.
               </p>
@@ -213,7 +213,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           {/* LEFT promo boutique */}
           <div className="card-right promo-side">
             <div className="promo-box boutique-gradient">
-              <img src={boutiqueLogo} alt="Yobanté Boutique" className="promo-logo" />
+              <img src={boutiqueLogo} alt="Yobanté Boutique" className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
               <p className="promo-desc boutique-desc">
                 Achetez vos produits préférés à prix discount
               </p>
@@ -290,7 +290,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
 
         .section {
           position: relative;
-          padding: 100px 0;
+          padding: var(--section-y) 0;
           background:
             radial-gradient(circle at top left, #FDF3CC 0%, transparent 28%),
             radial-gradient(circle at bottom right, #C5D5F0 0%, transparent 32%),
@@ -309,18 +309,10 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
         .bg1 { width: 320px; height: 320px; background: #1E3A8A; top: -90px; right: -90px; }
         .bg2 { width: 280px; height: 280px; background: #F5C518; bottom: -90px; left: -90px; }
 
-        .container {
-          position: relative;
-          z-index: 2;
-          max-width: 1250px;
-          margin: 0 auto;
-          padding: 0 24px;
-        }
-
         /* HEADER */
-        .section-header { text-align: center; margin-bottom: 56px; }
+        .section .section-header { text-align: center; margin-bottom: clamp(36px, 5vw, 56px); }
 
-        .section-tag {
+        .section .section-tag {
           display: inline-flex;
           align-items: center;
           gap: 10px;
@@ -400,7 +392,8 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           display: flex;
           align-items: center;
           gap: 10px;
-          font-size: 10px;
+          flex-wrap: wrap;
+          font-size: 11px;
           font-weight: 800;
           letter-spacing: 1.5px;
         }
@@ -474,7 +467,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           text-align: center;
         }
 
-        .step-desc { font-size: 11px; line-height: 1.6; }
+        .step-desc { font-size: 12px; line-height: 1.6; }
 
         .boutique-step-title { color: #ffffff !important; font-weight: 800; }
         .boutique-step-desc { color: rgba(255,255,255,0.85) !important; }
@@ -544,16 +537,17 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           margin-bottom: 14px;
         }
 
-        .plan-desc { font-size: 11px; line-height: 1.5; color: #475569; margin: 0; }
-        .plan-feature { margin-top: 8px; font-size: 10px; font-weight: 700; color: #1E3A8A; }
+        .plan-desc { font-size: 12px; line-height: 1.5; color: #475569; margin: 0; }
+        .plan-feature { margin-top: 8px; font-size: 11px; font-weight: 700; color: #1E3A8A; }
 
         .plan-btn {
           margin-top: auto;
           width: 100%; border: none;
+          min-height: var(--tap);
           padding: 11px; border-radius: 50px;
           background: linear-gradient(135deg, #1E3A8A, #2a52c9);
           color: white;
-          font-size: 11px; font-weight: 800; cursor: pointer;
+          font-size: 12px; font-weight: 800; cursor: pointer;
           flex-shrink: 0;
           transition: all 0.25s ease;
           box-shadow: 0 4px 14px rgba(30,58,138,0.25);
@@ -619,7 +613,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           margin-bottom: 8px; height: 28px;
         }
 
-        .cat-label { font-size: 12px; font-weight: 700; color: white; }
+        .cat-label { display: block; font-size: 12px; font-weight: 700; color: white; }
 
         /* PROMO */
         .promo-side {
@@ -674,6 +668,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
         .promo-btn {
           width: 100%; max-width: 260px;
           border: none; border-radius: 50px;
+          min-height: var(--tap);
           padding: 15px 24px;
           font-size: 14px; font-weight: 800;
           cursor: pointer;
@@ -706,7 +701,6 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
         }
 
         @media (max-width: 768px) {
-          .section { padding: 80px 0; }
           .promo-box { max-width: 100%; }
           .card-left { padding: 26px 20px; }
           .service-card-wrapper { border-radius: 22px; }
@@ -727,18 +721,16 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
         }
 
         @media (max-width: 480px) {
-          .section { padding: 64px 0; }
           .categories-grid { grid-template-columns: repeat(2, 1fr); }
           .card-main-title { font-size: 24px; }
           .card-left { padding: 22px 16px; gap: 22px; }
           .promo-box { padding: 32px 22px; gap: 20px; }
           .promo-desc { font-size: 15px; }
-          .promo-btn { max-width: 220px; font-size: 13px; padding: 12px 18px; }
+          .promo-btn { max-width: 260px; font-size: 14px; padding: 12px 18px; }
           .card-icon-circle { width: 52px; height: 52px; border-radius: 16px; }
-          .inner-tag { font-size: 9px; }
           .pricing-card { max-width: 100%; }
           .category-pill { min-width: 0; padding: 12px 6px; }
-          .cat-label { font-size: 10px; line-height: 1.25; }
+          .cat-label { font-size: 11px; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
         }
       `}</style>
     </section>

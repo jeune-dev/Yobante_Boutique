@@ -33,6 +33,31 @@
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-xl: 28px;
+
+  /* ── Mise en page fluide ───────────────────────────────────────── */
+  /* Largeur maximale commune : navbar, sections et footer s'alignent. */
+  --container-max: 1200px;
+  /* Gouttière latérale : 16px sur petit mobile, jusqu'à 32px sur grand écran. */
+  --gutter: clamp(16px, 4vw, 32px);
+  /* Hauteur de la barre de navigation (réduite sous 900px). */
+  --nav-h: 90px;
+  /* Espacement vertical des sections : 64px → 100px. */
+  --section-y: clamp(64px, 9vw, 100px);
+  /* Taille minimale d'une cible tactile (WCAG 2.5.5 / Apple HIG). */
+  --tap: 44px;
+
+  /* Boutons flottants (WhatsApp + retour en haut). */
+  --fab-gap: clamp(16px, 2.2vw, 28px);
+  --fab-size: clamp(48px, 4.2vw, 58px);
+}
+
+@media (max-width: 900px) {
+  :root { --nav-h: 72px; }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -41,7 +66,11 @@ body {
   background: var(--white);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
 }
+
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
 
 /* ─── SCROLL REVEAL ──────────────────────────────────────────────── */
@@ -68,28 +97,38 @@ body {
 .sr-d5 { transition-delay: 0.40s; }
 
 /* ─── LAYOUT ─────────────────────────────────────────────────────── */
+/* `clip` coupe le débordement sans créer de conteneur de scroll ;
+   `hidden` reste le repli pour les navigateurs plus anciens. */
 html, body { overflow-x: hidden; }
+@supports (overflow: clip) {
+  html, body { overflow-x: clip; }
+}
 
 html { min-width: 320px; }
-img, svg { max-width: 100%; }
+img, svg, video { max-width: 100%; }
+img, video { height: auto; }
 button, input, select, textarea { max-width: 100%; }
 
 * { user-select: none; }
 input, textarea { user-select: text; }
 button, a, .clickable { cursor: pointer; }
 
-/* ─── NAVBAR (global fallback) ───────────────────────────────────── */
-.navbar {
-  position: fixed; top: 0; left: 0; width: 100%;
-  z-index: 1000; transition: all 0.3s ease;
-  padding: 16px 0;
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0,0,0,.05);
+/* Supprime le délai de double-tap et le flash gris sur écran tactile. */
+a, button, [role="button"], input, select, textarea, label {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-.navbar.scrolled {
-  padding: 12px 0;
-  box-shadow: 0 4px 24px rgba(30,58,138,0.08);
+
+/* Conteneur unique : toutes les sections partagent la même largeur
+   utile et la même gouttière, de 320px à 4K. Les variantes étroites
+   (FAQ…) définissent leur propre classe. */
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
 /* ─── SCROLLBAR ───────────────────────────────────────────────────── */
@@ -111,9 +150,19 @@ button, a, .clickable { cursor: pointer; }
   border-radius: 6px;
 }
 
-/* ─── MOBILE ─────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  /* kill hover transforms on mobile — but keep .sr transitions */
+/* Sur fond sombre (hero bleu, footer, À propos) l'anneau bleu serait
+   invisible : on bascule sur un anneau doré lisible. */
+.hero :focus-visible,
+.footer :focus-visible,
+.about-section :focus-visible {
+  outline-color: #F5C518;
+}
+
+/* ─── ÉCRANS TACTILES ─────────────────────────────────────────────── */
+/* Pas de survol sur tactile : on neutralise les translations/ombres
+   déclenchées par :hover pour éviter les états « collés » après un tap.
+   (Basé sur la capacité réelle du périphérique, pas sur la largeur.) */
+@media (hover: none) {
   .app-card:hover,
   .pricing-card:hover,
   .promo-btn:hover,
@@ -132,27 +181,27 @@ button, a, .clickable { cursor: pointer; }
     transform: none !important;
     box-shadow: inherit !important;
   }
-  body { overflow-x: hidden; }
 }
 
-@media (max-width: 420px) {
-  .container { padding-left: 16px !important; padding-right: 16px !important; }
-  .section-tag, .section-badge, .faq-tag { max-width: calc(100vw - 32px); text-align: center; }
-}
-
-/* Remove decorative dots and short divider strokes across the site. */
+/* Décorations purement visuelles retirées sur tout le site. */
 .badge-dot, .tag-dot, .faq-dot, .tag-line, .inner-tag-line, .slide-dots { display: none !important; }
 .hero-badge, .section-badge, .section-tag, .faq-tag, .inner-tag { gap: 0 !important; }
 
+.section-tag, .section-badge, .faq-tag { max-width: 100%; }
+
+/* ─── BOUTONS FLOTTANTS ───────────────────────────────────────────── */
+/* WhatsApp (en bas) + retour en haut (au-dessus). Positionnés avec les
+   zones sûres (encoche / barre d'accueil iOS) et dimensionnés de façon
+   fluide pour ne jamais masquer plus de contenu que nécessaire. */
 .scroll-top-button {
   position: fixed;
-  right: 28px;
-  bottom: 104px;
+  right: calc(var(--fab-gap) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--fab-gap) + var(--fab-size) + 14px + env(safe-area-inset-bottom, 0px));
   z-index: 1100;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: var(--tap);
+  height: var(--tap);
   border: 1px solid rgba(255,255,255,.75);
   border-radius: 50%;
   background: #1E3A8A;
@@ -163,4 +212,25 @@ button, a, .clickable { cursor: pointer; }
 }
 .scroll-top-button:hover { background: #152E70; transform: translateY(-2px); }
 @keyframes scroll-top-appear { from { opacity: 0; } to { opacity: 1; } }
-@media (max-width: 768px) { .scroll-top-button { right: 20px; bottom: 100px; width: 44px; height: 44px; } }
+
+/* Paysage sur téléphone : peu de hauteur disponible, on rapproche les boutons. */
+@media (max-height: 480px) and (orientation: landscape) {
+  :root { --fab-gap: 12px; --fab-size: 44px; }
+  .scroll-top-button { bottom: calc(var(--fab-gap) + var(--fab-size) + 10px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* ─── MOUVEMENT RÉDUIT ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .sr, .sr-l, .sr-r { opacity: 1; transform: none; }
+  /* Le bandeau défilant n'a aucun intérêt à défiler pour ces utilisateurs :
+     il devient une rangée que l'on peut faire défiler au doigt. */
+  .trust-track { animation: none !important; }
+}

@@ -96,17 +96,17 @@ const Contact = ({ variant = 'rek' }) => {
 
               <div className="form-row">
                 <div className="form-group">
-                  <input type="text" name="prenom" placeholder="Prénom" aria-label="Prénom"
+                  <input type="text" name="prenom" placeholder="Prénom" aria-label="Prénom" autoComplete="given-name"
                     value={formData.prenom} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <input type="text" name="nom" placeholder="Nom" aria-label="Nom"
+                  <input type="text" name="nom" placeholder="Nom" aria-label="Nom" autoComplete="family-name"
                     value={formData.nom} onChange={handleChange} required />
                 </div>
               </div>
 
               <div className="form-group">
-                <input type="email" name="email" placeholder="Votre adresse email" aria-label="Adresse email"
+                <input type="email" name="email" placeholder="Votre adresse email" aria-label="Adresse email" autoComplete="email" inputMode="email"
                   value={formData.email} onChange={handleChange} required />
               </div>
 
@@ -117,6 +117,8 @@ const Contact = ({ variant = 'rek' }) => {
                   </span>
                   <input
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     name="telephone"
                     placeholder="Votre numéro de téléphone ou WhatsApp"
                     aria-label="Numéro de téléphone ou WhatsApp"
@@ -150,14 +152,14 @@ const Contact = ({ variant = 'rek' }) => {
               </div>
 
               {status === 'success' && (
-                <div className="feedback success">
+                <div className="feedback success" role="status">
                   <CheckCircle size={15} strokeWidth={2} style={{ marginRight: '7px', verticalAlign: 'middle' }} />
                   Message envoyé avec succès.
                 </div>
               )}
 
               {status === 'error' && (
-                <div className="feedback error">
+                <div className="feedback error" role="alert">
                   <XCircle size={15} strokeWidth={2} style={{ marginRight: '7px', verticalAlign: 'middle' }} />
                   Une erreur s'est produite.
                 </div>
@@ -176,28 +178,23 @@ const Contact = ({ variant = 'rek' }) => {
       <style>{`
         .contact-section {
           position: relative; overflow: hidden;
-          padding: 100px 0; background: #f8fbff;
-        }
-
-        .container {
-          position: relative; z-index: 5;
-          max-width: 1250px; margin: 0 auto; padding: 0 24px;
+          padding: var(--section-y) 0; background: #f8fbff;
         }
 
         .contact-grid {
           display: grid; grid-template-columns: 1fr 1.15fr;
-          gap: 70px; align-items: center;
+          gap: clamp(40px, 6vw, 70px); align-items: center;
         }
 
-        .bg-glow {
+        .contact-section .bg-glow {
           position: absolute; border-radius: 50%;
-          filter: blur(120px); opacity: 0.3;
+          filter: blur(120px); opacity: 0.3; pointer-events: none;
         }
 
-        .glow-1 { width: 400px; height: 400px; background: #1e3a8a; top: -90px; left: -90px; }
-        .glow-2 { width: 320px; height: 320px; background: #F5C518; bottom: -90px; right: -70px; }
+        .contact-section .glow-1 { width: 400px; height: 400px; background: #1e3a8a; top: -90px; left: -90px; }
+        .contact-section .glow-2 { width: 320px; height: 320px; background: #F5C518; bottom: -90px; right: -70px; }
 
-        .section-tag {
+        .contact-section .section-tag {
           display: inline-flex; align-items: center; gap: 12px;
           color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px;
           text-transform: uppercase; margin-bottom: 20px; font-size: 12px;
@@ -289,13 +286,15 @@ const Contact = ({ variant = 'rek' }) => {
         .shortcut-phone { background: rgba(30,58,138,.1); color: #1e3a8a; }
         .shortcut-wa    { background: rgba(37,211,102,.15); color: #15803d; }
 
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .form-row .form-group { margin-bottom: 0; }
         .form-group { margin-bottom: 14px; }
 
         input, select, textarea {
-          width: 100%; padding: 14px 16px; border: none;
+          width: 100%; min-height: 48px; padding: 14px 16px; border: none;
           border-radius: 14px; background: #f8fafc;
           font-size: 14px; outline: none; transition: 0.25s;
+          text-overflow: ellipsis;
           font-family: inherit;
           border: 1px solid transparent;
         }
@@ -343,7 +342,29 @@ const Contact = ({ variant = 'rek' }) => {
           box-shadow: none !important;
         }
 
-        textarea { resize: none; }
+        textarea { resize: none; min-height: 120px; text-overflow: clip; }
+
+        /* Flèche du select dessinée en CSS : même rendu sur tous les navigateurs
+           et place réservée pour qu'un long libellé ne passe pas dessous. */
+        select {
+          appearance: none; -webkit-appearance: none;
+          padding-right: 44px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231e3a8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 16px center;
+          cursor: pointer;
+        }
+        select:focus { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231e3a8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
+
+        /* iOS zoome automatiquement sur tout champ < 16px : on évite ce saut. */
+        @media (max-width: 900px), (pointer: coarse) {
+          input, select, textarea { font-size: 16px; }
+        }
+
+        /* Liens de contact : zone tactile confortable au doigt. */
+        @media (pointer: coarse) {
+          .contact-text a { display: inline-flex; align-items: center; min-height: var(--tap); }
+        }
 
         .feedback {
           padding: 12px 14px; border-radius: 12px;
@@ -354,7 +375,7 @@ const Contact = ({ variant = 'rek' }) => {
         .error   { background: #fef2f2; color: #991b1b; }
 
         .submit-btn {
-          width: 100%; border: none; padding: 16px; border-radius: 16px;
+          width: 100%; min-height: 52px; border: none; padding: 16px; border-radius: 16px;
           background: linear-gradient(135deg, #1e3a8a 0%, #2a52c9 100%);
           color: white;
           font-size: 15px; font-weight: 800; cursor: pointer;
@@ -369,7 +390,6 @@ const Contact = ({ variant = 'rek' }) => {
         @media (max-width: 980px) { .contact-grid { grid-template-columns: 1fr; gap: 52px; } }
 
         @media (max-width: 520px) {
-          .contact-section { padding: 76px 0; }
           .form-wrapper { padding: 26px 18px; }
           .form-row { grid-template-columns: 1fr; }
           .contact-title { font-size: 38px; }
@@ -380,7 +400,6 @@ const Contact = ({ variant = 'rek' }) => {
         }
 
         @media (max-width: 360px) {
-          .contact-section { padding: 64px 0; }
           .form-wrapper { padding: 22px 14px; border-radius: 22px; }
           .contact-title { font-size: 32px; }
         }

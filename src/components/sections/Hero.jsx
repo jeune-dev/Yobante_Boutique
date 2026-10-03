@@ -7,11 +7,11 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import deliveryPhone from '../../assets/images/mockeup.png';
+import deliveryPhone from '../../assets/images/mockeup.webp';
 import deliveryPhone2 from '../../assets/images/mockeup2.png';
-import airpodsProduct from '../../assets/images/Airpods.png';
-import fridgeProduct from '../../assets/images/frigo.png';
-import microwaveProduct from '../../assets/images/micro-onde.png';
+import airpodsProduct from '../../assets/images/Airpods.webp';
+import fridgeProduct from '../../assets/images/frigo.webp';
+import microwaveProduct from '../../assets/images/micro-onde.webp';
 
 const AppStoreIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -168,7 +168,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
                     {current.buttonText}
                     <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: 8 }} />
                   </button>
-                  <button className="hero-btn bt-btn-outline" onClick={() => scrollTo('applications')}>
+                  <button className="hero-btn bt-btn-outline" onClick={() => scrollTo('apps')}>
                     <Smartphone size={15} strokeWidth={2} style={{ marginRight: 8 }} />
                     Télécharger l'application
                   </button>
@@ -214,13 +214,13 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
                 <div className="boutique-scene" aria-hidden="true">
                   <div className="bt-blob" />
                   <div className="phone-frame">
-                    <img src={current.image} alt="Application mobile" />
+                    <img src={current.image} alt="Application mobile" width="418" height="597" decoding="async" />
                   </div>
 
                   <div className="boutique-product-scene">
-                    <img className="boutique-product product-airpods" src={airpodsProduct} alt="" />
-                    <img className="boutique-product product-microwave" src={microwaveProduct} alt="" />
-                    <img className="boutique-product product-fridge" src={fridgeProduct} alt="" />
+                    <img className="boutique-product product-airpods" src={airpodsProduct} alt="" width="565" height="442" decoding="async" />
+                    <img className="boutique-product product-microwave" src={microwaveProduct} alt="" width="500" height="287" decoding="async" />
+                    <img className="boutique-product product-fridge" src={fridgeProduct} alt="" width="372" height="671" decoding="async" />
                     <span className="product-discount discount-airpods">-20%</span>
                     <span className="product-discount discount-microwave">-10%</span>
                     <span className="product-discount discount-fridge">-25%</span>
@@ -275,6 +275,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           position: relative;
           width: 100%;
           min-height: 100vh;
+          min-height: 100svh;
           overflow: hidden;
           display: flex;
           justify-content: center;
@@ -350,7 +351,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           z-index: 5;
           width: 100%;
           max-width: 1400px;
-          padding: 140px 40px 52px;
+          padding: clamp(112px, 12vw, 140px) clamp(var(--gutter), 3vw, 40px) clamp(40px, 5vw, 52px);
         }
 
         .hero-content {
@@ -636,9 +637,10 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           display: flex;
           justify-content: center;
           position: relative;
-          min-height: 610px;
+          min-height: 0;
           margin-left: 12px;
           overflow: visible;
+          align-items: center;
         }
 
         .hero-image::before {
@@ -667,15 +669,17 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         .boutique-scene {
           position: relative;
           width: min(620px, 100%);
-          height: 610px;
+          aspect-ratio: 620 / 610;
+          /* cqw : unité relative à la largeur de ce cadre (tailles des pastilles -x%). */
+          container-type: inline-size;
         }
 
         .bt-blob {
           position: absolute;
-          right: -40px;
-          top: 90px;
-          width: 460px;
-          height: 460px;
+          right: -6.45%;
+          top: 14.75%;
+          width: 74.2%;
+          aspect-ratio: 1;
           border-radius: 50%;
           background: #F5C518;
           z-index: 1;
@@ -683,9 +687,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .phone-frame {
           position: absolute;
-          left: 50px;
-          top: 10px;
-          width: 330px;
+          left: 8.06%;
+          top: 1.64%;
+          width: 53.2%;
           z-index: 3;
         }
 
@@ -711,9 +715,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           object-fit: contain;
         }
 
-        .product-airpods   { width: 132px; left: -58px; top: 42px;     transform: rotate(-14deg); }
-        .product-microwave { width: 215px; right: -14px; top: -4px;    transform: rotate(5deg); }
-        .product-fridge    { width: 250px; right: -42px; bottom: -28px; transform: rotate(-2deg); }
+        .product-airpods   { width: 21.3%; left: -9.35%;  top: 6.9%;      transform: rotate(-14deg); }
+        .product-microwave { width: 34.7%; right: -2.26%; top: -0.66%;    transform: rotate(5deg); }
+        .product-fridge    { width: 40.3%; right: -6.8%;  bottom: -4.6%;  transform: rotate(-2deg); }
 
         .product-discount {
           position: absolute;
@@ -721,18 +725,19 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          padding: 8px 12px;
+          padding: 0.4em 0.6em;
           border-radius: 8px;
           background: #F5C518;
           color: #1E3A8A;
           font-weight: 900;
           font-size: 20px;
+          font-size: clamp(11px, 3.2cqw, 20px);
           box-shadow: 0 6px 16px rgba(7,27,69,0.22);
         }
 
-        .discount-airpods   { left: -12px;  top: 140px;    transform: rotate(-8deg); }
-        .discount-microwave { right: 120px; top: -12px;   transform: rotate(7deg); }
-        .discount-fridge    { right: 176px; bottom: 264px; transform: rotate(-5deg); }
+        .discount-airpods   { left: -1.9%;  top: 23%;     transform: rotate(-8deg); }
+        .discount-microwave { right: 19.4%; top: -2%;     transform: rotate(7deg); }
+        .discount-fridge    { right: 28.4%; bottom: 43.3%; transform: rotate(-5deg); }
 
         /* ───────── BOUTIQUE : barre d'avantages ───────── */
         .bt-features {
@@ -753,7 +758,8 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .bt-feature:first-child { border-left: none; padding-left: 0; }
         .bt-feature strong { display: block; font-size: 13px; font-weight: 700; }
-        .bt-feature span { display: block; font-size: 11px; opacity: 0.7; margin-top: 2px; }
+        .bt-feature span { display: block; font-size: 12px; opacity: 0.78; margin-top: 2px; }
+        .bt-feature svg { flex-shrink: 0; }
 
         .slide-dots {
           position: absolute;
@@ -778,7 +784,6 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         /* ───────── RESPONSIVE ───────── */
         @media (max-width: 1024px) {
-          .hero-container { padding: 190px 24px 74px; }
           .hero-content { gap: 28px; }
           .hero-image > img { max-width: 320px; }
         }
@@ -795,8 +800,6 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
             width: 100%;
           }
 
-          .hero-container { padding: 120px 24px 72px; }
-
           .hero-content {
             flex-direction: column;
             text-align: center;
@@ -809,8 +812,8 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
             align-items: center;
           }
 
-          .hero-title { font-size: 48px; }
-          .hero-title.bt-title { font-size: 44px; }
+          .hero-title { font-size: clamp(30px, 3vw + 24px, 52px); }
+          .hero-title.bt-title { font-size: clamp(34px, 3vw + 24px, 54px); }
 
           .title-context { margin-left: 12%; }
           .title-brand { margin-left: 17%; }
@@ -821,9 +824,12 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
           .bt-sub { margin-left: auto; margin-right: auto; }
           .bt-actions { justify-content: center; }
-          .bt-features { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+          .bt-features { grid-template-columns: repeat(2, 1fr); gap: 18px 0; width: 100%; }
           .bt-feature:nth-child(3) { border-left: none; padding-left: 0; }
-          .boutique-scene { height: 520px; }
+          /* En colonne, le bloc image doit occuper toute la largeur : le cadre de la
+             scène (en %) a besoin d'une largeur parente définie. */
+          .hero-image { width: 100%; margin-left: 0; }
+          .boutique-scene { width: min(520px, 84%); margin-inline: auto; }
           .bt-corner { width: 420px; height: 420px; top: -200px; right: -160px; }
 
           .shipping-methods {
@@ -845,9 +851,8 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         }
 
         @media (max-width: 520px) {
-          .hero-container { padding: 115px 16px 56px; }
-          .hero-title { font-size: 30px; line-height: 1.17; margin-bottom: 20px; }
-          .hero-title.bt-title { font-size: 34px; line-height: 1.05; }
+          .hero-title { line-height: 1.17; margin-bottom: 20px; }
+          .hero-title.bt-title { line-height: 1.05; }
 
           .shipping-methods {
             width: 100%; max-width: 320px;
@@ -879,26 +884,14 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           .stat-number { font-size: 26px; }
           .hero-image > img { max-width: 200px; }
 
-          .boutique-scene { height: 420px; }
-          .product-airpods   { width: 76px; left: -24px; top: 36px; }
-          .product-microwave { width: 115px; right: -8px; top: 0; }
-          .phone-frame { width: 200px; left: 30px; }
-          .product-fridge    { width: 140px; right: -20px; bottom: -14px; }
-          .product-discount { font-size: 14px; padding: 5px 8px; }
-          .discount-airpods   { left: -12px; top: 96px; }
-          .discount-microwave { right: 58px; top: -10px; }
-          .discount-fridge    { right: 102px; bottom: 146px; }
-          .bt-blob { width: 300px; height: 300px; top: 80px; }
+          .bt-corner { width: 300px; height: 300px; top: -170px; right: -130px; }
           .bt-feature { padding: 0 10px; }
           .bt-feature strong { font-size: 12px; }
           .bt-feature span { display: none; }
         }
 
         @media (max-width: 380px) {
-          .hero-container { padding-left: 12px; padding-right: 12px; }
           .hero-badge { max-width: 100%; text-align: left; font-size: 11px; padding: 7px 12px; }
-          .hero-title { font-size: 27px; }
-          .hero-title.bt-title { font-size: 30px; }
           .shipping-methods { max-width: 290px; }
           .hero-stats { gap: 20px; }
           .stat-number { font-size: 22px; }

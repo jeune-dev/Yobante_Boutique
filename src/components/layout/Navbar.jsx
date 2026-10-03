@@ -1,26 +1,62 @@
 // src/components/layout/Navbar.jsx
-import { useState } from 'react';
-import logo from '../../assets/images/Logo Yobante Boutique - Fond Blanc.PNG';
+import { useEffect, useRef, useState } from 'react';
+import logo from '../../assets/images/Logo Yobante Boutique - Fond Blanc.webp';
+
+const navItems = [
+  { label: 'Services', id: 'services' },
+  { label: 'Applications', id: 'apps' },
+  { label: 'FAQ', id: 'faq' },
+  { label: 'Contact', id: 'contact' },
+  { label: 'Qui sommes-nous ?', id: 'about' },
+];
 
 const Navbar = ({ scrolled, hidden, scrollTo }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navItems = [
-    { label: 'Services', id: 'services' },
-    { label: 'Applications', id: 'apps' },
-    { label: 'FAQ', id: 'faq' },
-    { label: 'Contact', id: 'contact' },
-    { label: 'Qui sommes-nous ?', id: 'about' },
-  ];
+  const navRef = useRef(null);
+  const burgerRef = useRef(null);
 
   const handleScroll = (id) => {
     scrollTo(id);
     setMobileMenuOpen(false);
   };
 
+  // Menu mobile ouvert : fermeture au tap à l'extérieur, sur Échap
+  // (le focus revient alors sur le bouton) et au passage en affichage desktop.
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+
+    const onPointerDown = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) setMobileMenuOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        burgerRef.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia('(min-width: 901px)');
+    const onBreakpoint = (e) => { if (e.matches) setMobileMenuOpen(false); };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', onBreakpoint);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+      desktop.removeEventListener('change', onBreakpoint);
+    };
+  }, [mobileMenuOpen]);
+
+  // La barre se masque au défilement vers le bas, sauf si le menu est ouvert.
+  const isHidden = hidden && !mobileMenuOpen;
+
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${hidden ? 'nav-hidden' : ''}`}>
+      <nav
+        ref={navRef}
+        aria-label="Navigation principale"
+        className={`navbar ${scrolled ? 'scrolled' : ''} ${isHidden ? 'nav-hidden' : ''}`}
+      >
         <div className="nav-container">
 
           {/* Logo */}
@@ -29,6 +65,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
               src={logo}
               alt="YOBANTÉ Logo"
               className="logo-img"
+              decoding="async"
             />
           </button>
 
@@ -54,9 +91,10 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
 
           {/* Burger */}
           <button
+            ref={burgerRef}
             className={`burger ${mobileMenuOpen ? 'active' : ''}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Menu"
+            aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
           >
@@ -88,37 +126,37 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
       </nav>
 
       <style>{`
-    .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 90px;
-  z-index: 1000;
-  transition: transform 0.35s ease, box-shadow 0.3s ease, padding 0.3s ease;
-  padding: 0px 0;
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: var(--nav-h);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          transition: transform 0.35s ease, box-shadow 0.3s ease;
+          background: #ffffff;
+          border-bottom: 1px solid rgba(0,0,0,.06);
+        }
 
-  background: #ffffff;
-  border-bottom: 1px solid rgba(0,0,0,.06);
-}
+        .navbar.nav-hidden {
+          transform: translateY(-100%);
+        }
 
-.navbar.nav-hidden {
-  transform: translateY(-100%);
-}
-
-       .navbar.scrolled {
-  padding: 8px 0;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
+        .navbar.scrolled {
+          box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
 
         .nav-container {
-          max-width: 1200px;
+          width: 100%;
+          max-width: var(--container-max);
           margin: 0 auto;
-          padding: 0 24px;
+          padding: 0 var(--gutter);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 20px;
+          gap: clamp(12px, 2vw, 20px);
         }
 
         /* Logo */
@@ -129,19 +167,21 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           padding: 0;
           display: flex;
           align-items: center;
+          flex-shrink: 0;
         }
 
-        .logo-img {
-          height: 72px;
+        .navbar .logo-img {
+          height: calc(var(--nav-h) - 18px);
           width: auto;
           object-fit: contain;
         }
 
-        /* Desktop Nav */
+        /* Desktop Nav : l'écart se réduit avec la largeur pour que les
+           5 liens + le CTA tiennent dès 901px sans passer sous le logo. */
         .desktop-links {
           display: flex;
           align-items: center;
-          gap: 30px;
+          gap: clamp(14px, 2.4vw, 30px);
         }
 
         .desktop-links button {
@@ -151,6 +191,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           font-size: 15px;
           font-weight: 600;
           color: #0f172a;
+          white-space: nowrap;
           transition: color 0.3s ease;
           position: relative;
         }
@@ -183,6 +224,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           border-radius: 50px;
           font-size: 14px;
           font-weight: 700;
+          white-space: nowrap;
+          flex-shrink: 0;
           cursor: pointer;
           transition: all 0.3s ease;
           box-shadow: 0 8px 20px rgba(0, 191, 255, 0.18);
@@ -193,10 +236,17 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           background: #1A3278;
         }
 
+        /* Tablette en paysage (≥901px) : doigt, pas souris → cibles de 44px. */
+        @media (pointer: coarse) {
+          .nav-cta { min-height: var(--tap); padding-inline: 20px; }
+          .desktop-links button { min-height: var(--tap); }
+        }
+
         /* Burger */
         .burger {
-          width: 46px;
-          height: 46px;
+          width: var(--tap);
+          height: var(--tap);
+          flex-shrink: 0;
           border-radius: 12px;
           border: none;
           background: #f8fafc;
@@ -206,7 +256,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           align-items: center;
           gap: 5px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: background 0.3s ease;
         }
 
         .burger span {
@@ -214,11 +264,13 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           height: 2px;
           background: #0f172a;
           border-radius: 10px;
-          transition: all 0.3s ease;
+          transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
+        /* Pas de 7px entre deux barres (2px + gap 5px) : la croix se referme
+           exactement au centre du bouton. */
         .burger.active span:nth-child(1) {
-          transform: rotate(45deg) translateY(10px);
+          transform: translateY(7px) rotate(45deg);
         }
 
         .burger.active span:nth-child(2) {
@@ -226,44 +278,54 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
         }
 
         .burger.active span:nth-child(3) {
-          transform: rotate(-45deg) translateY(-10px);
+          transform: translateY(-7px) rotate(-45deg);
         }
 
-        /* Mobile Menu */
+        /* Mobile Menu : jamais plus haut que l'écran (paysage inclus),
+           défile en interne si besoin, et sort de l'ordre de tabulation
+           lorsqu'il est fermé (visibility). */
         .mobile-menu {
           position: absolute;
           top: 100%;
           left: 0;
           width: 100%;
+          max-height: calc(100vh - var(--nav-h));
+          max-height: calc(100dvh - var(--nav-h));
+          overflow-y: auto;
+          overscroll-behavior: contain;
           background: white;
-          padding: 20px 24px 30px;
+          padding: 20px var(--gutter) calc(30px + env(safe-area-inset-bottom, 0px));
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 12px;
           transform: translateY(-20px);
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
-          transition: all 0.3s ease;
+          transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
         }
 
         .mobile-menu.open {
           transform: translateY(0);
           opacity: 1;
-          pointer-events: all;
+          visibility: visible;
+          pointer-events: auto;
+          transition-delay: 0s;
         }
 
         .mobile-link {
           border: none;
           background: #f8fafc;
-          padding: 15px 18px;
+          min-height: var(--tap);
+          padding: 14px 18px;
           border-radius: 14px;
           text-align: left;
-          font-size: 15px;
+          font-size: 16px;
           font-weight: 600;
           color: #0f172a;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: background 0.3s ease, color 0.3s ease;
         }
 
         .mobile-link:hover {
@@ -276,9 +338,10 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           border: none;
           background: #1E3A8A;
           color: white;
+          min-height: var(--tap);
           padding: 16px;
           border-radius: 16px;
-          font-size: 15px;
+          font-size: 16px;
           font-weight: 700;
           cursor: pointer;
         }
@@ -293,11 +356,6 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           .burger {
             display: flex;
           }
-
-          .logo-img {
-            height: 54px;
-            width: auto;
-          }
         }
 
         @media (min-width: 901px) {
@@ -307,18 +365,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
         }
 
         @media (max-width: 480px) {
-          .nav-container {
-            padding: 0 18px;
-          }
-
-          .logo-img {
-            height: 48px;
-            width: auto;
-          }
-
-          .burger {
-            width: 42px;
-            height: 42px;
+          .navbar .logo-img {
+            height: calc(var(--nav-h) - 24px);
           }
         }
       `}</style>

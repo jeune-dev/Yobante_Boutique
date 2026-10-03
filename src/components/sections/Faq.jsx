@@ -41,10 +41,10 @@ const Faq = ({ variant = 'rek' }) => {
 
         {/* HEADER */}
         <div className="faq-header sr">
-          <div className="faq-tag">
+          <h2 className="faq-tag">
             <span className="faq-dot"></span>
             Questions fréquentes
-          </div>
+          </h2>
         </div>
 
         {/* FAQ LIST */}
@@ -53,13 +53,24 @@ const Faq = ({ variant = 'rek' }) => {
             const open = activeFaq === i;
             return (
               <div key={i} className={`faq-item ${open ? 'open' : ''}`}>
-                <button className="faq-btn" onClick={() => toggle(i)} aria-expanded={open}>
+                <button
+                  className="faq-btn"
+                  id={`faq-btn-${i}`}
+                  onClick={() => toggle(i)}
+                  aria-expanded={open}
+                  aria-controls={`faq-panel-${i}`}
+                >
                   <div className="faq-number">0{i + 1}</div>
                   <div className="faq-question">{faq.q}</div>
                   <div className="faq-icon"><PlusIcon /></div>
                 </button>
                 {open && (
-                  <div className="faq-answer-wrapper">
+                  <div
+                    className="faq-answer-wrapper"
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-btn-${i}`}
+                  >
                     <div className="faq-answer">{faq.a}</div>
                   </div>
                 )}
@@ -73,7 +84,7 @@ const Faq = ({ variant = 'rek' }) => {
       <style>{`
         .faq-section {
           position: relative; overflow: hidden;
-          padding: 90px 0;
+          padding: calc(var(--section-y) * 0.9) 0;
           background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
         }
 
@@ -88,7 +99,7 @@ const Faq = ({ variant = 'rek' }) => {
 
         .faq-container {
           position: relative; z-index: 5;
-          max-width: 880px; margin: 0 auto; padding: 0 24px;
+          max-width: 880px; margin: 0 auto; padding: 0 var(--gutter);
         }
 
         /* HEADER */
@@ -103,6 +114,7 @@ const Faq = ({ variant = 'rek' }) => {
           font-size: 12px; font-weight: 800;
           letter-spacing: 0.6px; text-transform: uppercase;
           margin-bottom: 20px;
+          max-width: 100%;
         }
 
         .faq-dot {
@@ -149,6 +161,7 @@ const Faq = ({ variant = 'rek' }) => {
           padding: 22px 26px;
           display: flex; align-items: center; gap: 18px;
           cursor: pointer; text-align: left;
+          min-height: var(--tap);
         }
 
         .faq-number {
@@ -199,7 +212,6 @@ const Faq = ({ variant = 'rek' }) => {
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-          .faq-section { padding: 72px 0; }
           .faq-btn { padding: 18px 20px; gap: 14px; }
           .faq-question { font-size: 15px; }
           .faq-answer { padding: 0 20px 18px 78px; }
@@ -211,6 +223,7 @@ const Faq = ({ variant = 'rek' }) => {
           .faq-number { min-width: 38px; height: 38px; border-radius: 10px; font-size: 13px; }
           .faq-answer { padding: 0 18px 18px 18px; }
           .faq-icon { min-width: 34px; width: 34px; height: 34px; }
+          .faq-question { overflow-wrap: anywhere; }
           .faq-question { font-size: 14px; }
         }
       `}</style>

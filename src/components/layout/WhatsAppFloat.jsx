@@ -24,10 +24,10 @@ const WhatsAppFloat = () => {
       <style>{`
         .whatsapp-float {
           position: fixed;
-          bottom: 28px;
-          right: 28px;
-          width: 58px;
-          height: 58px;
+          bottom: calc(var(--fab-gap) + env(safe-area-inset-bottom, 0px));
+          right: calc(var(--fab-gap) + env(safe-area-inset-right, 0px));
+          width: var(--fab-size);
+          height: var(--fab-size);
           background: linear-gradient(135deg, #25D366, #1ebe57);
           border-radius: 50%;
           display: flex;
@@ -43,15 +43,6 @@ const WhatsAppFloat = () => {
         .whatsapp-float:hover {
           transform: scale(1.1);
           box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
-        }
-
-        @media (max-width: 480px) {
-          .whatsapp-float {
-            bottom: 20px;
-            right: 20px;
-            width: 52px;
-            height: 52px;
-          }
         }
       `}</style>
     </>

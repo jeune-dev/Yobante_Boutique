@@ -37,7 +37,11 @@ const TrustBar = () => {
           {/* Doublement du tableau pour un effet infini parfait sans coupure */}
           <div className="trust-track">
             {[...TRUST_ITEMS, ...TRUST_ITEMS].map((item, index) => (
-              <div className="trust-item" key={index}>
+              <div
+                className="trust-item"
+                key={index}
+                aria-hidden={index >= TRUST_ITEMS.length ? 'true' : undefined}
+              >
                 <div className="icon-box">
                   {item.icon}
                 </div>
@@ -81,12 +85,6 @@ const TrustBar = () => {
             transparent
           );
           opacity: 0.8;
-        }
-
-        .container {
-          max-width: 1250px;
-          margin: 0 auto;
-          padding: 0 24px;
         }
 
         .trust-bar {
@@ -142,7 +140,7 @@ const TrustBar = () => {
           }
         }
 
-        .trust-item {
+        .trust-wrapper .trust-item {
           display: flex;
           align-items: center;
           gap: 14px;
@@ -180,6 +178,13 @@ const TrustBar = () => {
           letter-spacing: 0.2px;
         }
 
+        /* Mouvement réduit : plus de défilement automatique, la rangée se
+           fait défiler au doigt/à la molette. */
+        @media (prefers-reduced-motion: reduce) {
+          .trust-bar { overflow-x: auto; }
+          .trust-track { animation: none !important; }
+        }
+
         /* MOBILE */
         @media (max-width: 768px) {
           .trust-wrapper {
@@ -196,7 +201,7 @@ const TrustBar = () => {
             animation: trustScroll 18s linear infinite !important;
           }
 
-          .trust-item {
+          .trust-wrapper .trust-item {
             padding: 10px 14px;
             margin-left: 12px;
           }

@@ -1,6 +1,6 @@
 // src/components/layout/Footer.jsx
 import { Zap, Lock, HeadphonesIcon, Smartphone } from 'lucide-react';
-import yobanteLogo from '../../assets/images/Logo Yobante Boutique.png';
+import yobanteLogo from '../../assets/images/Logo Yobante Boutique.webp';
 
 const trustItems = [
   { icon: <Zap size={13} />, label: 'Livraison rapide' },
@@ -21,7 +21,7 @@ const Footer = () => {
           {/* BRAND */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={yobanteLogo} alt="Yobanté Logo" className="logo-img" />
+              <img src={yobanteLogo} alt="Yobanté Logo" className="logo-img" width="260" height="80" loading="lazy" decoding="async" />
             </div>
             <p className="footer-description">
               Votre spécialiste de l'expédition de colis et du e-commerce
@@ -53,12 +53,11 @@ const Footer = () => {
       </div>
 
       <style>{`
-        * { box-sizing: border-box; }
-
         .footer {
           position: relative; overflow: hidden;
           background: #053d8f;
           color: white; padding-top: 38px;
+          padding-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         .footer-bg-glow {
@@ -66,79 +65,86 @@ const Footer = () => {
           filter: blur(120px); opacity: 0.12; z-index: 0;
         }
 
-        .glow-1 { width: 280px; height: 280px; background: #1E3A8A; top: -90px; right: -90px; }
-        .glow-2 { width: 230px; height: 230px; background: #F5C518; bottom: -70px; left: -70px; }
-
-        .container {
-          position: relative; z-index: 2;
-          max-width: 1100px; margin: 0 auto; padding: 0 28px;
-        }
+        .footer .glow-1 { width: 280px; height: 280px; background: #1E3A8A; top: -90px; right: -90px; }
+        .footer .glow-2 { width: 230px; height: 230px; background: #F5C518; bottom: -70px; left: -70px; }
 
         .footer-main {
-          display: flex; justify-content: space-between; align-items: flex-start;
-          gap: 50px; padding-bottom: 24px;
+          display: flex; flex-wrap: wrap;
+          justify-content: space-between; align-items: flex-start;
+          gap: 24px clamp(24px, 5vw, 50px); padding-bottom: 24px;
           border-bottom: 1px solid rgba(255,255,255,.08);
         }
 
-        .footer-brand { max-width: 290px; flex-shrink: 0; }
+        .footer-brand { max-width: 290px; flex: 1 1 220px; }
         .footer-logo  { margin-bottom: 12px; }
 
-        .logo-img { height: 82px; width: auto; object-fit: contain; }
+        .footer .logo-img {
+          display: block;
+          width: clamp(210px, 56vw, 260px);
+          height: clamp(62px, 17vw, 80px);
+          object-fit: cover;
+          object-position: 50% 50%;
+        }
 
         .footer-description {
-          color: rgba(255,255,255,.58);
+          color: rgba(255,255,255,.74);
           line-height: 1.65; font-size: 13px; margin: 0;
         }
 
         .footer-right {
           display: flex; flex-direction: column;
-          align-items: flex-end; gap: 18px;
+          align-items: flex-end; gap: 12px;
+          flex: 1 1 280px;
+          min-width: 0;
         }
 
         .footer-trust {
           display: flex; flex-wrap: wrap; gap: 9px; justify-content: flex-end;
         }
 
-        .trust-item {
+        .footer .trust-item {
           display: flex; align-items: center; gap: 6px;
           padding: 6px 12px; border-radius: 18px;
           background: rgba(255,255,255,.05);
           border: 1px solid rgba(255,255,255,.09);
-          color: rgba(255,255,255,.75);
+          color: rgba(255,255,255,.82);
           font-size: 11.5px; font-weight: 700;
           backdrop-filter: blur(8px);
+          margin-left: 0;
+          white-space: normal;
         }
 
         .trust-icon { display: flex; align-items: center; color: #F5C518; }
 
-        .footer-links { display: flex; gap: 18px; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 18px; }
 
+        /* Cible tactile ≥ 44px de haut sans changer l'allure du lien. */
         .footer-links button {
           background: transparent; border: none;
-          color: rgba(255,255,255,.5);
-          font-size: 12.5px; cursor: pointer; padding: 0;
+          color: rgba(255,255,255,.75);
+          font-size: 12.5px; cursor: pointer;
+          min-height: var(--tap); min-width: var(--tap); padding: 0 2px;
+          display: inline-flex; align-items: center;
           transition: color 0.2s;
         }
 
-        .footer-links button:hover { color: rgba(255,255,255,.82); }
+        .footer-links button:hover { color: #fff; }
 
         .footer-bottom {
           display: flex; justify-content: center; padding: 14px 0;
         }
 
-        .copyright { color: rgba(255,255,255,.38); font-size: 12.5px; }
+        .copyright { color: rgba(255,255,255,.66); font-size: 12.5px; text-align: center; }
 
         @media (max-width: 768px) {
-          .footer-main { flex-direction: column; gap: 24px; }
-          .footer-brand { max-width: 100%; }
-          .footer-right { align-items: flex-start; }
-          .footer-trust { justify-content: flex-start; }
+          .footer-main { flex-direction: column; }
+          .footer-brand { max-width: 100%; flex: 0 0 auto; }
+          .footer-right { align-items: flex-start; flex: 0 0 auto; width: 100%; }
+          .footer-trust, .footer-links { justify-content: flex-start; }
         }
 
         @media (max-width: 480px) {
-          .container { padding: 0 16px; }
-          .logo-img { height: 66px; }
-          .footer-links { flex-wrap: wrap; gap: 10px 16px; }
+          .footer-links { gap: 0 16px; }
         }
       `}</style>
     </footer>
@@ -146,4 +152,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

@@ -42,7 +42,7 @@ const AboutSection = ({ variant = 'rek' }) => {
       <style>{`
         .about-section {
           position: relative; overflow: hidden;
-          padding: 100px 0;
+          padding: var(--section-y) 0;
           background: linear-gradient(135deg, #0a1535 0%, #1E3A8A 60%, #152E70 100%);
           color: white;
         }
@@ -52,8 +52,8 @@ const AboutSection = ({ variant = 'rek' }) => {
           filter: blur(130px); opacity: 0.18; pointer-events: none;
         }
 
-        .glow-1 { width: 420px; height: 420px; background: #2a52c9; top: -120px; right: -100px; }
-        .glow-2 { width: 350px; height: 350px; background: #F5C518; bottom: -100px; left: -80px; }
+        .about-section .glow-1 { width: 420px; height: 420px; background: #2a52c9; top: -120px; right: -100px; }
+        .about-section .glow-2 { width: 350px; height: 350px; background: #F5C518; bottom: -100px; left: -80px; }
 
         /* Déco grande guillemet */
         .about-quote-deco {
@@ -68,17 +68,13 @@ const AboutSection = ({ variant = 'rek' }) => {
           user-select: none;
         }
 
-        .container {
-          position: relative; z-index: 2;
-          max-width: 900px; margin: 0 auto; padding: 0 28px;
-        }
 
         .about-inner { display: flex; flex-direction: column; }
 
         .about-header { max-width: 100%; }
 
         /* TAG */
-        .section-tag {
+        .about-section .section-tag {
           display: inline-flex; align-items: center; gap: 10px;
           color: #F5C518; font-weight: 800; letter-spacing: 2px;
           text-transform: uppercase; margin-bottom: 20px; font-size: 11px;
@@ -144,13 +140,11 @@ const AboutSection = ({ variant = 'rek' }) => {
         }
 
         @media (max-width: 768px) {
-          .about-section { padding: 80px 0; }
           .about-quote-deco { font-size: 240px; right: -20px; }
           .about-description { font-size: 15px; }
         }
 
         @media (max-width: 520px) {
-          .about-section { padding: 68px 0; }
           .about-title { font-size: 30px; }
           .about-description { font-size: 14px; }
           .about-badges { gap: 10px; }
