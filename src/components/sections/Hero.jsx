@@ -5,10 +5,8 @@ import {
   Package, ShoppingBag, Plane, Ship, ArrowRight,
   ShoppingCart, Smartphone, ShieldCheck, Truck, Headphones,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import deliveryPhone from '../../assets/images/mockeup.webp';
-import deliveryPhone2 from '../../assets/images/mockeup2.png';
 import airpodsProduct from '../../assets/images/Airpods.webp';
 import fridgeProduct from '../../assets/images/frigo.webp';
 import microwaveProduct from '../../assets/images/micro-onde.webp';
@@ -33,7 +31,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
       title: "Expédiez vos colis depuis chez vous !",
       buttonText: "En savoir plus",
       buttonLink: "services",
-      image: deliveryPhone2,
+      image: deliveryPhone,
       bgColor: "#F5C518",
       textColor: "#1E3A8A",
       statColor: "#1E3A8A",
@@ -67,11 +65,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
     <section id="hero" className="hero">
 
       {/* BACKGROUND */}
-      <motion.div
-        className="hero-bg"
-        animate={{ background: current.bgColor }}
-        transition={{ duration: 0.6 }}
-      />
+      <div className="hero-bg" style={{ background: current.bgColor }} />
       <div className="hero-glow"></div>
       {current.id === 2 && <div className="bt-corner" aria-hidden="true" />}
 
@@ -92,146 +86,137 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            className="hero-content"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.55 }}
-          >
-            {/* TEXT */}
-            <div className="hero-text">
+        <div key={current.id} className="hero-content">
+          {/* TEXT */}
+          <div className="hero-text">
 
-              {/* BADGE */}
-              {current.id === 2 ? (
-                <div className="hero-badge bt-badge">
-                  <ShoppingCart size={14} strokeWidth={2.2} />
-                  <span>Boutique officielle sur mobile</span>
-                </div>
-              ) : (
-                <div className="hero-badge" style={{ background: current.badgeBg }}>
-                  <span className="badge-dot"></span>
-                  <span style={{ color: current.badgeTextColor }}>
-                    Expédition de colis - Boutique en ligne
-                  </span>
-                </div>
-              )}
-
-              {/* TITLE */}
-              <h1 className={`hero-title ${current.id === 2 ? 'bt-title' : ''}`} style={{ color: current.textColor }}>
-                {current.id === 2 ? (
-                  <>
-                    <span className="bt-line">Vos grandes</span>
-                    <span className="bt-line">marques,</span>
-                    <span className="bt-line bt-accent">à prix réduits.</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="title-main">Expédiez vos</span>
-                    <span className="title-line-rek"><span className="title-colis">colis</span><span className="title-brand rek-title-brand">depuis chez vous !</span></span>
-                    <span className="title-footer rek-title-footer"><span className="title-footer-ak">AK</span><span className="title-footer-name">YOBANTE REK</span></span>
-                  </>
-                )}
-              </h1>
-
-              {current.id === 2 && (
-                <p className="bt-sub">
-                  Retrouvez vos produits préférés, découvrez nos offres exclusives et
-                  commandez facilement depuis l'application YOBANTE.
-                </p>
-              )}
-
-              {current.id === 1 && (
-                <div className="shipping-methods">
-                  <div className="method-card">
-                    <span className="method-icon"><Plane size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
-                    <span className="method-name">Fret Aérien</span>
-                  </div>
-                  <div className="method-card">
-                    <span className="method-icon"><Ship size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
-                    <span className="method-name">Fret Maritime</span>
-                  </div>
-                  <div className="method-card">
-                    <span className="method-icon"><Package size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
-                    <span className="method-name">Colis GP</span>
-                  </div>
-                </div>
-              )}
-
-              {/* BUTTONS */}
-              {current.id === 2 ? (
-                <div className="bt-actions">
-                  <button className="hero-btn bt-btn-main" onClick={() => scrollTo(current.buttonLink)}>
-                    <ShoppingCart size={15} strokeWidth={2.2} style={{ marginRight: 8 }} />
-                    {current.buttonText}
-                    <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: 8 }} />
-                  </button>
-                  <button className="hero-btn bt-btn-outline" onClick={() => scrollTo('apps')}>
-                    <Smartphone size={15} strokeWidth={2} style={{ marginRight: 8 }} />
-                    Télécharger l'application
-                  </button>
-                </div>
-              ) : (
-                <button
-                  className={`hero-btn ${current.id === 1 ? 'expedition' : ''}`}
-                  onClick={() => scrollTo(current.buttonLink)}
-                >
-                  {current.buttonText}
-                  <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
-                </button>
-              )}
-
-              {/* STORES */}
-              <div className="store-buttons">
-                <a href="https://apps.apple.com" target="_blank" rel="noreferrer" className={`store-btn ${current.id === 1 ? 'appstore' : 'store-black'}`}>
-                  <AppStoreIcon />
-                  <div className="store-text">
-                    <small>Télécharger sur</small>
-                    <strong>App Store</strong>
-                  </div>
-                </a>
-                <a
-                  href="https://play.google.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`store-btn ${current.id === 1 ? 'play-gold' : 'store-black'}`}
-                >
-                  <PlayStoreIcon />
-                  <div className="store-text">
-                    <small>Disponible sur</small>
-                    <strong>Google Play</strong>
-                  </div>
-                </a>
+            {/* BADGE */}
+            {current.id === 2 ? (
+              <div className="hero-badge bt-badge">
+                <ShoppingCart size={14} strokeWidth={2.2} />
+                <span>Boutique officielle sur mobile</span>
               </div>
+            ) : (
+              <div className="hero-badge" style={{ background: current.badgeBg }}>
+                <span className="badge-dot"></span>
+                <span style={{ color: current.badgeTextColor }}>
+                  Expédition de colis - Boutique en ligne
+                </span>
+              </div>
+            )}
 
+            {/* TITLE */}
+            <h1 className={`hero-title ${current.id === 2 ? 'bt-title' : ''}`} style={{ color: current.textColor }}>
+              {current.id === 2 ? (
+                <>
+                  <span className="bt-line">Vos grandes</span>
+                  <span className="bt-line">marques,</span>
+                  <span className="bt-line bt-accent">à prix réduits.</span>
+                </>
+              ) : (
+                <>
+                  <span className="title-main">Expédiez vos</span>
+                  <span className="title-line-rek"><span className="title-colis">colis</span><span className="title-brand rek-title-brand">depuis chez vous !</span></span>
+                  <span className="title-footer rek-title-footer"><span className="title-footer-ak">AK</span><span className="title-footer-name">YOBANTE REK</span></span>
+                </>
+              )}
+            </h1>
+
+            {current.id === 2 && (
+              <p className="bt-sub">
+                Retrouvez vos produits préférés, découvrez nos offres exclusives et
+                commandez facilement depuis l'application YOBANTE.
+              </p>
+            )}
+
+            {current.id === 1 && (
+              <div className="shipping-methods">
+                <div className="method-card">
+                  <span className="method-icon"><Plane size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
+                  <span className="method-name">Fret Aérien</span>
+                </div>
+                <div className="method-card">
+                  <span className="method-icon"><Ship size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
+                  <span className="method-name">Fret Maritime</span>
+                </div>
+                <div className="method-card">
+                  <span className="method-icon"><Package size={22} strokeWidth={1.5} color="#1E3A8A" /></span>
+                  <span className="method-name">Colis GP</span>
+                </div>
+              </div>
+            )}
+
+            {/* BUTTONS */}
+            {current.id === 2 ? (
+              <div className="bt-actions">
+                <button className="hero-btn bt-btn-main" onClick={() => scrollTo(current.buttonLink)}>
+                  <ShoppingCart size={15} strokeWidth={2.2} style={{ marginRight: 8 }} />
+                  {current.buttonText}
+                  <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: 8 }} />
+                </button>
+                <button className="hero-btn bt-btn-outline" onClick={() => scrollTo('apps')}>
+                  <Smartphone size={15} strokeWidth={2} style={{ marginRight: 8 }} />
+                  Télécharger l'application
+                </button>
+              </div>
+            ) : (
+              <button
+                className={`hero-btn ${current.id === 1 ? 'expedition' : ''}`}
+                onClick={() => scrollTo(current.buttonLink)}
+              >
+                {current.buttonText}
+                <ArrowRight size={15} strokeWidth={2} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
+              </button>
+            )}
+
+            {/* STORES */}
+            <div className="store-buttons">
+              <a href="https://apps.apple.com" target="_blank" rel="noreferrer" className={`store-btn ${current.id === 1 ? 'appstore' : 'store-black'}`}>
+                <AppStoreIcon />
+                <div className="store-text">
+                  <small>Télécharger sur</small>
+                  <strong>App Store</strong>
+                </div>
+              </a>
+              <a
+                href="https://play.google.com"
+                target="_blank"
+                rel="noreferrer"
+                className={`store-btn ${current.id === 1 ? 'play-gold' : 'store-black'}`}
+              >
+                <PlayStoreIcon />
+                <div className="store-text">
+                  <small>Disponible sur</small>
+                  <strong>Google Play</strong>
+                </div>
+              </a>
             </div>
 
-            {/* IMAGE */}
-            <motion.div className="hero-image">
-              {current.id === 2 && (
-                <div className="boutique-scene" aria-hidden="true">
-                  <div className="bt-blob" />
-                  <div className="phone-frame">
-                    <img src={current.image} alt="Application mobile" width="418" height="597" decoding="async" />
-                  </div>
+          </div>
 
-                  <div className="boutique-product-scene">
-                    <img className="boutique-product product-airpods" src={airpodsProduct} alt="" width="565" height="442" decoding="async" />
-                    <img className="boutique-product product-microwave" src={microwaveProduct} alt="" width="500" height="287" decoding="async" />
-                    <img className="boutique-product product-fridge" src={fridgeProduct} alt="" width="372" height="671" decoding="async" />
-                    <span className="product-discount discount-airpods">-20%</span>
-                    <span className="product-discount discount-microwave">-10%</span>
-                    <span className="product-discount discount-fridge">-25%</span>
-                  </div>
+          {/* IMAGE */}
+          <div className="hero-image">
+            {current.id === 2 && (
+              <div className="boutique-scene" aria-hidden="true">
+                <div className="bt-blob" />
+                <div className="phone-frame">
+                  <img src={current.image} alt="Application mobile" width="418" height="597" decoding="async" />
                 </div>
-              )}
 
-              {current.id !== 2 && <img src={current.image} alt="Application mobile" />}
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+                <div className="boutique-product-scene">
+                  <img className="boutique-product product-airpods" src={airpodsProduct} alt="" width="565" height="442" decoding="async" />
+                  <img className="boutique-product product-microwave" src={microwaveProduct} alt="" width="500" height="287" decoding="async" />
+                  <img className="boutique-product product-fridge" src={fridgeProduct} alt="" width="372" height="671" decoding="async" />
+                  <span className="product-discount discount-airpods">-20%</span>
+                  <span className="product-discount discount-microwave">-10%</span>
+                  <span className="product-discount discount-fridge">-25%</span>
+                </div>
+              </div>
+            )}
+
+            {current.id !== 2 && <img src={current.image} alt="Application mobile" />}
+          </div>
+        </div>
 
         {/* FEATURES BAR */}
         {current.id === 2 && (
@@ -297,14 +282,8 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           border-radius: 50%;
           top: -130px;
           right: -80px;
-          animation: floatGlow 8s ease-in-out infinite;
         }
 
-        @keyframes floatGlow {
-          0% { transform: translate(0,0); }
-          50% { transform: translate(-50px,35px); }
-          100% { transform: translate(0,0); }
-        }
 
         .hero-tabs {
           position: absolute;
@@ -512,13 +491,15 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
         .bt-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
         .bt-actions .hero-btn { margin-bottom: 0; display: inline-flex; align-items: center; padding: 14px 22px; font-size: 14px; }
         .bt-btn-main { background: #F5C518; color: #1E3A8A; }
-        .bt-btn-outline {
+        /* Double classe : la règle .hero-btn (fond jaune) est déclarée plus bas et écrasait ce style, le bouton
+           secondaire s'affichait donc en jaune plein comme le bouton principal. */
+        .hero-btn.bt-btn-outline {
           background: transparent;
           color: #ffffff;
           border: 1.5px solid rgba(255,255,255,0.7);
           box-shadow: none;
         }
-        .bt-btn-outline:hover { background: rgba(255,255,255,0.1); box-shadow: none; }
+        .hero-btn.bt-btn-outline:hover { background: rgba(255,255,255,0.1); box-shadow: none; }
 
         .shipping-methods {
           display: grid;
@@ -533,12 +514,12 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           border-radius: 18px;
           text-align: center;
           box-shadow: 0 8px 24px rgba(30,58,138,0.12);
-          transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
           border: 1px solid rgba(30,58,138,0.06);
         }
 
         .method-card:hover {
-          transform: translateY(-10px) scale(1.04);
+          transform: translateY(-4px);
           box-shadow: 0 16px 36px rgba(30,58,138,0.18);
           border-color: rgba(30,58,138,0.14);
         }
@@ -564,7 +545,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           font-weight: 800;
           cursor: pointer;
           margin-bottom: 24px;
-          transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
           background: #F5C518;
           color: #1E3A8A;
           width: fit-content;
@@ -572,7 +553,7 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           letter-spacing: 0.2px;
         }
 
-        .hero-btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 16px 36px rgba(245,197,24,0.45); }
+        .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(245,197,24,0.45); }
 
         .hero-btn.expedition {
           background: #1E3A8A;
@@ -596,11 +577,11 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           padding: 12px 18px;
           border-radius: 15px;
           text-decoration: none;
-          transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
           min-width: 165px;
         }
 
-        .store-btn:hover { transform: translateY(-4px) scale(1.03); }
+        .store-btn:hover { transform: translateY(-2px); }
 
         .store-text {
           display: flex;
@@ -676,9 +657,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .bt-blob {
           position: absolute;
-          right: -6.45%;
-          top: 14.75%;
-          width: 74.2%;
+          right: 0;
+          top: 12%;
+          width: 72%;
           aspect-ratio: 1;
           border-radius: 50%;
           background: #F5C518;
@@ -687,9 +668,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
 
         .phone-frame {
           position: absolute;
-          left: 8.06%;
-          top: 1.64%;
-          width: 53.2%;
+          left: 13%;
+          top: 3%;
+          width: 50%;
           z-index: 3;
         }
 
@@ -715,9 +696,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           object-fit: contain;
         }
 
-        .product-airpods   { width: 21.3%; left: -9.35%;  top: 6.9%;      transform: rotate(-14deg); }
-        .product-microwave { width: 34.7%; right: -2.26%; top: -0.66%;    transform: rotate(5deg); }
-        .product-fridge    { width: 40.3%; right: -6.8%;  bottom: -4.6%;  transform: rotate(-2deg); }
+        .product-airpods   { width: 20%; left: 0;    top: 9%;     transform: rotate(-14deg); }
+        .product-microwave { width: 32%; right: 0;   top: 1%;     transform: rotate(5deg); }
+        .product-fridge    { width: 29%; right: 1%;  bottom: 1%;  transform: rotate(-2deg); }
 
         .product-discount {
           position: absolute;
@@ -735,9 +716,9 @@ const Hero = ({ scrollTo, variant = 'rek' }) => {
           box-shadow: 0 6px 16px rgba(7,27,69,0.22);
         }
 
-        .discount-airpods   { left: -1.9%;  top: 23%;     transform: rotate(-8deg); }
-        .discount-microwave { right: 19.4%; top: -2%;     transform: rotate(7deg); }
-        .discount-fridge    { right: 28.4%; bottom: 43.3%; transform: rotate(-5deg); }
+        .discount-airpods   { left: 3%;   top: 27%;     transform: rotate(-8deg); }
+        .discount-microwave { right: 27%; top: 1%;      transform: rotate(7deg); }
+        .discount-fridge    { right: 25%; bottom: 52%;  transform: rotate(-5deg); }
 
         /* ───────── BOUTIQUE : barre d'avantages ───────── */
         .bt-features {

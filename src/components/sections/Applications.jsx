@@ -2,14 +2,13 @@
 import { Package, ShoppingBag, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
 import expeditionLogo from '../../assets/images/Logo Yobante Rek - fond blanc.webp';
 import boutiqueLogo from '../../assets/images/Logo Yobante Boutique - Fond Blanc.webp';
-import appli1 from '../../assets/images/Appli1.webp';
-import appli2 from '../../assets/images/Appli2.png';
-import appli3 from '../../assets/images/APPLI3.webp';
+import appPreview from '../../assets/images/app-preview.webp';
 
 const appsData = [
   {
     id: "expedition",
     logo: expeditionLogo,
+    logoHeight: 244,
     alt: "Yobanté Expédition",
     chipIcon: <Package size={14} strokeWidth={1.8} />,
     chipText: "Expédition & Suivi",
@@ -27,6 +26,7 @@ const appsData = [
   {
     id: "boutique",
     logo: boutiqueLogo,
+    logoHeight: 262,
     alt: "Yobanté Boutique",
     chipIcon: <ShoppingBag size={14} strokeWidth={1.8} />,
     chipText: "Boutique en ligne",
@@ -45,7 +45,7 @@ const appsData = [
 
 const Applications = ({ variant = 'rek' }) => {
   const visibleApps = appsData.filter((app) => variant === 'rek' ? app.id === 'expedition' : app.id === 'boutique');
-  const appImages = variant === 'boutique' ? [appli3] : [appli1, appli2];
+  const appImage = appPreview;
   return (
     <section id="apps" className={`apps-section ${variant === 'boutique' ? 'apps-boutique' : ''}`}>
       <div className="bg-glow glow-1"></div>
@@ -73,7 +73,7 @@ const Applications = ({ variant = 'rek' }) => {
 
               <div className="card-inner">
                 <div className="app-logo-container">
-                  <img src={app.logo} alt={app.alt} className="app-logo" />
+                  <img src={app.logo} alt={app.alt} className="app-logo" width="600" height={app.logoHeight} decoding="async" />
                 </div>
 
                 <div className={`app-chip ${app.chipClass}`}>
@@ -109,7 +109,7 @@ const Applications = ({ variant = 'rek' }) => {
               <div className="download-buttons" style={{ padding: '0 34px' }}>
                 <button
                   className="download-btn ios"
-                  onClick={() => window.open(app.iosUrl, '_blank')}
+                  onClick={() => window.open(app.iosUrl, '_blank', 'noopener,noreferrer')}
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ marginRight: '7px', verticalAlign: 'middle' }}>
                     <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,22c-1.31,0.05-1.73,-0.75-3.23,-0.75c-1.49,0-1.96,0.73,-3.22,0.78c-1.33,0.05-2.29,-1.32-3.13,-2.53C4.37,17.18 3.05,12.35 4.81,9.31c0.88,-1.52 2.45,-2.48 4.16,-2.51c1.3,-0.02 2.53,0.88 3.32,0.88c0.79,0 2.27,-1.07 3.82,-0.91c0.65,0.03 2.47,0.26 3.64,1.98c-0.09,0.06 -2.17,1.28 -2.15,3.81c0.03,3.02 2.65,4.03 2.68,4.04c-0.03,0.07 -0.42,1.44 -1.38,2.83M15.97,4.17C16.63,3.37 17.07,2.28 16.95,1c-1.09,0.04 -2.41,0.72 -3.19,1.63c-0.67,0.77 -1.25,1.88 -1.09,3.14c1.21,0.09 2.47,-0.6 3.3,-1.6" />
@@ -119,7 +119,7 @@ const Applications = ({ variant = 'rek' }) => {
                 </button>
                 <button
                   className="download-btn android"
-                  onClick={() => window.open(app.androidUrl, '_blank')}
+                  onClick={() => window.open(app.androidUrl, '_blank', 'noopener,noreferrer')}
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ marginRight: '7px', verticalAlign: 'middle' }}>
                     <path d="M3,5.27V18.73c0,0.59,0.34,1.13,0.88,1.38L13.12,12l-9.24-8.11C3.34,4.14,3,4.68,3,5.27Z" opacity="0.15"/>
@@ -133,7 +133,7 @@ const Applications = ({ variant = 'rek' }) => {
               </div>
 
               <div className="app-visual">
-                <img src={appImages[0]} alt={app.id === 'boutique' ? 'Application Yobante Boutique et catalogue de produits' : app.alt} width="1199" height="1312" loading="lazy" decoding="async" />
+                <img src={appImage} alt={app.id === 'boutique' ? 'Application Yobante Boutique et catalogue de produits' : app.alt} width="1199" height="1312" loading="lazy" decoding="async" />
               </div>
             </div>
           ))}
@@ -332,7 +332,7 @@ const Applications = ({ variant = 'rek' }) => {
           padding: 14px 18px; font-size: 14px; font-weight: 800;
           cursor: pointer;
           display: inline-flex; align-items: center; justify-content: center;
-          transition: all 0.25s cubic-bezier(0.34,1.4,0.64,1);
+          transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
           letter-spacing: 0.1px;
         }
 

@@ -14,11 +14,36 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navRef = useRef(null);
   const burgerRef = useRef(null);
+  const [activeId, setActiveId] = useState(null);
 
   const handleScroll = (id) => {
     scrollTo(id);
     setMobileMenuOpen(false);
   };
+
+  // Section affichée : la rubrique correspondante du menu est mise en valeur,
+  // pour que le visiteur sache toujours où il se trouve sur la page.
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return undefined;
+    const ratios = new Map();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => ratios.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0));
+        let best = null;
+        let bestRatio = 0;
+        ratios.forEach((ratio, id) => {
+          if (ratio > bestRatio) { best = id; bestRatio = ratio; }
+        });
+        setActiveId(best);
+      },
+      { rootMargin: '-35% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] }
+    );
+    navItems.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Menu mobile ouvert : fermeture au tap à l'extérieur, sur Échap
   // (le focus revient alors sur le bouton) et au passage en affichage desktop.
@@ -65,6 +90,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
               src={logo}
               alt="YOBANTÉ Logo"
               className="logo-img"
+              width="600"
+              height="262"
               decoding="async"
             />
           </button>
@@ -74,6 +101,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
             {navItems.map((item) => (
               <button
                 key={item.id}
+                className={activeId === item.id ? 'active' : undefined}
+                aria-current={activeId === item.id ? 'true' : undefined}
                 onClick={() => handleScroll(item.id)}
               >
                 {item.label}
@@ -109,7 +138,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           {navItems.map((item) => (
             <button
               key={item.id}
-              className="mobile-link"
+              className={`mobile-link${activeId === item.id ? ' active' : ''}`}
+              aria-current={activeId === item.id ? 'true' : undefined}
               onClick={() => handleScroll(item.id)}
             >
               {item.label}
@@ -211,8 +241,13 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           color: #1E3A8A;
         }
 
-        .desktop-links button:hover::after {
+        .desktop-links button:hover::after,
+        .desktop-links button.active::after {
           width: 100%;
+        }
+
+        .desktop-links button.active {
+          color: #1E3A8A;
         }
 
         /* CTA */
@@ -328,7 +363,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           transition: background 0.3s ease, color 0.3s ease;
         }
 
-        .mobile-link:hover {
+        .mobile-link:hover,
+        .mobile-link.active {
           background: #EEF2FF;
           color: #1E3A8A;
         }

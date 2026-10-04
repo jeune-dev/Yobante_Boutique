@@ -4,7 +4,7 @@ import { Truck, MessageCircle, Lock, Smartphone, Zap } from 'lucide-react';
 const TRUST_ITEMS = [
   {
     icon: <Truck size={18} strokeWidth={1.8} color="white" />,
-    text: 'Livraison France → Sénégal',
+    text: 'Livraison France ↔ Sénégal',
   },
   {
     icon: <MessageCircle size={18} strokeWidth={1.8} color="white" />,
@@ -34,13 +34,11 @@ const TrustBar = () => {
           <div className="glow glow-left"></div>
           <div className="glow glow-right"></div>
 
-          {/* Doublement du tableau pour un effet infini parfait sans coupure */}
           <div className="trust-track">
-            {[...TRUST_ITEMS, ...TRUST_ITEMS].map((item, index) => (
+            {TRUST_ITEMS.map((item, index) => (
               <div
                 className="trust-item"
                 key={index}
-                aria-hidden={index >= TRUST_ITEMS.length ? 'true' : undefined}
               >
                 <div className="icon-box">
                   {item.icon}
@@ -55,10 +53,6 @@ const TrustBar = () => {
       </div>
 
       <style>{`
-        * {
-          box-sizing: border-box;
-        }
-
         .trust-wrapper {
           position: relative;
           padding: 26px 0;
@@ -120,43 +114,34 @@ const TrustBar = () => {
           background: #F5C518;
         }
 
-        /* ANIMATION ISOL�?E UNIQUEMENT POUR LA TRUSTBAR */
+        /* Rangée statique : cinq repères courts n'ont pas besoin de défiler. */
         .trust-track {
           position: relative;
           z-index: 2;
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
-          gap: 22px;
-          width: max-content;
-          animation: trustScroll 24s linear infinite !important;
-        }
-
-        @keyframes trustScroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
+          justify-content: center;
+          gap: 10px 8px;
+          padding: 0 6px;
         }
 
         .trust-wrapper .trust-item {
           display: flex;
           align-items: center;
-          gap: 14px;
-          padding: 10px 18px;
-          border-radius: 18px;
+          gap: 8px;
+          padding: 8px 12px;
+          border-radius: 16px;
           background: rgba(255, 255, 255, 0.65);
           border: 1px solid rgba(255, 255, 255, 0.5);
           backdrop-filter: blur(10px);
           white-space: nowrap;
-          margin-left: 20px;
         }
 
         .icon-box {
-          width: 42px;
-          height: 42px;
-          border-radius: 14px;
+          width: 36px;
+          height: 36px;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -172,17 +157,10 @@ const TrustBar = () => {
         }
 
         .trust-text {
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
           color: #334155;
           letter-spacing: 0.2px;
-        }
-
-        /* Mouvement réduit : plus de défilement automatique, la rangée se
-           fait défiler au doigt/à la molette. */
-        @media (prefers-reduced-motion: reduce) {
-          .trust-bar { overflow-x: auto; }
-          .trust-track { animation: none !important; }
         }
 
         /* MOBILE */
@@ -196,14 +174,10 @@ const TrustBar = () => {
             padding: 14px 0;
           }
 
-          .trust-track {
-            gap: 14px;
-            animation: trustScroll 18s linear infinite !important;
-          }
+          .trust-track { gap: 10px; padding: 0 14px; }
 
           .trust-wrapper .trust-item {
             padding: 10px 14px;
-            margin-left: 12px;
           }
 
           .icon-box {

@@ -39,10 +39,17 @@ jobs:
           {
             echo "VITE_CONTACT_PHONE=${{ secrets.VITE_CONTACT_PHONE }}"
             echo "VITE_WHATSAPP_NUMBER=${{ secrets.VITE_WHATSAPP_NUMBER }}"
+            echo "VITE_API_URL=${{ secrets.VITE_API_URL }}"
           } > .env
 
       - name: Build
         run: npm run build
+
+      # Garde-fou : un bundle qui vise localhost ou sans URL d'API ne doit jamais partir en production.
+      - name: Check production bundle
+        run: |
+          if grep -rq "localhost" dist/assets; then echo "dist/ contient localhost : VITE_API_URL manquant ou de développement"; exit 1; fi
+          if [ -z "${{ secrets.VITE_API_URL }}" ]; then echo "Secret VITE_API_URL absent : le formulaire de contact ne pourrait rien envoyer"; exit 1; fi
 
       # dist/ est servi à la racine du domaine par Nginx (voir deploy/nginx.conf).
       - name: Deploy dist/ to VPS

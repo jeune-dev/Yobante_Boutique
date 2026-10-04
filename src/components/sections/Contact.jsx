@@ -1,6 +1,10 @@
 // src/components/sections/Contact.jsx
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Mail, MessageCircle, Phone, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
+
+// Délai maximal d'attente de l'API avant d'afficher une erreur.
+const REQUEST_TIMEOUT_MS = 15000;
+const MSG_GENERIC = 'Une erreur s\u2019est produite. Réessayez dans un instant.';
 
 const Contact = ({ variant = 'rek' }) => {
   const isBoutique = variant === 'boutique';
@@ -8,32 +12,73 @@ const Contact = ({ variant = 'rek' }) => {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER?.replace(/\D/g, '');
   const [formData, setFormData] = useState({ prenom: '', nom: '', email: '', telephone: '', sujet: '', message: '' });
   const [status, setStatus] = useState('idle');
+  const [errorMsg, setErrorMsg] = useState(MSG_GENERIC);
+  // Verrou synchrone : l'état React ne se met à jour qu'au rendu suivant, un double clic ou
+  // deux « Entrée » rapprochés enverraient sinon deux demandes.
+  const sending = useRef(false);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const fail = (message) => {
+    setErrorMsg(message);
+    setStatus('error');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (sending.current) return;
+
+    const payload = {
+      source: isBoutique ? 'boutique' : 'rek',
+      prenom: formData.prenom.trim(),
+      nom: formData.nom.trim(),
+      email: formData.email.trim(),
+      telephone: formData.telephone.trim(),
+      sujet: formData.sujet,
+      message: formData.message.trim(),
+    };
+    // Mêmes règles que l'API : un champ rempli d'espaces passe la validation du navigateur.
+    if (!payload.prenom || !payload.nom || payload.message.length < 5) {
+      fail('Merci de renseigner votre prénom, votre nom et un message d\u2019au moins 5 caractères.');
+      return;
+    }
+
+    // En production l'URL de l'API doit être fournie au build (VITE_API_URL) : on ne retombe
+    // sur localhost qu'en développement, jamais dans le bundle déployé.
+    const apiUrl = (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5001/api/v1' : '')).replace(/\/$/, '');
+    if (!apiUrl) { fail(MSG_GENERIC); return; }
+
+    sending.current = true;
     setStatus('sending');
-    const apiKey = import.meta.env.VITE_WEB3FORMS_KEY || 'a741136d-b23e-4891-a8b4-c6f4f8210215';
+    // Sans délai maximal, une API qui ne répond pas laisserait « Envoi en cours… » indéfiniment.
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch(`${apiUrl}/public/demandes-contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: apiKey,
-          name: `${formData.prenom} ${formData.nom}`,
-          email: formData.email,
-          telephone: formData.telephone,
-          subject: formData.sujet,
-          message: formData.message,
-        }),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
-      const data = await res.json();
-      if (data.success) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
         setStatus('success');
         setFormData({ prenom: '', nom: '', email: '', telephone: '', sujet: '', message: '' });
-      } else { setStatus('error'); }
-    } catch { setStatus('error'); }
+      } else if (res.status === 429) {
+        fail(data.message || 'Trop de messages envoyés. Réessayez plus tard.');
+      } else if (res.status === 400) {
+        fail('Vérifiez les informations saisies (adresse email, message…) puis réessayez.');
+      } else {
+        fail(MSG_GENERIC);
+      }
+    } catch (err) {
+      fail(err.name === 'AbortError'
+        ? 'Le serveur met trop de temps à répondre. Réessayez dans un instant.'
+        : 'Envoi impossible : vérifiez votre connexion puis réessayez.');
+    } finally {
+      clearTimeout(timer);
+      sending.current = false;
+    }
   };
 
   return (
@@ -96,17 +141,17 @@ const Contact = ({ variant = 'rek' }) => {
 
               <div className="form-row">
                 <div className="form-group">
-                  <input type="text" name="prenom" placeholder="Prénom" aria-label="Prénom" autoComplete="given-name"
+                  <input type="text" name="prenom" maxLength={80} placeholder="Prénom" aria-label="Prénom" autoComplete="given-name"
                     value={formData.prenom} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <input type="text" name="nom" placeholder="Nom" aria-label="Nom" autoComplete="family-name"
+                  <input type="text" name="nom" maxLength={80} placeholder="Nom" aria-label="Nom" autoComplete="family-name"
                     value={formData.nom} onChange={handleChange} required />
                 </div>
               </div>
 
               <div className="form-group">
-                <input type="email" name="email" placeholder="Votre adresse email" aria-label="Adresse email" autoComplete="email" inputMode="email"
+                <input type="email" name="email" maxLength={150} pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Adresse email valide, par exemple nom@domaine.com" placeholder="Votre adresse email" aria-label="Adresse email" autoComplete="email" inputMode="email"
                   value={formData.email} onChange={handleChange} required />
               </div>
 
@@ -147,7 +192,7 @@ const Contact = ({ variant = 'rek' }) => {
               </div>
 
               <div className="form-group">
-                <textarea name="message" rows="4" placeholder="Décrivez votre demande..." aria-label="Message"
+                <textarea name="message" rows="4" maxLength={3000} placeholder="Décrivez votre demande..." aria-label="Message"
                   value={formData.message} onChange={handleChange} required></textarea>
               </div>
 
@@ -161,7 +206,7 @@ const Contact = ({ variant = 'rek' }) => {
               {status === 'error' && (
                 <div className="feedback error" role="alert">
                   <XCircle size={15} strokeWidth={2} style={{ marginRight: '7px', verticalAlign: 'middle' }} />
-                  Une erreur s'est produite.
+                  {errorMsg}
                 </div>
               )}
 
@@ -203,7 +248,7 @@ const Contact = ({ variant = 'rek' }) => {
         .tag-line { width: 28px; height: 2px; background: #F5C518; }
 
         .contact-title {
-          font-size: clamp(32px, 4.5vw, 52px);
+          font-size: var(--fs-h2);
           line-height: 1.12; color: #1e3a8a; font-weight: 900; margin-bottom: 18px;
         }
 
@@ -221,7 +266,7 @@ const Contact = ({ variant = 'rek' }) => {
           border-radius: 20px;
           backdrop-filter: blur(14px);
           border: 1px solid rgba(255,255,255,0.6);
-          transition: transform 0.28s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.28s ease;
+          transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), box-shadow 0.28s ease;
         }
 
         .contact-item:hover {
@@ -268,7 +313,7 @@ const Contact = ({ variant = 'rek' }) => {
         .form-header { margin-bottom: 26px; }
 
         .form-header h3 { color: #1e3a8a; font-size: 24px; font-weight: 900; margin-bottom: 6px; }
-        .form-header p  { color: #94a3b8; font-size: 14px; margin-bottom: 14px; }
+        .form-header p  { color: #64748b; font-size: 14px; margin-bottom: 14px; }
 
         .form-contact-shortcuts {
           display: flex; gap: 10px; flex-wrap: wrap;
@@ -361,8 +406,9 @@ const Contact = ({ variant = 'rek' }) => {
           input, select, textarea { font-size: 16px; }
         }
 
-        /* Liens de contact : zone tactile confortable au doigt. */
-        @media (pointer: coarse) {
+        /* Liens de contact : zone tactile confortable au doigt, et sur toute fenêtre étroite
+           (une cible de 21 px est trop petite même à la souris : WCAG 2.5.8). */
+        @media (max-width: 900px), (pointer: coarse) {
           .contact-text a { display: inline-flex; align-items: center; min-height: var(--tap); }
         }
 

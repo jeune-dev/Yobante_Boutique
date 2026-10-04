@@ -316,7 +316,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          font-size: 11px;
+          font-size: var(--fs-eyebrow);
           font-weight: 800;
           text-transform: uppercase;
           color: #1E3A8A;
@@ -425,7 +425,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
 
         .white-card {
           background: rgba(255,255,255,0.97);
-          transition: all 0.28s cubic-bezier(0.34,1.3,0.64,1);
+          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
         }
         .white-card:hover {
           transform: translateY(-6px);
@@ -436,7 +436,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           background: rgba(255,255,255,0.1);
           border: 1px solid rgba(255,255,255,0.18);
           backdrop-filter: blur(10px);
-          transition: all 0.28s cubic-bezier(0.34,1.3,0.64,1);
+          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
         }
         .boutique-step-card:hover {
           transform: translateY(-6px);
@@ -467,7 +467,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           text-align: center;
         }
 
-        .step-desc { font-size: 12px; line-height: 1.6; }
+        .step-desc { font-size: 13px; line-height: 1.6; }
 
         .boutique-step-title { color: #ffffff !important; font-weight: 800; }
         .boutique-step-desc { color: rgba(255,255,255,0.85) !important; }
@@ -537,8 +537,8 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           margin-bottom: 14px;
         }
 
-        .plan-desc { font-size: 12px; line-height: 1.5; color: #475569; margin: 0; }
-        .plan-feature { margin-top: 8px; font-size: 11px; font-weight: 700; color: #1E3A8A; }
+        .plan-desc { font-size: 13px; line-height: 1.5; color: #475569; margin: 0; }
+        .plan-feature { margin-top: 8px; font-size: 12px; font-weight: 700; color: #1E3A8A; }
 
         .plan-btn {
           margin-top: auto;
@@ -636,15 +636,6 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           overflow: hidden;
         }
 
-        .promo-box::before {
-          content: "";
-          position: absolute;
-          width: 200px; height: 200px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.1);
-          top: -70px; right: -70px;
-        }
-
         .expedition-gradient { background: #F5C518; }
         .boutique-gradient   { background: linear-gradient(135deg, #1E3A8A 0%, #152E70 100%); }
 
@@ -673,7 +664,7 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           font-size: 14px; font-weight: 800;
           cursor: pointer;
           display: flex; align-items: center; justify-content: center;
-          transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
           letter-spacing: 0.2px;
         }
 
@@ -681,13 +672,13 @@ const Services = ({ scrollTo, variant = 'rek' }) => {
           background: #1E3A8A; color: white;
           box-shadow: 0 8px 24px rgba(30,58,138,0.35);
         }
-        .expedition-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 14px 32px rgba(30,58,138,0.45); }
+        .expedition-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(30,58,138,0.45); }
 
         .boutique-btn {
           background: #F5C518; color: #1E3A8A;
           box-shadow: 0 8px 24px rgba(245,197,24,0.35);
         }
-        .boutique-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 14px 32px rgba(245,197,24,0.45); }
+        .boutique-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(245,197,24,0.45); }
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {

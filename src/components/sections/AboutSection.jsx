@@ -31,7 +31,7 @@ const AboutSection = ({ variant = 'rek' }) => {
 
             <div className="about-badges">
               <span className="about-badge">🇫🇷 France</span>
-              <span className="about-badge-arrow">→</span>
+              <span className="about-badge-arrow">↔</span>
               <span className="about-badge">🇸🇳 Sénégal</span>
             </div>
           </div>
@@ -98,7 +98,7 @@ const AboutSection = ({ variant = 'rek' }) => {
         }
 
         .about-title {
-          font-size: clamp(32px, 5vw, 58px);
+          font-size: var(--fs-h2);
           font-weight: 900; line-height: 1.08;
           color: white; margin-bottom: 28px;
           letter-spacing: -0.5px;
