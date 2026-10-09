@@ -405,7 +405,7 @@ const Applications = ({ variant = 'rek' }) => {
           inset: 0;
           z-index: 1;
           pointer-events: none;
-          background: linear-gradient(90deg, transparent 47%, rgba(255,255,255,.9) 59%, #fff 70%);
+          background: linear-gradient(90deg, transparent 36%, rgba(255,255,255,.85) 45%, #fff 50%);
         }
         .apps-boutique .app-card-featured .card-glow,
         .apps-boutique .app-card-featured .app-logo-container { display: none; }
@@ -482,7 +482,7 @@ const Applications = ({ variant = 'rek' }) => {
           display: block;
           grid-column: 1;
           grid-row: 1 / -1;
-          width: 56%;
+          width: 50%;
           min-height: 0;
           padding: 0;
           overflow: hidden;
