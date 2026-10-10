@@ -228,7 +228,8 @@ const Hero = ({ scrollTo }) => (
         aspect-ratio: 1 / 1;
         object-fit: cover;
         object-position: 100% center;
-        border-radius: var(--radius-lg);
+        -webkit-mask-image: radial-gradient(ellipse 60% 58% at 55% 52%, #000 55%, transparent 100%);
+        mask-image: radial-gradient(ellipse 60% 58% at 55% 52%, #000 55%, transparent 100%);
       }
 
       .hero-features {
@@ -269,7 +270,8 @@ const Hero = ({ scrollTo }) => (
         .hero-title { font-size: clamp(36px, 3vw + 24px, 56px); }
         .hero-sub { margin-inline: auto; }
         .hero-actions, .store-buttons { justify-content: center; }
-        .hero-image { display: block; width: 100%; max-width: 560px; margin-inline: auto; }
+        .hero { background: #0A429D; }
+        .hero-image { display: block; width: 100%; max-width: 600px; margin-inline: auto; }
         .hero-features { grid-template-columns: repeat(2, 1fr); gap: 20px 0; text-align: left; }
         .hero-feature:nth-child(3) { padding-left: 0; border-left: 0; }
       }

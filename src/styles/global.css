@@ -72,7 +72,7 @@
 }
 
 @media (max-width: 900px) {
-  :root { --nav-h: 62px; }
+  :root { --nav-h: 72px; }
 }
 
 html {

@@ -74,7 +74,7 @@ const TrustBar = () => (
       @media (max-width: 900px) {
         .trust-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
         .trust-item { justify-content: flex-start; padding: 0; border-left: 0; }
-        .trust-item:last-child { grid-column: 1 / -1; }
+        .trust-item:last-child { grid-column: 1 / -1; justify-content: center; }
         .trust-text { white-space: normal; }
       }
     ` }} />

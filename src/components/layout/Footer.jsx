@@ -115,8 +115,9 @@ const Footer = () => (
 
       @media (max-width: 768px) {
         .footer-main { flex-direction: column; }
-        .footer-brand { max-width: 100%; }
-        .footer-right { align-items: flex-start; width: 100%; }
+        .footer-main { gap: 24px; }
+        .footer-brand { flex: none; max-width: 100%; }
+        .footer-right { flex: none; align-items: flex-start; width: 100%; }
         .footer-trust, .footer-links { justify-content: flex-start; }
         .footer-trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
       }
