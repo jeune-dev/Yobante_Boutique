@@ -21,13 +21,13 @@ test.describe('Routes et historique', () => {
     });
   }
 
-  test('actualiser la page à une ancre la conserve et ne casse rien', async ({ page }) => {
+  test('actualiser la page ramène en haut et ne casse rien', async ({ page }) => {
     await page.goto('/#contact');
     await expectSectionInView(page, 'contact');
     await page.reload();
     await expect(page).toHaveTitle(site.title);
-    await expectSectionInView(page, 'contact');
-    await expect(page.locator('form.contact-form')).toBeVisible();
+    await expect.poll(() => page.evaluate(() => Math.round(window.scrollY))).toBe(0);
+    await expect(page.locator('form.contact-form')).toBeAttached();
   });
 
   test('retour et avance du navigateur entre deux ancres', async ({ page }) => {
