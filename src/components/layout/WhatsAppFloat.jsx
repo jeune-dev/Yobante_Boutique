@@ -21,30 +21,28 @@ const WhatsAppFloat = () => {
         )}
       </a>
 
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .whatsapp-float {
           position: fixed;
           bottom: calc(var(--fab-gap) + env(safe-area-inset-bottom, 0px));
           right: calc(var(--fab-gap) + env(safe-area-inset-right, 0px));
           width: var(--fab-size);
           height: var(--fab-size);
-          background: linear-gradient(135deg, #25D366, #1ebe57);
+          background: #25D366;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
-          z-index: 9999;
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+          z-index: 1100;
           transition: transform 0.25s ease, box-shadow 0.25s ease;
           text-decoration: none;
           border: 2px solid #ffffff;
+          color: #fff;
         }
 
-        .whatsapp-float:hover {
-          transform: scale(1.1);
-          box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
-        }
-      `}</style>
+        .whatsapp-float:hover { transform: scale(1.06); }
+      ` }} />
     </>
   );
 };

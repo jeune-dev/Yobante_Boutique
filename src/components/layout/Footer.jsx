@@ -1,154 +1,127 @@
-// src/components/layout/Footer.jsx
-import { Zap, Lock, HeadphonesIcon, Smartphone } from 'lucide-react';
-import yobanteLogo from '../../assets/images/Logo Yobante Boutique.webp';
+import { Zap, Lock, Headphones, Smartphone } from 'lucide-react';
+import footerLogo from '../../assets/images/logo-boutique-footer.webp';
 
-const trustItems = [
-  { icon: <Zap size={13} />, label: 'Livraison rapide' },
-  { icon: <Lock size={13} />, label: 'Paiement sécurisé' },
-  { icon: <HeadphonesIcon size={13} />, label: 'Support en ligne' },
-  { icon: <Smartphone size={13} />, label: 'iOS & Android' },
+const TRUST_ITEMS = [
+  { icon: Zap, label: 'Livraison rapide' },
+  { icon: Lock, label: 'Paiement sécurisé' },
+  { icon: Headphones, label: 'Support en ligne' },
+  { icon: Smartphone, label: 'iOS & Android' },
 ];
 
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <div className="footer-bg-glow glow-1"></div>
-      <div className="footer-bg-glow glow-2"></div>
+const LEGAL_LINKS = ['Mentions légales', 'CGV', 'Confidentialité'];
 
-      <div className="container">
-        <div className="footer-main">
-
-          {/* BRAND */}
-          <div className="footer-brand">
-            <div className="footer-logo">
-              <img src={yobanteLogo} alt="Yobanté Logo" className="logo-img" width="260" height="80" loading="lazy" decoding="async" />
-            </div>
-            <p className="footer-description">
-              Votre spécialiste de l'expédition de colis et du e-commerce
-              entre la France et le Sénégal.
-            </p>
-          </div>
-
-          {/* TRUST + LINKS */}
-          <div className="footer-right">
-            <div className="footer-trust">
-              {trustItems.map(({ icon, label }) => (
-                <div className="trust-item" key={label}>
-                  <span className="trust-icon">{icon}</span>
-                  {label}
-                </div>
-              ))}
-            </div>
-            <div className="footer-links">
-              <button>Mentions légales</button>
-              <button>CGV</button>
-              <button>Confidentialité</button>
-            </div>
-          </div>
+const Footer = () => (
+  <footer className="footer">
+    <div className="container">
+      <div className="footer-main">
+        <div className="footer-brand">
+          <img src={footerLogo} alt="Yobanté Logo" className="footer-logo" width="570" height="170" loading="lazy" decoding="async" />
+          <p className="footer-description">
+            Votre spécialiste de l'expédition de colis et du e-commerce
+            entre la France et le Sénégal.
+          </p>
         </div>
 
-        <div className="footer-bottom">
-          <span className="copyright">© 2026 YOBANTÉ. Tous droits réservés.</span>
+        <div className="footer-right">
+          <ul className="footer-trust">
+            {TRUST_ITEMS.map(({ icon: Icon, label }) => (
+              <li key={label}>
+                <Icon size={15} strokeWidth={2} aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ul>
+          <div className="footer-links">
+            {LEGAL_LINKS.map((label) => (
+              <button type="button" key={label}>{label}</button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <style>{`
-        .footer {
-          position: relative; overflow: hidden;
-          background: #053d8f;
-          color: white; padding-top: 38px;
-          padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
+      <div className="footer-bottom">
+        <span className="copyright">© 2026 YOBANTÉ. Tous droits réservés.</span>
+      </div>
+    </div>
 
-        .footer-bg-glow {
-          position: absolute; border-radius: 50%;
-          filter: blur(120px); opacity: 0.12; z-index: 0;
-        }
+    <style dangerouslySetInnerHTML={{ __html: `
+      .footer {
+        padding-top: clamp(40px, 5vw, 56px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        background: var(--blue-deep);
+        color: #fff;
+      }
 
-        .footer .glow-1 { width: 280px; height: 280px; background: #1E3A8A; top: -90px; right: -90px; }
-        .footer .glow-2 { width: 230px; height: 230px; background: #F5C518; bottom: -70px; left: -70px; }
+      .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 28px clamp(24px, 5vw, 56px);
+        padding-bottom: 32px;
+      }
 
-        .footer-main {
-          display: flex; flex-wrap: wrap;
-          justify-content: space-between; align-items: flex-start;
-          gap: 24px clamp(24px, 5vw, 50px); padding-bottom: 24px;
-          border-bottom: 1px solid rgba(255,255,255,.08);
-        }
+      .footer-brand { flex: 1 1 240px; max-width: 320px; }
+      .footer-logo { display: block; width: 190px; height: auto; margin-bottom: 18px; }
+      .footer-description { color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.65; }
 
-        .footer-brand { max-width: 290px; flex: 1 1 220px; }
-        .footer-logo  { margin-bottom: 12px; }
+      .footer-right {
+        display: flex;
+        flex: 1 1 320px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 14px;
+        min-width: 0;
+      }
 
-        .footer .logo-img {
-          display: block;
-          width: clamp(210px, 56vw, 260px);
-          height: clamp(62px, 17vw, 80px);
-          object-fit: cover;
-          object-position: 50% 50%;
-        }
+      .footer-trust {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px 24px;
+        list-style: none;
+      }
+      .footer-trust li {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 13.5px;
+        font-weight: 600;
+      }
+      .footer-trust svg { color: var(--gold); }
 
-        .footer-description {
-          color: rgba(255,255,255,.74);
-          line-height: 1.65; font-size: 13px; margin: 0;
-        }
+      .footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 24px; }
+      .footer-links button {
+        display: inline-flex;
+        align-items: center;
+        min-height: var(--tap);
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 13.5px;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+      .footer-links button:hover { color: #fff; }
 
-        .footer-right {
-          display: flex; flex-direction: column;
-          align-items: flex-end; gap: 12px;
-          flex: 1 1 280px;
-          min-width: 0;
-        }
+      .footer-bottom {
+        padding: 18px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+      }
+      .copyright { color: rgba(255, 255, 255, 0.55); font-size: 13px; }
 
-        .footer-trust {
-          display: flex; flex-wrap: wrap; gap: 9px; justify-content: flex-end;
-        }
-
-        .footer .trust-item {
-          display: flex; align-items: center; gap: 6px;
-          padding: 6px 12px; border-radius: 18px;
-          background: rgba(255,255,255,.05);
-          border: 1px solid rgba(255,255,255,.09);
-          color: rgba(255,255,255,.82);
-          font-size: 11.5px; font-weight: 700;
-          backdrop-filter: blur(8px);
-          margin-left: 0;
-          white-space: normal;
-        }
-
-        .trust-icon { display: flex; align-items: center; color: #F5C518; }
-
-        .footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 18px; }
-
-        /* Cible tactile ≥ 44px de haut sans changer l'allure du lien. */
-        .footer-links button {
-          background: transparent; border: none;
-          color: rgba(255,255,255,.75);
-          font-size: 12.5px; cursor: pointer;
-          min-height: var(--tap); min-width: var(--tap); padding: 0 2px;
-          display: inline-flex; align-items: center;
-          transition: color 0.2s;
-        }
-
-        .footer-links button:hover { color: #fff; }
-
-        .footer-bottom {
-          display: flex; justify-content: center; padding: 14px 0;
-        }
-
-        .copyright { color: rgba(255,255,255,.66); font-size: 12.5px; text-align: center; }
-
-        @media (max-width: 768px) {
-          .footer-main { flex-direction: column; }
-          .footer-brand { max-width: 100%; flex: 0 0 auto; }
-          .footer-right { align-items: flex-start; flex: 0 0 auto; width: 100%; }
-          .footer-trust, .footer-links { justify-content: flex-start; }
-        }
-
-        @media (max-width: 480px) {
-          .footer-links { gap: 0 16px; }
-        }
-      `}</style>
-    </footer>
-  );
-};
+      @media (max-width: 768px) {
+        .footer-main { flex-direction: column; }
+        .footer-brand { max-width: 100%; }
+        .footer-right { align-items: flex-start; width: 100%; }
+        .footer-trust, .footer-links { justify-content: flex-start; }
+        .footer-trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      }
+    ` }} />
+  </footer>
+);
 
 export default Footer;

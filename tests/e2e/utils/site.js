@@ -4,7 +4,7 @@ export const site = {
   name: 'YOBANTÉ Boutique',
   title: 'YOBANTÉ Boutique | Vos achats livrés au Sénégal',
   h1: /Vos grandes/,
-  domain: 'https://yobante-boutique.com',
+  domain: 'https://www.yobante-boutique.com',
   source: 'boutique',
   subject: 'Autres',
   // Visuel du Hero préchargé dans index.html (élément LCP) ; null si aucun.

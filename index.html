@@ -3,44 +3,109 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#1e3a8a" />
+  <meta name="theme-color" content="#053D8F" />
   <meta name="description" content="YOBANTÉ Boutique - Achetez vos produits préférés à prix discount et faites-les livrer au Sénégal : électroménager, informatique, high-tech." />
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="author" content="YOBANTÉ" />
+  <meta name="format-detection" content="telephone=no" />
 
   <title>YOBANTÉ Boutique | Vos achats livrés au Sénégal</title>
 
-  <!-- URL canonique : une seule adresse indexée pour la page. -->
-  <link rel="canonical" href="https://yobante-boutique.com/" />
+  <link rel="canonical" href="https://www.yobante-boutique.com/" />
+  <link rel="alternate" hreflang="fr" href="https://www.yobante-boutique.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.yobante-boutique.com/" />
 
-  <!-- Aperçu lors du partage du lien (Open Graph / réseaux sociaux). -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:site_name" content="YOBANTÉ Boutique" />
   <meta property="og:title" content="YOBANTÉ Boutique | Vos achats livrés au Sénégal" />
   <meta property="og:description" content="YOBANTÉ Boutique - Achetez vos produits préférés à prix discount et faites-les livrer au Sénégal : électroménager, informatique, high-tech." />
-  <meta property="og:url" content="https://yobante-boutique.com/" />
-  <meta property="og:image" content="https://yobante-boutique.com/og-image.jpg" />
+  <meta property="og:url" content="https://www.yobante-boutique.com/" />
+  <meta property="og:image" content="https://www.yobante-boutique.com/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:alt" content="YOBANTÉ Boutique : application mobile et produits livrés au Sénégal" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="YOBANTÉ Boutique | Vos achats livrés au Sénégal" />
   <meta name="twitter:description" content="YOBANTÉ Boutique - Achetez vos produits préférés à prix discount et faites-les livrer au Sénégal : électroménager, informatique, high-tech." />
-  <meta name="twitter:image" content="https://yobante-boutique.com/og-image.jpg" />
+  <meta name="twitter:image" content="https://www.yobante-boutique.com/og-image.jpg" />
+  <meta name="twitter:image:alt" content="YOBANTÉ Boutique : application mobile et produits livrés au Sénégal" />
 
-  <!-- Favicon servi depuis public/ : Vite recopie ce dossier tel quel a la
-       racine de dist/, le chemin reste donc valable en production. -->
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <script type="application/ld+json">
-  {
+{
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://www.yobante-boutique.com/#organization",
     "name": "YOBANTÉ Boutique",
-    "url": "https://yobante-boutique.com/",
-    "logo": "https://yobante-boutique.com/favicon.png",
+    "url": "https://www.yobante-boutique.com/",
+    "logo": "https://www.yobante-boutique.com/favicon.png",
+    "image": "https://www.yobante-boutique.com/og-image.jpg",
     "email": "contact@yobanteboutique.com",
     "description": "Boutique en ligne : produits à prix discount livrés au Sénégal.",
-    "areaServed": "Sénégal"
+    "areaServed": {
+      "@type": "Country",
+      "name": "Sénégal"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "contact@yobanteboutique.com",
+      "availableLanguage": [
+        "French"
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.yobante-boutique.com/#website",
+    "name": "YOBANTÉ Boutique",
+    "url": "https://www.yobante-boutique.com/",
+    "inLanguage": "fr-FR",
+    "publisher": {
+      "@id": "https://www.yobante-boutique.com/#organization"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quels produits puis-je commander ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "YOBANTÉ Boutique propose des produits alimentaires, de mode, de maison, d'électronique, d'hygiène et de sport selon les disponibilités du catalogue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment passer une commande ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sélectionnez vos produits, validez votre panier puis choisissez votre mode de paiement et votre adresse de livraison."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quels sont les moyens de paiement acceptés ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le paiement peut être effectué avec Orange Money, Wave ou carte bancaire."
+        }
+      }
+    ]
   }
   </script>
 </head>

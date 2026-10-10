@@ -1,4 +1,3 @@
-// src/components/sections/ShopCategories.jsx
 import { Laptop, Headphones, WashingMachine, ShoppingBasket, ArrowRight } from 'lucide-react';
 
 const CATEGORIES = [
@@ -38,7 +37,7 @@ const ShopCategories = () => (
       <div className="shc-grid">
         {CATEGORIES.map(({ icon: Icon, title, text }, i) => (
           <article key={title} className={`shc-card sr sr-d${i + 1}`}>
-            <span className="shc-icon"><Icon size={30} strokeWidth={1.8} /></span>
+            <span className="shc-icon"><Icon size={26} strokeWidth={1.8} aria-hidden="true" /></span>
             <h3>{title}</h3>
             <p>{text}</p>
           </article>
@@ -47,42 +46,61 @@ const ShopCategories = () => (
 
       <div className="sec-cta sr">
         <a className="shc-btn" href="#apps">
-          Découvrir l'application <ArrowRight size={17} strokeWidth={2.2} />
+          Découvrir l'application <ArrowRight size={17} strokeWidth={2.2} aria-hidden="true" />
         </a>
       </div>
     </div>
 
-    <style>{`
-      .shc-section { padding: var(--section-y) 0; background: linear-gradient(180deg, #f8fbff, #eef4ff); }
+    <style dangerouslySetInnerHTML={{ __html: `
+      .shc-section { padding: var(--section-y) 0; background: var(--surface); }
 
-      .shc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+      .shc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
       .shc-card {
-        padding: 32px 24px; border-radius: 24px; background: #fff;
-        border: 1px solid rgba(30,58,138,.08); box-shadow: 0 8px 34px rgba(30,58,138,.07);
-        transition: transform .3s ease, box-shadow .3s ease;
+        padding: 30px 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.25s var(--ease), box-shadow 0.25s ease, border-color 0.25s ease;
       }
-      .shc-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(30,58,138,.14); }
+      .shc-card:hover { transform: translateY(-3px); border-color: var(--blue-100); box-shadow: var(--shadow-md); }
       .shc-icon {
-        display: grid; place-items: center; width: 62px; height: 62px; margin-bottom: 18px;
-        border-radius: 20px; background: #fff3ca; color: #1E3A8A;
+        display: grid;
+        place-items: center;
+        width: 56px;
+        height: 56px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        background: var(--gold-50);
+        color: var(--blue);
+        box-shadow: inset 0 0 0 1px var(--gold-100);
       }
-      .shc-card h3 { margin: 0 0 8px; color: #1E3A8A; font-size: 18px; font-weight: 900; line-height: 1.25; }
-      .shc-card p { margin: 0; color: #64748b; font-size: 14.5px; line-height: 1.65; }
+      .shc-card h3 { margin-bottom: 8px; color: var(--blue); font-size: 17.5px; font-weight: 700; line-height: 1.3; }
+      .shc-card p { color: var(--text-light); font-size: 14.5px; line-height: 1.65; }
 
       .shc-btn {
-        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-        min-height: var(--tap, 44px); padding: 14px 28px; border-radius: 999px;
-        background: #F5C518; color: #1E3A8A; font-weight: 800; font-size: 15px; text-decoration: none;
-        box-shadow: 0 10px 26px rgba(245,197,24,.4); transition: transform .25s ease, box-shadow .25s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 50px;
+        padding: 0 28px;
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14.5px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.2s ease, transform 0.2s var(--ease);
       }
-      .shc-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(245,197,24,.5); }
+      .shc-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
       @media (max-width: 1024px) { .shc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       @media (max-width: 560px) {
-        .shc-grid { grid-template-columns: 1fr; gap: 16px; }
+        .shc-grid { grid-template-columns: 1fr; gap: 14px; }
         .shc-btn { width: 100%; }
       }
-    `}</style>
+    ` }} />
   </section>
 );
 

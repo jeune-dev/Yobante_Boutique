@@ -1,732 +1,370 @@
-// src/components/sections/Services.jsx
-import { useCallback, useState } from "react";
-import rekLogo from "../../assets/images/Logo Yobante Rek.webp";
-import boutiqueLogo from "../../assets/images/Logo Yobante Boutique.webp";
+import { useState } from 'react';
+import boutiqueLogo from '../../assets/images/Logo Yobante Boutique.webp';
 import {
-  Mail, Package, Truck, ShoppingBag, ArrowRight,
+  ShoppingBag, ArrowRight,
   Tag, MapPin, Coffee, Shirt, UtensilsCrossed, Home,
   Apple, Fish, Egg, Snowflake, Baby, Cookie, FlaskConical,
   GlassWater, Wheat, SprayCan, Droplets, PawPrint,
   Gamepad2, Smartphone, Laptop, Tv, Dumbbell,
-} from "lucide-react";
+} from 'lucide-react';
 
 const STEPS = [
-  {
-    id: "create",
-    num: "01",
-    title: "Remplissez le formulaire",
-    desc: "Renseignez les informations de votre colis sur notre site ou via l'application."
-  },
-  {
-    id: "pay",
-    num: "02",
-    title: "Payez en ligne",
-    desc: "Choisissez votre mode de paiement : en ligne, à la collecte ou à la livraison."
-  },
-  {
-    id: "deliver",
-    num: "03",
-    title: "Nous livrons votre colis",
-    desc: "Le colis est livré à l'adresse de votre choix."
-  }
-];
-
-const PRICING_PLANS = [
-  {
-    id: "docs",
-    icon: <Mail size={30} strokeWidth={1.5} color="#1E3A8A" />,
-    name: "Documents",
-    price: "Tarif fixe",
-    desc: "Lettres, documents administratifs, courriers",
-    features: ["Poids inférieur à 500g"],
-    button: "Effectuez un envoi",
-    type: "default"
-  },
-  {
-    id: "colis10",
-    icon: <Package size={30} strokeWidth={1.5} color="#1E3A8A" />,
-    name: "Produit max 30kg",
-    price: "Devis",
-    desc: "Vêtements, chaussures, Électronique légère...",
-    features: ["Jusqu'à 30 kilos"],
-    button: "Obtenir un devis",
-    type: "popular"
-  },
-  {
-    id: "colis20",
-    icon: <Truck size={30} strokeWidth={1.5} color="#1E3A8A" />,
-    name: "Gros colis",
-    price: "Devis",
-    desc: "Gros colis, électroménagers, mobiliers...",
-    features: ["Collecte à domicile"],
-    button: "Obtenir un devis",
-    type: "default"
-  }
-];
-
-const BOUTIQUE_STEPS = [
-  {
-    num: "01",
-    title: "Parcourez nos rayons et sélectionnez vos produits",
-    desc: ""
-  },
-  {
-    num: "02",
-    title: "Validez votre panier",
-    desc: "Règlement possible par Orange Money, Wave ou carte bancaire."
-  },
-  {
-    num: "03",
-    title: "Programmez vos livraisons",
-    desc: "Recevez directement votre commande à l'adresse de votre choix."
-  }
+  { title: 'Parcourez nos rayons et sélectionnez vos produits', desc: '' },
+  { title: 'Validez votre panier', desc: 'Règlement possible par Orange Money, Wave ou carte bancaire.' },
+  { title: 'Programmez vos livraisons', desc: "Recevez directement votre commande à l'adresse de votre choix." },
 ];
 
 const CATEGORIES = [
-  { icon: <Tag size={26} strokeWidth={1.5} color="white" />, label: "Promotions", description: "Offres du moment et produits à prix réduits." },
-  { icon: <MapPin size={26} strokeWidth={1.5} color="white" />, label: "Produits Locaux", description: "Produits fabriqués ou cultivés au Sénégal et dans la région." },
-  { icon: <Coffee size={26} strokeWidth={1.5} color="white" />, label: "Cafés", description: "Cafés, grains, boissons chaudes et accessoires associés." },
-  { icon: <Shirt size={26} strokeWidth={1.5} color="white" />, label: "Mode Locale", description: "Vêtements et créations inspirés des styles locaux." },
-  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Traiteur", description: "Plats préparés, spécialités et produits traiteur." },
-  { icon: <Home size={26} strokeWidth={1.5} color="white" />, label: "Mobilier & Déco", description: "Meubles et objets pour aménager et décorer votre intérieur." },
-  { icon: <Apple size={26} strokeWidth={1.5} color="white" />, label: "Fruits & Légumes", description: "Fruits et légumes frais pour vos repas du quotidien." },
-  { icon: <Fish size={26} strokeWidth={1.5} color="white" />, label: "Viande & Poissons", description: "Viandes, poissons et produits de la mer." },
-  { icon: <Egg size={26} strokeWidth={1.5} color="white" />, label: "Crèmerie & Laitiers", description: "Lait, fromages, yaourts et autres produits laitiers." },
-  { icon: <UtensilsCrossed size={26} strokeWidth={1.5} color="white" />, label: "Charcuterie", description: "Sélection de charcuteries et produits salés à partager." },
-  { icon: <Snowflake size={26} strokeWidth={1.5} color="white" />, label: "Surgelés", description: "Produits surgelés à conserver et préparer facilement." },
-  { icon: <Baby size={26} strokeWidth={1.5} color="white" />, label: "Bébé", description: "Essentiels, soins et accessoires pour les tout-petits." },
-  { icon: <Cookie size={26} strokeWidth={1.5} color="white" />, label: "Épicerie Sucrée", description: "Biscuits, confiseries, chocolat et douceurs." },
-  { icon: <FlaskConical size={26} strokeWidth={1.5} color="white" />, label: "Épicerie Salée", description: "Ingrédients, conserves et produits salés pour cuisiner." },
-  { icon: <GlassWater size={26} strokeWidth={1.5} color="white" />, label: "Boissons", description: "Eaux, jus et boissons pour toutes les occasions." },
-  { icon: <Wheat size={26} strokeWidth={1.5} color="white" />, label: "Pains & Pâtisserie", description: "Pains, viennoiseries et pâtisseries à déguster." },
-  { icon: <SprayCan size={26} strokeWidth={1.5} color="white" />, label: "Entretien & Nettoyage", description: "Produits et accessoires pour entretenir votre maison." },
-  { icon: <Droplets size={26} strokeWidth={1.5} color="white" />, label: "Hygiène & Beauté", description: "Soins, hygiène personnelle et produits de beauté." },
-  { icon: <PawPrint size={26} strokeWidth={1.5} color="white" />, label: "Animalerie", description: "Alimentation et accessoires pour vos animaux." },
-  { icon: <Gamepad2 size={26} strokeWidth={1.5} color="white" />, label: "Jeux Vidéo", description: "Jeux, consoles et accessoires de divertissement." },
-  { icon: <Smartphone size={26} strokeWidth={1.5} color="white" />, label: "Smartphones & Connectés", description: "Téléphones, objets connectés et accessoires mobiles." },
-  { icon: <Laptop size={26} strokeWidth={1.5} color="white" />, label: "Informatique & Bureau", description: "Ordinateurs, périphériques et fournitures de bureau." },
-  { icon: <Tv size={26} strokeWidth={1.5} color="white" />, label: "Image & Son", description: "Téléviseurs, équipements audio et accessoires multimédias." },
-  { icon: <Dumbbell size={26} strokeWidth={1.5} color="white" />, label: "Sport", description: "Équipements et accessoires pour bouger et s’entraîner." },
-  { icon: <ShoppingBag size={26} strokeWidth={1.5} color="white" />, label: "Mode & Textile", description: "Vêtements, chaussures et accessoires pour toute la famille." },
+  { icon: Tag, label: 'Promotions', description: 'Offres du moment et produits à prix réduits.' },
+  { icon: MapPin, label: 'Produits Locaux', description: 'Produits fabriqués ou cultivés au Sénégal et dans la région.' },
+  { icon: Coffee, label: 'Cafés', description: 'Cafés, grains, boissons chaudes et accessoires associés.' },
+  { icon: Shirt, label: 'Mode Locale', description: 'Vêtements et créations inspirés des styles locaux.' },
+  { icon: UtensilsCrossed, label: 'Traiteur', description: 'Plats préparés, spécialités et produits traiteur.' },
+  { icon: Home, label: 'Mobilier & Déco', description: 'Meubles et objets pour aménager et décorer votre intérieur.' },
+  { icon: Apple, label: 'Fruits & Légumes', description: 'Fruits et légumes frais pour vos repas du quotidien.' },
+  { icon: Fish, label: 'Viande & Poissons', description: 'Viandes, poissons et produits de la mer.' },
+  { icon: Egg, label: 'Crèmerie & Laitiers', description: 'Lait, fromages, yaourts et autres produits laitiers.' },
+  { icon: UtensilsCrossed, label: 'Charcuterie', description: 'Sélection de charcuteries et produits salés à partager.' },
+  { icon: Snowflake, label: 'Surgelés', description: 'Produits surgelés à conserver et préparer facilement.' },
+  { icon: Baby, label: 'Bébé', description: 'Essentiels, soins et accessoires pour les tout-petits.' },
+  { icon: Cookie, label: 'Épicerie Sucrée', description: 'Biscuits, confiseries, chocolat et douceurs.' },
+  { icon: FlaskConical, label: 'Épicerie Salée', description: 'Ingrédients, conserves et produits salés pour cuisiner.' },
+  { icon: GlassWater, label: 'Boissons', description: 'Eaux, jus et boissons pour toutes les occasions.' },
+  { icon: Wheat, label: 'Pains & Pâtisserie', description: 'Pains, viennoiseries et pâtisseries à déguster.' },
+  { icon: SprayCan, label: 'Entretien & Nettoyage', description: 'Produits et accessoires pour entretenir votre maison.' },
+  { icon: Droplets, label: 'Hygiène & Beauté', description: 'Soins, hygiène personnelle et produits de beauté.' },
+  { icon: PawPrint, label: 'Animalerie', description: 'Alimentation et accessoires pour vos animaux.' },
+  { icon: Gamepad2, label: 'Jeux Vidéo', description: 'Jeux, consoles et accessoires de divertissement.' },
+  { icon: Smartphone, label: 'Smartphones & Connectés', description: 'Téléphones, objets connectés et accessoires mobiles.' },
+  { icon: Laptop, label: 'Informatique & Bureau', description: 'Ordinateurs, périphériques et fournitures de bureau.' },
+  { icon: Tv, label: 'Image & Son', description: 'Téléviseurs, équipements audio et accessoires multimédias.' },
+  { icon: Dumbbell, label: 'Sport', description: 'Équipements et accessoires pour bouger et s’entraîner.' },
+  { icon: ShoppingBag, label: 'Mode & Textile', description: 'Vêtements, chaussures et accessoires pour toute la famille.' },
 ];
 
-const Services = ({ scrollTo, variant = 'rek' }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const handleClick = useCallback(() => { scrollTo("contact"); }, [scrollTo]);
+const Services = ({ scrollTo }) => {
+  const [selected, setSelected] = useState(null);
 
   return (
-    <section id="services" className={`section ${variant}`}>
-      <div className="bg-shape bg1"></div>
-      <div className="bg-shape bg2"></div>
-
+    <section id="services" className="services-section">
       <div className="container">
-
-        {/* HEADER */}
-        <div className="section-header sr">
-          <h2 className="section-tag">
-            <span className="tag-line"></span>
-            Nos services
-          </h2>
+        <div className="sec-head sr">
+          <h2 className="sec-title">Nos services</h2>
         </div>
 
-        {/* ===== EXPEDITION ===== */}
-        <div className="service-card-wrapper glass-card sr expedition-service">
-
-          <div className="card-left yellow-main">
-            <div className="card-title-row">
-              <div className="card-icon-circle blue-bg">
-                <Package size={28} strokeWidth={1.5} color="white" />
-              </div>
-              <div>
-                <h3 className="card-main-title blue-text">Expédiez votre colis</h3>
-              </div>
-            </div>
-
-            {/* Comment ça marche */}
-            <div className="inner-section">
-              <div className="inner-tag blue-text">
-                <span className="inner-tag-line blue-bg"></span>
-                COMMENT ÇA MARCHE ?
-              </div>
-              <div className="steps-row">
-                {STEPS.map((step, i) => (
-                  <div key={step.id} className="step-wrapper">
-                    <div className="step-card white-card">
-                      <div className="step-num blue-bg">Étape {i + 1}</div>
-                      <p className="step-title blue-text">{step.title}</p>
-                      <p className="step-desc dark-text">{step.desc}</p>
-                    </div>
-                    {i < STEPS.length - 1 && <div className="step-arrow"><ArrowRight size={22} strokeWidth={2.5} className="blue-text" /></div>}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Nos tarifs */}
-            <div className="inner-section">
-              <div className="inner-tag blue-text">
-                <span className="inner-tag-line blue-bg"></span>
-                NOS TARIFS
-              </div>
-              <div className="pricing-row">
-                {PRICING_PLANS.map((plan) => (
-                  <div
-                    key={plan.id}
-                    className={`pricing-card ${plan.type === "popular" ? "popular-card" : "white-card"}`}
-                  >
-                    {plan.type === "popular" && (
-                      <div className="popular-badge">LE + POPULAIRE</div>
-                    )}
-                    <div className="plan-icon-container">{plan.icon}</div>
-                    <h4 className="plan-name blue-text">{plan.name}</h4>
-                    <p className="plan-price-label">{plan.price}</p>
-                    <div className="plan-details-box">
-                      <p className="plan-desc">{plan.desc}</p>
-                      {plan.features.map((f, i) => (
-                        <p key={i} className="plan-feature">{f}</p>
-                      ))}
-                    </div>
-                    <button className="plan-btn" onClick={handleClick}>{plan.button}</button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT promo expédition */}
-          <div className="card-right promo-side">
-            <div className="promo-box expedition-gradient">
-              <img src={rekLogo} alt="Yobanté Rek" className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
-              <p className="promo-desc expedition-desc">
-                Envoyez vos colis depuis la France vers le Sénégal avec collecte à domicile ou dépôt en point relais.
-              </p>
-              <button className="promo-btn expedition-btn" onClick={() => scrollTo("app-expedition")}>
-                En savoir plus →
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* ===== BOUTIQUE ===== */}
-        <div id="app-boutique" className="service-card-wrapper boutique-wrapper glass-card sr boutique-service" style={{ marginTop: "60px" }}>
-
-          {/* LEFT promo boutique */}
-          <div className="card-right promo-side">
-            <div className="promo-box boutique-gradient">
+        <div id="app-boutique" className="boutique-service sr">
+          <aside className="promo-side">
+            <div className="promo-box">
               <img src={boutiqueLogo} alt="Yobanté Boutique" className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
-              <p className="promo-desc boutique-desc">
-                Achetez vos produits préférés à prix discount
-              </p>
-              <button className="promo-btn boutique-btn" onClick={() => scrollTo("app-boutique")}>
+              <p className="promo-desc">Achetez vos produits préférés à prix discount</p>
+              <button type="button" className="promo-btn" onClick={() => scrollTo('app-boutique')}>
                 Explorer nos rayons
               </button>
             </div>
-          </div>
+          </aside>
 
-          <div className="card-left blue-dark-bg">
-            <div className="card-title-row">
-              <div className="card-icon-circle gold-bg">
-                <ShoppingBag size={28} strokeWidth={1.5} color="#1E3A8A" />
-              </div>
-              <div>
-                <h3 className="card-main-title white-text">Yobanté Boutique</h3>
-              </div>
+          <div className="service-body">
+            <div className="service-title-row">
+              <span className="service-icon"><ShoppingBag size={26} strokeWidth={1.7} aria-hidden="true" /></span>
+              <h3 className="service-title">Yobanté Boutique</h3>
             </div>
 
-            {/* Nos rayons */}
-            <div className="inner-section">
-              <div className="inner-tag white-text">
-                <span className="inner-tag-line gold-bg"></span>
-                NOS RAYONS
-              </div>
-              {selectedCategory && (
+            <div className="service-block">
+              <p className="service-label">Nos rayons</p>
+              {selected && (
                 <div className="category-info" role="status" aria-live="polite">
-                  <strong>{selectedCategory.label}</strong>
-                  <p>{selectedCategory.description}</p>
+                  <strong>{selected.label}</strong>
+                  <p>{selected.description}</p>
                 </div>
               )}
               <div className="categories-grid">
-                {CATEGORIES.map((cat, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`category-pill ${selectedCategory?.label === cat.label ? "selected" : ""}`}
-                    aria-pressed={selectedCategory?.label === cat.label}
-                    onClick={() => setSelectedCategory(cat)}
-                  >
-                    <span className="cat-icon">{cat.icon}</span>
-                    <span className="cat-label">{cat.label}</span>
-                  </button>
-                ))}
+                {CATEGORIES.map((cat) => {
+                  const Icon = cat.icon;
+                  const isSelected = selected?.label === cat.label;
+                  return (
+                    <button
+                      key={cat.label}
+                      type="button"
+                      className={`category-pill${isSelected ? ' selected' : ''}`}
+                      aria-pressed={isSelected}
+                      onClick={() => setSelected(cat)}
+                    >
+                      <span className="cat-icon"><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></span>
+                      <span className="cat-label">{cat.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Parcours client */}
-            <div className="inner-section">
-              <div className="inner-tag white-text">
-                <span className="inner-tag-line gold-bg"></span>
-                PARCOURS CLIENT
-              </div>
-              <div className="steps-row">
-                {BOUTIQUE_STEPS.map((step, i) => (
-                  <div key={i} className="step-wrapper">
-                    <div className="step-card boutique-step-card">
-                      <div className="step-num gold-bg step-num-dark">Étape {i + 1}</div>
-                      <p className="step-title boutique-step-title">{step.title}</p>
-                      {step.desc && <p className="step-desc boutique-step-desc">{step.desc}</p>}
+            <div className="service-block">
+              <p className="service-label">Parcours client</p>
+              <ol className="steps-row">
+                {STEPS.map((step, i) => (
+                  <li key={step.title} className="step-wrapper">
+                    <div className="boutique-step-card">
+                      <span className="step-num">Étape {i + 1}</span>
+                      <p className="step-title">{step.title}</p>
+                      {step.desc && <p className="step-desc">{step.desc}</p>}
                     </div>
-                    {i < BOUTIQUE_STEPS.length - 1 && <div className="step-arrow"><ArrowRight size={22} strokeWidth={2.5} className="gold-text" /></div>}
-                  </div>
+                    {i < STEPS.length - 1 && (
+                      <span className="step-arrow" aria-hidden="true"><ArrowRight size={16} strokeWidth={2.4} /></span>
+                    )}
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </div>
         </div>
-
       </div>
 
-      <style>{`
-        * { box-sizing: border-box; }
-
-        .section {
+      <style dangerouslySetInnerHTML={{ __html: `
+        .services-section {
           position: relative;
           padding: var(--section-y) 0;
-          background:
-            radial-gradient(circle at top left, #FDF3CC 0%, transparent 28%),
-            radial-gradient(circle at bottom right, #C5D5F0 0%, transparent 32%),
-            #f8fafc;
-          overflow: hidden;
+          overflow: clip;
+          background: var(--surface);
         }
 
-        .bg-shape {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(120px);
-          opacity: 0.25;
-          z-index: 0;
-        }
-
-        .bg1 { width: 320px; height: 320px; background: #1E3A8A; top: -90px; right: -90px; }
-        .bg2 { width: 280px; height: 280px; background: #F5C518; bottom: -90px; left: -90px; }
-
-        /* HEADER */
-        .section .section-header { text-align: center; margin-bottom: clamp(36px, 5vw, 56px); }
-
-        .section .section-tag {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-size: var(--fs-eyebrow);
-          font-weight: 800;
-          text-transform: uppercase;
-          color: #1E3A8A;
-          letter-spacing: 2px;
-          background: rgba(30,58,138,0.06);
-          padding: 8px 16px;
-          border-radius: 999px;
-        }
-
-        .tag-line { width: 20px; height: 2px; background: #F5C518; border-radius: 2px; }
-
-        /* WRAPPERS */
-        .service-card-wrapper {
+        .boutique-service {
           display: grid;
-          grid-template-columns: 2fr 1fr;
-          border-radius: 30px;
+          grid-template-columns: minmax(260px, 1fr) 2fr;
           overflow: hidden;
-          align-items: stretch;
-          gap: 0;
+          border: 1px solid var(--border);
+          border-radius: 30px;
+          background: var(--white);
+          box-shadow: var(--shadow-lg);
+          scroll-margin-top: calc(var(--nav-h) + 16px);
         }
 
-        .glass-card {
-          background: rgba(255,255,255,0.72);
-          backdrop-filter: blur(24px);
-          border: 1px solid rgba(255,255,255,0.45);
-          box-shadow: 0 20px 60px rgba(30,58,138,0.1), 0 2px 0 rgba(255,255,255,0.8) inset;
-        }
-
-        .boutique-wrapper { grid-template-columns: 1fr 2fr; }
-
-        .boutique .expedition-service,
-        .rek .boutique-service { display: none; }
-
-        .card-left {
-          padding: 38px;
+        /* Bloc promo */
+        .promo-side { display: flex; align-items: center; justify-content: center; padding: 22px; }
+        .promo-box {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          align-items: center;
+          gap: 24px;
+          width: 100%;
+          max-width: 300px;
+          padding: 36px 26px;
+          border-radius: 24px;
+          background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+          box-shadow: 0 16px 36px rgba(5, 61, 143, 0.22);
+          text-align: center;
         }
-
-        .yellow-main { background: #F5C518; }
-        .blue-dark-bg { background: linear-gradient(135deg, #1E3A8A 0%, #152E70 100%); }
-
-        /* COLORS */
-        .blue-text   { color: #1E3A8A; }
-        .white-text  { color: white; }
-        .gold-text   { color: #F5C518; }
-        .dark-text   { color: #475569; }
-        .blue-bg     { background: #1E3A8A; }
-        .gold-bg     { background: #F5C518; }
-
-        /* CARD TITLE */
-        .card-title-row { display: flex; align-items: center; gap: 16px; }
-
-        .card-icon-circle {
-          width: 62px; height: 62px;
+        .promo-logo {
+          width: 140px;
+          height: auto;
           border-radius: 20px;
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 8px 22px rgba(0,0,0,0.15);
-          flex-shrink: 0;
+          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+        }
+        .promo-desc {
+          color: #fff;
+          font-size: clamp(18px, 1.7vw, 21px);
+          font-weight: 700;
+          line-height: 1.4;
+        }
+        .promo-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 260px;
+          min-height: 50px;
+          padding: 0 24px;
+          border: 0;
+          border-radius: 999px;
+          background: var(--gold);
+          color: var(--blue);
+          font-size: 14.5px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s ease, transform 0.2s var(--ease);
+        }
+        .promo-btn:hover { background: #F8D255; transform: translateY(-1px); }
+
+        /* Contenu */
+        .service-body {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+          padding: 38px;
+          background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
         }
 
-        .card-main-title {
-          font-size: 28px;
-          font-weight: 900;
+        .service-title-row { display: flex; align-items: center; gap: 16px; }
+        .service-icon {
+          display: grid;
+          flex-shrink: 0;
+          place-items: center;
+          width: 56px;
+          height: 56px;
+          border-radius: 16px;
+          background: var(--gold);
+          color: var(--blue);
+        }
+        .service-title {
+          color: #fff;
+          font-size: clamp(24px, 2.4vw, 30px);
+          font-weight: 800;
           line-height: 1.1;
         }
 
-        /* INNER */
-        .inner-section { display: flex; flex-direction: column; gap: 16px; }
-
-        .inner-tag {
+        .service-block { display: flex; flex-direction: column; gap: 16px; }
+        .service-label {
           display: flex;
+          align-items: center;
+          gap: 12px;
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+        }
+        .service-label::before {
+          content: "";
+          width: 22px;
+          height: 3px;
+          border-radius: 3px;
+          background: var(--gold);
+        }
+        .service-label::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Rayons */
+        .categories-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .category-pill {
+          display: flex;
+          flex-direction: column;
           align-items: center;
           gap: 10px;
-          flex-wrap: wrap;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 1.5px;
-        }
-
-        .inner-tag-line { width: 18px; height: 2px; }
-
-        /* STEPS */
-        .steps-row { display: flex; gap: 16px; align-items: stretch; width: 100%; }
-
-        .step-wrapper {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex: 1;
-        }
-
-        .step-card {
-          width: 100%;
-          min-height: 200px;
-          padding: 26px 16px;
-          border-radius: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          text-align: center;
-          box-sizing: border-box;
-        }
-
-        .white-card {
-          background: rgba(255,255,255,0.97);
-          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
-        }
-        .white-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 16px 36px rgba(30,58,138,0.14);
-        }
-
-        .boutique-step-card {
-          background: rgba(255,255,255,0.1);
-          border: 1px solid rgba(255,255,255,0.18);
-          backdrop-filter: blur(10px);
-          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
-        }
-        .boutique-step-card:hover {
-          transform: translateY(-6px);
-          background: rgba(255,255,255,0.15);
-          box-shadow: 0 14px 32px rgba(0,0,0,0.15);
-        }
-
-        .step-num {
-          height: 30px;
-          border-radius: 50px;
-          padding: 0 14px;
-          width: auto;
-          white-space: nowrap;
-          margin: 0 auto 12px;
-          display: inline-flex; align-items: center; justify-content: center;
-          font-size: 11px; font-weight: 900; color: white;
-          flex-shrink: 0;
-        }
-
-        .step-num-dark { color: #1E3A8A; }
-
-        .step-title {
-          font-size: 13px;
-          font-weight: 800;
-          margin-bottom: 6px;
-          min-height: 36px;
-          display: flex; align-items: center; justify-content: center;
-          text-align: center;
-        }
-
-        .step-desc { font-size: 13px; line-height: 1.6; }
-
-        .boutique-step-title { color: #ffffff !important; font-weight: 800; }
-        .boutique-step-desc { color: rgba(255,255,255,0.85) !important; }
-
-        .step-arrow {
-          font-size: 32px; font-weight: 800;
-          display: flex; align-items: center;
-          user-select: none; flex-shrink: 0;
-        }
-
-        /* PRICING */
-        .pricing-row {
-          display: grid;
-          grid-template-columns: repeat(3,1fr);
-          gap: 12px;
-          align-items: stretch;
-        }
-
-        .pricing-card {
-          position: relative;
-          border-radius: 20px;
-          padding: 20px 14px;
-          text-align: center;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .popular-card {
-          background: linear-gradient(135deg, #ffffff 0%, #FDF3CC 100%);
-          border: 2px solid #1E3A8A;
-        }
-
-        .popular-badge {
-          position: absolute;
-          top: -1px; left: 50%;
-          transform: translateX(-50%);
-          background: linear-gradient(90deg, #1E3A8A, #2a52c9);
-          color: white;
-          padding: 4px 28px;
-          border-radius: 0 0 14px 14px;
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.8px;
-          z-index: 10;
-          white-space: nowrap;
-          text-transform: uppercase;
-          box-shadow: 0 4px 12px rgba(30,58,138,0.25);
-        }
-
-        .plan-icon-container {
-          display: flex; align-items: center; justify-content: center;
-          margin-bottom: 8px; height: 36px;
-        }
-
-        .plan-name { font-size: 15px; font-weight: 900; }
-
-        .plan-price-label {
-          margin: 8px 0;
-          font-size: 12px; font-weight: 700; color: #0f172a;
-        }
-
-        .plan-details-box {
-          flex-grow: 1;
-          display: flex; flex-direction: column;
-          justify-content: flex-start;
-          margin-bottom: 14px;
-        }
-
-        .plan-desc { font-size: 13px; line-height: 1.5; color: #475569; margin: 0; }
-        .plan-feature { margin-top: 8px; font-size: 12px; font-weight: 700; color: #1E3A8A; }
-
-        .plan-btn {
-          margin-top: auto;
-          width: 100%; border: none;
-          min-height: var(--tap);
-          padding: 11px; border-radius: 50px;
-          background: linear-gradient(135deg, #1E3A8A, #2a52c9);
-          color: white;
-          font-size: 12px; font-weight: 800; cursor: pointer;
-          flex-shrink: 0;
-          transition: all 0.25s ease;
-          box-shadow: 0 4px 14px rgba(30,58,138,0.25);
-          letter-spacing: 0.3px;
-        }
-        .plan-btn:hover {
-          background: linear-gradient(135deg, #152E70, #1E3A8A);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(30,58,138,0.35);
-        }
-
-        /* CATEGORIES */
-        .categories-grid {
-          display: grid;
-          grid-template-columns: repeat(3,1fr);
-          gap: 12px;
-        }
-
-        .category-pill {
-          width: 100%;
+          min-height: 108px;
+          padding: 16px 8px 14px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.05);
           font: inherit;
-          background: rgba(255,255,255,0.1);
-          border: 1px solid rgba(255,255,255,0.16);
-          border-radius: 18px;
-          padding: 14px 10px;
           text-align: center;
-          backdrop-filter: blur(12px);
-          transition: all 0.25s ease;
           cursor: pointer;
+          transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
         }
         .category-pill:hover {
-          background: rgba(255,255,255,0.18);
-          border-color: rgba(245,197,24,0.4);
-          transform: translateY(-4px);
+          transform: translateY(-2px);
+          border-color: rgba(246, 197, 55, 0.45);
+          background: rgba(255, 255, 255, 0.09);
         }
-
-        .category-pill.selected {
-          background: rgba(245,197,24,.24);
-          border-color: #F5C518;
-          box-shadow: 0 0 0 2px rgba(245,197,24,.18);
+        .cat-icon {
+          display: grid;
+          place-items: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: rgba(246, 197, 55, 0.14);
+          color: var(--gold);
+          transition: background 0.2s ease, color 0.2s ease;
         }
+        .cat-label { color: rgba(255, 255, 255, 0.92); font-size: 12px; font-weight: 600; line-height: 1.3; }
+        .category-pill.selected { border-color: var(--gold); background: rgba(246, 197, 55, 0.16); }
+        .category-pill.selected .cat-icon { background: var(--gold); color: var(--blue); }
 
         .category-info {
-          margin: 0 0 14px;
-          padding: 14px 18px;
-          border: 1px solid rgba(245,197,24,.55);
-          border-radius: 12px;
-          background: rgba(255,255,255,.96);
-          color: #1E3A8A;
-          animation: category-info-in .2s ease-out;
-        }
-
-        .category-info strong { display: block; margin-bottom: 4px; font-size: 15px; }
-        .category-info p { margin: 0; color: #475569; font-size: 13px; line-height: 1.5; }
-
-        @keyframes category-info-in {
-          from { opacity: 0; transform: translateY(-5px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .cat-icon {
-          display: flex; align-items: center; justify-content: center;
-          margin-bottom: 8px; height: 28px;
-        }
-
-        .cat-label { display: block; font-size: 12px; font-weight: 700; color: white; }
-
-        /* PROMO */
-        .promo-side {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 22px;
-        }
-
-        .promo-box {
-          width: 100%; max-width: 300px;
-          border-radius: 24px;
-          padding: 36px 26px;
-          display: flex; flex-direction: column;
-          justify-content: center; align-items: center;
-          text-align: center;
-          box-sizing: border-box;
-          gap: 24px;
           position: relative;
+          padding: 16px 20px 16px 24px;
           overflow: hidden;
+          border-radius: 14px;
+          background: #fff;
+          animation: category-info-in 0.2s ease-out;
+        }
+        .category-info::before {
+          content: "";
+          position: absolute;
+          inset: 0 auto 0 0;
+          width: 4px;
+          background: var(--gold);
+        }
+        .category-info strong { display: block; margin-bottom: 4px; color: var(--blue); font-size: 15px; }
+        .category-info p { color: var(--text-mid); font-size: 13.5px; line-height: 1.5; }
+        @keyframes category-info-in {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: none; }
         }
 
-        .expedition-gradient { background: #F5C518; }
-        .boutique-gradient   { background: linear-gradient(135deg, #1E3A8A 0%, #152E70 100%); }
-
-        .promo-logo {
-          width: 150px;
-          height: auto;
-          border-radius: 20px;
-          object-fit: contain;
-          box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+        /* Parcours client */
+        .steps-row { display: flex; gap: 10px; list-style: none; }
+        .step-wrapper { display: flex; flex: 1 1 0; align-items: stretch; min-width: 0; }
+        .step-wrapper:last-child { flex: 0 0 calc((100% - 104px) / 3); }
+        .boutique-step-card {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          align-items: center;
+          min-height: 176px;
+          padding: 24px 18px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.05);
+          text-align: center;
+        }
+        .step-num {
+          display: inline-flex;
+          align-items: center;
+          height: 28px;
+          margin-bottom: 16px;
+          padding: 0 12px;
+          border-radius: 999px;
+          background: var(--gold);
+          color: var(--blue);
+          font-size: 11.5px;
+          font-weight: 700;
+        }
+        .step-title { color: #fff; font-size: 14.5px; font-weight: 700; line-height: 1.4; }
+        .step-desc { margin-top: 8px; color: rgba(255, 255, 255, 0.72); font-size: 13px; line-height: 1.6; }
+        .step-arrow {
+          display: grid;
           flex-shrink: 0;
+          align-self: center;
+          place-items: center;
+          width: 32px;
+          height: 32px;
+          margin: 0 5px;
+          border: 1px solid rgba(246, 197, 55, 0.35);
+          border-radius: 50%;
+          color: var(--gold);
         }
 
-        .promo-desc {
-          font-size: 20px; line-height: 1.55;
-          font-weight: 800; margin: 0; color: white;
-        }
-
-        .expedition-desc { color: #1E3A8A !important; }
-        .boutique-desc { color: white !important; }
-
-        .promo-btn {
-          width: 100%; max-width: 260px;
-          border: none; border-radius: 50px;
-          min-height: var(--tap);
-          padding: 15px 24px;
-          font-size: 14px; font-weight: 800;
-          cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
-          letter-spacing: 0.2px;
-        }
-
-        .expedition-btn {
-          background: #1E3A8A; color: white;
-          box-shadow: 0 8px 24px rgba(30,58,138,0.35);
-        }
-        .expedition-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(30,58,138,0.45); }
-
-        .boutique-btn {
-          background: #F5C518; color: #1E3A8A;
-          box-shadow: 0 8px 24px rgba(245,197,24,0.35);
-        }
-        .boutique-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(245,197,24,0.45); }
-
-        /* RESPONSIVE */
         @media (max-width: 1024px) {
-          .service-card-wrapper,
-          .boutique-wrapper { grid-template-columns: 1fr; }
-          .promo-side { min-height: 280px; }
-
-          /* Expédition : promo passe en premier sur mobile */
-          .service-card-wrapper:not(.boutique-wrapper) .card-left { order: 2; }
-          .service-card-wrapper:not(.boutique-wrapper) .promo-side { order: 1; }
+          .boutique-service { grid-template-columns: 1fr; }
+          .promo-box { padding: 36px 24px; }
         }
 
         @media (max-width: 768px) {
-          .promo-box { max-width: 100%; }
-          .card-left { padding: 26px 20px; }
-          .service-card-wrapper { border-radius: 22px; }
+          .boutique-service { border-radius: 22px; }
+          .service-body { gap: 28px; padding: 26px 18px; }
           .promo-side { padding: 16px; }
-          .card-title-row { align-items: flex-start; }
-
-          .steps-row { flex-direction: column; align-items: center; }
-          .step-wrapper { width: 100%; flex-direction: column; }
-          .step-card { width: 100%; max-width: 420px; height: auto; min-height: unset; }
-          .step-arrow { transform: rotate(90deg); margin: 8px 0; }
-
-          .pricing-row { grid-template-columns: 1fr; }
-          .pricing-card { max-width: 380px; margin: 0 auto; width: 100%; }
-
-          .categories-grid { grid-template-columns: repeat(2,1fr); }
-          .promo-desc { font-size: 17px; }
-          .promo-side { min-height: 250px; }
+          .promo-box { max-width: 100%; }
+          .categories-grid { grid-template-columns: repeat(2, 1fr); }
+          .category-pill:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 96px; }
+          .steps-row { flex-direction: column; }
+          .step-wrapper, .step-wrapper:last-child { flex: none; flex-direction: column; align-items: center; }
+          .boutique-step-card { width: 100%; min-height: 0; }
+          .step-arrow { margin: 8px 0; transform: rotate(90deg); }
         }
 
         @media (max-width: 480px) {
-          .categories-grid { grid-template-columns: repeat(2, 1fr); }
-          .card-main-title { font-size: 24px; }
-          .card-left { padding: 22px 16px; gap: 22px; }
-          .promo-box { padding: 32px 22px; gap: 20px; }
-          .promo-desc { font-size: 15px; }
-          .promo-btn { max-width: 260px; font-size: 14px; padding: 12px 18px; }
-          .card-icon-circle { width: 52px; height: 52px; border-radius: 16px; }
-          .pricing-card { max-width: 100%; }
-          .category-pill { min-width: 0; padding: 12px 6px; }
-          .cat-label { font-size: 11px; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
+          .service-body { padding: 20px 14px; }
+          .service-icon { width: 48px; height: 48px; border-radius: 14px; }
+          .category-pill { padding: 14px 6px 12px; }
+          .cat-icon { width: 40px; height: 40px; }
+          .cat-label { font-size: 11.5px; hyphens: auto; }
+          .promo-desc { font-size: 16px; }
         }
-      `}</style>
+      ` }} />
     </section>
   );
 };
 
 export default Services;
-

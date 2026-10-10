@@ -1,4 +1,3 @@
-// src/components/sections/HowItWorks.jsx
 import { Search, ShoppingCart, ShieldCheck, Truck } from 'lucide-react';
 
 const STEPS = [
@@ -38,8 +37,8 @@ const HowItWorks = () => (
       <ol className="hiw-grid">
         {STEPS.map(({ icon: Icon, title, text }, i) => (
           <li key={title} className={`hiw-card sr sr-d${i + 1}`}>
-            <span className="hiw-num">{i + 1}</span>
-            <span className="hiw-icon"><Icon size={26} strokeWidth={1.9} /></span>
+            <span className="hiw-num" aria-hidden="true">{i + 1}</span>
+            <span className="hiw-icon"><Icon size={24} strokeWidth={1.9} aria-hidden="true" /></span>
             <h3>{title}</h3>
             <p>{text}</p>
           </li>
@@ -47,39 +46,54 @@ const HowItWorks = () => (
       </ol>
     </div>
 
-    <style>{`
-      .hiw-section { padding: var(--section-y) 0; background: #fff; }
+    <style dangerouslySetInnerHTML={{ __html: `
+      .hiw-section { padding: var(--section-y) 0; background: var(--white); }
 
       .hiw-grid {
-        list-style: none; margin: 0; padding: 0;
-        display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+        list-style: none;
       }
       .hiw-card {
-        position: relative; padding: 34px 24px 28px; border-radius: 24px;
-        background: #f8fbff; border: 1px solid rgba(30,58,138,.08);
-        box-shadow: 0 8px 30px rgba(30,58,138,.06);
-        transition: transform .3s ease, box-shadow .3s ease;
+        position: relative;
+        padding: 32px 24px 28px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.25s var(--ease), box-shadow 0.25s ease, border-color 0.25s ease;
       }
-      .hiw-card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(30,58,138,.12); }
+      .hiw-card:hover { transform: translateY(-3px); border-color: var(--blue-100); box-shadow: var(--shadow-md); }
       .hiw-num {
-        position: absolute; top: 16px; right: 18px;
-        font-size: 44px; font-weight: 900; line-height: 1; color: rgba(245,197,24,.55);
+        position: absolute;
+        top: 22px;
+        right: 22px;
+        color: var(--gold-dark);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
       }
+      .hiw-num::before { content: "0"; }
       .hiw-icon {
-        display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 18px;
-        border-radius: 18px; color: #fff;
-        background: linear-gradient(135deg, #1E3A8A, #152E70);
-        box-shadow: 0 10px 22px rgba(30,58,138,.22);
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 20px;
+        border-radius: 14px;
+        background: var(--blue);
+        color: #fff;
       }
-      .hiw-card h3 { margin: 0 0 8px; color: #1E3A8A; font-size: 18px; font-weight: 800; }
-      .hiw-card p { margin: 0; color: #64748b; font-size: 14.5px; line-height: 1.65; }
+      .hiw-card h3 { margin-bottom: 8px; color: var(--blue); font-size: 17.5px; font-weight: 700; }
+      .hiw-card p { color: var(--text-light); font-size: 14.5px; line-height: 1.65; }
 
       @media (max-width: 1024px) { .hiw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       @media (max-width: 560px) {
-        .hiw-grid { grid-template-columns: 1fr; gap: 16px; }
-        .hiw-card { padding: 28px 20px 24px; }
+        .hiw-grid { grid-template-columns: 1fr; gap: 14px; }
+        .hiw-card { padding: 26px 20px 22px; }
       }
-    `}</style>
+    ` }} />
   </section>
 );
 

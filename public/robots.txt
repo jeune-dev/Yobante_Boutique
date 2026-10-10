@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yobante-boutique.com/sitemap.xml
+Sitemap: https://www.yobante-boutique.com/sitemap.xml

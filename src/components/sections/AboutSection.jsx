@@ -1,158 +1,118 @@
-// src/components/sections/AboutSection.jsx
+import { ArrowLeftRight } from 'lucide-react';
 
-const AboutSection = ({ variant = 'rek' }) => {
-  const isBoutique = variant === 'boutique';
-  return (
-    <section id="about" className="about-section">
-      <div className="about-bg-glow glow-1"></div>
-      <div className="about-bg-glow glow-2"></div>
+const FlagFR = () => (
+  <svg className="about-flag" viewBox="0 0 3 2" aria-hidden="true">
+    <rect width="1" height="2" fill="#002395" />
+    <rect x="1" width="1" height="2" fill="#fff" />
+    <rect x="2" width="1" height="2" fill="#ED2939" />
+  </svg>
+);
 
-      {/* Décoration grande quote */}
-      <div className="about-quote-deco" aria-hidden="true">"</div>
+const FlagSN = () => (
+  <svg className="about-flag" viewBox="0 0 3 2" aria-hidden="true">
+    <rect width="1" height="2" fill="#00853F" />
+    <rect x="1" width="1" height="2" fill="#FDEF42" />
+    <rect x="2" width="1" height="2" fill="#E31B23" />
+    <path d="M1.5 0.62l0.11 0.34h0.36l-0.29 0.21 0.11 0.34-0.29-0.21-0.29 0.21 0.11-0.34-0.29-0.21h0.36z" fill="#00853F" />
+  </svg>
+);
 
-      <div className="container">
-        <div className="about-inner">
+/* Pictogramme de la marque, en filigrane */
+const BrandMark = () => (
+  <svg className="about-mark" viewBox="0 0 334 400" aria-hidden="true">
+    <path d="M0 0h108a110 120 0 0 0 110 120v120A228 240 0 0 1 0 0z" fill="currentColor" />
+    <rect className="about-mark-gold" x="228" y="0" width="106" height="116" />
+    <rect x="228" y="284" width="106" height="116" fill="currentColor" />
+  </svg>
+);
 
-          {/* HEADER */}
-          <div className="about-header sr">
-            <div className="section-tag">
-              <span className="tag-dot"></span>
-              À propos
-            </div>
-            <h2 className="about-title">Qui sommes-nous ?</h2>
+const AboutSection = () => (
+  <section id="about" className="about-section">
+    <BrandMark />
 
-            <div className="about-divider"></div>
+    <div className="container">
+      <div className="about-header sr">
+        <p className="sec-eyebrow about-eyebrow">À propos</p>
+        <h2 className="about-title">Qui sommes-nous ?</h2>
 
-            <p className="about-description">
-              {isBoutique
-                ? "YOBANTÉ Boutique facilite vos achats en France et leur livraison au Sénégal grâce à une sélection de produits fiables, accessibles et authentiques."
-                : "YOBANTÉ REK facilite l'envoi de colis entre la France et le Sénégal grâce à un service fiable, accessible et transparent."}
-            </p>
+        <p className="about-description">
+          YOBANTÉ Boutique facilite vos achats en France et leur livraison au Sénégal grâce à une
+          sélection de produits fiables, accessibles et authentiques.
+        </p>
 
-            <div className="about-badges">
-              <span className="about-badge">🇫🇷 France</span>
-              <span className="about-badge-arrow">↔</span>
-              <span className="about-badge">🇸🇳 Sénégal</span>
-            </div>
-          </div>
-
+        <div className="about-badges">
+          <span className="about-badge"><FlagFR />France</span>
+          <span className="about-badge-arrow"><ArrowLeftRight size={18} strokeWidth={2.2} aria-hidden="true" /></span>
+          <span className="about-badge"><FlagSN />Sénégal</span>
         </div>
       </div>
+    </div>
 
-      <style>{`
-        .about-section {
-          position: relative; overflow: hidden;
-          padding: var(--section-y) 0;
-          background: linear-gradient(135deg, #0a1535 0%, #1E3A8A 60%, #152E70 100%);
-          color: white;
-        }
+    <style dangerouslySetInnerHTML={{ __html: `
+      .about-section {
+        position: relative;
+        padding: var(--section-y) 0;
+        overflow: hidden;
+        background: var(--blue);
+        color: #fff;
+      }
 
-        .about-bg-glow {
-          position: absolute; border-radius: 50%;
-          filter: blur(130px); opacity: 0.18; pointer-events: none;
-        }
+      .about-mark {
+        position: absolute;
+        top: 50%;
+        right: max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)));
+        width: clamp(140px, 17vw, 220px);
+        height: auto;
+        color: rgba(255, 255, 255, 0.16);
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+      .about-mark-gold { fill: var(--gold); }
 
-        .about-section .glow-1 { width: 420px; height: 420px; background: #2a52c9; top: -120px; right: -100px; }
-        .about-section .glow-2 { width: 350px; height: 350px; background: #F5C518; bottom: -100px; left: -80px; }
+      .about-header { position: relative; max-width: 720px; }
 
-        /* Déco grande guillemet */
-        .about-quote-deco {
-          position: absolute;
-          font-size: 380px;
-          font-weight: 900;
-          color: rgba(255,255,255,0.03);
-          line-height: 1;
-          top: -60px; right: 5%;
-          pointer-events: none;
-          font-family: Georgia, serif;
-          user-select: none;
-        }
+      .about-eyebrow { color: var(--gold); }
 
+      .about-title {
+        margin-bottom: 24px;
+        color: #fff;
+        font-size: var(--fs-h2);
+        font-weight: 800;
+        line-height: 1.1;
+      }
 
-        .about-inner { display: flex; flex-direction: column; }
+      .about-description {
+        margin-bottom: 32px;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 17px;
+        line-height: 1.8;
+      }
 
-        .about-header { max-width: 100%; }
+      .about-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+      .about-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .about-flag { width: 22px; height: 15px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); }
+      .about-badge-arrow { display: grid; place-items: center; color: var(--gold); }
 
-        /* TAG */
-        .about-section .section-tag {
-          display: inline-flex; align-items: center; gap: 10px;
-          color: #F5C518; font-weight: 800; letter-spacing: 2px;
-          text-transform: uppercase; margin-bottom: 20px; font-size: 11px;
-          background: rgba(245,197,24,0.1);
-          padding: 8px 16px; border-radius: 999px;
-          border: 1px solid rgba(245,197,24,0.2);
-        }
+      @media (max-width: 860px) {
+        .about-mark { display: none; }
+      }
 
-        .tag-dot {
-          width: 7px; height: 7px; border-radius: 50%;
-          background: #F5C518;
-          box-shadow: 0 0 0 0 rgba(245,197,24,0.4);
-          animation: pulse-gold 2.5s ease-in-out infinite;
-          flex-shrink: 0;
-        }
-
-        @keyframes pulse-gold {
-          0%   { box-shadow: 0 0 0 0 rgba(245,197,24,0.5); }
-          60%  { box-shadow: 0 0 0 7px rgba(245,197,24,0); }
-          100% { box-shadow: 0 0 0 0 rgba(245,197,24,0); }
-        }
-
-        .about-title {
-          font-size: var(--fs-h2);
-          font-weight: 900; line-height: 1.08;
-          color: white; margin-bottom: 28px;
-          letter-spacing: -0.5px;
-        }
-
-        /* Diviseur doré */
-        .about-divider {
-          width: 64px; height: 4px;
-          background: linear-gradient(90deg, #F5C518, rgba(245,197,24,0.3));
-          border-radius: 4px;
-          margin-bottom: 28px;
-        }
-
-        .about-description {
-          color: rgba(255,255,255,.78);
-          font-size: 17px; line-height: 1.85;
-          max-width: 720px;
-          margin-bottom: 36px;
-        }
-
-        /* Badges pays */
-        .about-badges {
-          display: flex; align-items: center; gap: 14px;
-          flex-wrap: wrap;
-        }
-
-        .about-badge {
-          background: rgba(255,255,255,0.1);
-          border: 1px solid rgba(255,255,255,0.16);
-          border-radius: 999px;
-          padding: 10px 20px;
-          font-size: 15px; font-weight: 700;
-          backdrop-filter: blur(10px);
-          letter-spacing: 0.2px;
-        }
-
-        .about-badge-arrow {
-          font-size: 20px; color: #F5C518; font-weight: 800;
-        }
-
-        @media (max-width: 768px) {
-          .about-quote-deco { font-size: 240px; right: -20px; }
-          .about-description { font-size: 15px; }
-        }
-
-        @media (max-width: 520px) {
-          .about-title { font-size: 30px; }
-          .about-description { font-size: 14px; }
-          .about-badges { gap: 10px; }
-          .about-badge { font-size: 13px; padding: 8px 14px; }
-        }
-      `}</style>
-    </section>
-  );
-};
+      @media (max-width: 520px) {
+        .about-description { font-size: 15px; }
+        .about-badge { padding: 8px 14px; font-size: 14px; }
+      }
+    ` }} />
+  </section>
+);
 
 export default AboutSection;
