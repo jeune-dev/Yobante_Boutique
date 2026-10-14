@@ -122,7 +122,7 @@ img, video { height: auto; }
 button, input, select, textarea { max-width: 100%; font-family: inherit; }
 
 button { user-select: none; }
-button, a, .clickable { cursor: pointer; }
+button, a { cursor: pointer; }
 
 a, button, [role="button"], input, select, textarea, label {
   touch-action: manipulation;
