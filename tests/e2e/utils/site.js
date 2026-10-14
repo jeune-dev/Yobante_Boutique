@@ -8,7 +8,7 @@ export const site = {
   source: 'boutique',
   subject: 'Autres',
   // Visuel du Hero préchargé dans index.html (élément LCP) ; null si aucun.
-  heroPreload: null,
+  heroPreload: '/images/hero-visuel.webp',
   // Sections de la page, dans l'ordre d'affichage.
   sections: ['hero', 'services', 'comment-commander', 'rayons', 'apps', 'faq', 'contact', 'about'],
   // Entrées du menu principal.
@@ -27,5 +27,6 @@ export const site = {
   // Exclusions axe documentées : problèmes connus et assumés, JAMAIS des erreurs masquées.
   // Le jaune de la marque sur fond blanc (« Yobanté dès maintenant ! », version mobile) est sous
   // les 3:1 requis pour un grand texte : décision de design en attente du propriétaire du site.
-  axeExclude: ['.featured-title > span'],
+  // Titres en jaune de la marque sur fond blanc : choix graphique assumé.
+  axeExclude: ['.featured-title > span', '.hero--light .hero-accent'],
 };

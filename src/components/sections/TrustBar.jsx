@@ -1,18 +1,11 @@
-import { Truck, MessageCircle, Lock, Smartphone, Zap } from 'lucide-react';
-
-const TRUST_ITEMS = [
-  { icon: Truck, text: 'Livraison France ↔ Sénégal' },
-  { icon: MessageCircle, text: 'Support en ligne' },
-  { icon: Lock, text: 'Paiement 100% sécurisé' },
-  { icon: Smartphone, text: 'Application iOS & Android' },
-  { icon: Zap, text: 'Expédition rapide' },
-];
+// Bandeau d'engagements — identique sur les deux sites ; les textes viennent de src/data/content.js.
+import { trust } from '../../data/content';
 
 const TrustBar = () => (
   <section className="trust-wrapper" aria-label="Nos engagements">
     <div className="container">
       <ul className="trust-track">
-        {TRUST_ITEMS.map(({ icon: Icon, text }) => (
+        {trust.map(({ icon: Icon, text }) => (
           <li className="trust-item" key={text}>
             <span className="trust-icon"><Icon size={18} strokeWidth={1.9} aria-hidden="true" /></span>
             <span className="trust-text">{text}</span>

@@ -1,49 +1,79 @@
+// Section « Nos services » — identique sur les deux sites. Le contenu (promo, titre et
+// blocs : rayons, étapes ou tarifs) vient de src/data/content.js.
 import { useState } from 'react';
-import boutiqueLogo from '../../assets/images/Logo Yobante Boutique.webp';
-import {
-  ShoppingBag, ArrowRight,
-  Tag, MapPin, Coffee, Shirt, UtensilsCrossed, Home,
-  Apple, Fish, Egg, Snowflake, Baby, Cookie, FlaskConical,
-  GlassWater, Wheat, SprayCan, Droplets, PawPrint,
-  Gamepad2, Smartphone, Laptop, Tv, Dumbbell,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { services } from '../../data/content';
 
-const STEPS = [
-  { title: 'Parcourez nos rayons et sélectionnez vos produits', desc: '' },
-  { title: 'Validez votre panier', desc: 'Règlement possible par Orange Money, Wave ou carte bancaire.' },
-  { title: 'Programmez vos livraisons', desc: "Recevez directement votre commande à l'adresse de votre choix." },
-];
+const ServiceIcon = services.icon;
 
-const CATEGORIES = [
-  { icon: Tag, label: 'Promotions', description: 'Offres du moment et produits à prix réduits.' },
-  { icon: MapPin, label: 'Produits Locaux', description: 'Produits fabriqués ou cultivés au Sénégal et dans la région.' },
-  { icon: Coffee, label: 'Cafés', description: 'Cafés, grains, boissons chaudes et accessoires associés.' },
-  { icon: Shirt, label: 'Mode Locale', description: 'Vêtements et créations inspirés des styles locaux.' },
-  { icon: UtensilsCrossed, label: 'Traiteur', description: 'Plats préparés, spécialités et produits traiteur.' },
-  { icon: Home, label: 'Mobilier & Déco', description: 'Meubles et objets pour aménager et décorer votre intérieur.' },
-  { icon: Apple, label: 'Fruits & Légumes', description: 'Fruits et légumes frais pour vos repas du quotidien.' },
-  { icon: Fish, label: 'Viande & Poissons', description: 'Viandes, poissons et produits de la mer.' },
-  { icon: Egg, label: 'Crèmerie & Laitiers', description: 'Lait, fromages, yaourts et autres produits laitiers.' },
-  { icon: UtensilsCrossed, label: 'Charcuterie', description: 'Sélection de charcuteries et produits salés à partager.' },
-  { icon: Snowflake, label: 'Surgelés', description: 'Produits surgelés à conserver et préparer facilement.' },
-  { icon: Baby, label: 'Bébé', description: 'Essentiels, soins et accessoires pour les tout-petits.' },
-  { icon: Cookie, label: 'Épicerie Sucrée', description: 'Biscuits, confiseries, chocolat et douceurs.' },
-  { icon: FlaskConical, label: 'Épicerie Salée', description: 'Ingrédients, conserves et produits salés pour cuisiner.' },
-  { icon: GlassWater, label: 'Boissons', description: 'Eaux, jus et boissons pour toutes les occasions.' },
-  { icon: Wheat, label: 'Pains & Pâtisserie', description: 'Pains, viennoiseries et pâtisseries à déguster.' },
-  { icon: SprayCan, label: 'Entretien & Nettoyage', description: 'Produits et accessoires pour entretenir votre maison.' },
-  { icon: Droplets, label: 'Hygiène & Beauté', description: 'Soins, hygiène personnelle et produits de beauté.' },
-  { icon: PawPrint, label: 'Animalerie', description: 'Alimentation et accessoires pour vos animaux.' },
-  { icon: Gamepad2, label: 'Jeux Vidéo', description: 'Jeux, consoles et accessoires de divertissement.' },
-  { icon: Smartphone, label: 'Smartphones & Connectés', description: 'Téléphones, objets connectés et accessoires mobiles.' },
-  { icon: Laptop, label: 'Informatique & Bureau', description: 'Ordinateurs, périphériques et fournitures de bureau.' },
-  { icon: Tv, label: 'Image & Son', description: 'Téléviseurs, équipements audio et accessoires multimédias.' },
-  { icon: Dumbbell, label: 'Sport', description: 'Équipements et accessoires pour bouger et s’entraîner.' },
-  { icon: ShoppingBag, label: 'Mode & Textile', description: 'Vêtements, chaussures et accessoires pour toute la famille.' },
-];
+// Grille de rayons : un clic affiche la description du rayon.
+const Tiles = ({ items }) => {
+  const [selected, setSelected] = useState(null);
+  return (
+    <>
+      {selected && (
+        <div className="category-info" role="status" aria-live="polite">
+          <strong>{selected.label}</strong>
+          <p>{selected.text}</p>
+        </div>
+      )}
+      <div className="categories-grid">
+        {items.map((item) => {
+          const Icon = item.icon;
+          const isSelected = selected?.label === item.label;
+          return (
+            <button
+              key={item.label}
+              type="button"
+              className={`category-pill${isSelected ? ' selected' : ''}`}
+              aria-pressed={isSelected}
+              onClick={() => setSelected(item)}
+            >
+              <span className="cat-icon"><Icon size={20} strokeWidth={1.7} aria-hidden="true" /></span>
+              <span className="cat-label">{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
+const Steps = ({ items }) => (
+  <ol className="steps-row">
+    {items.map((step, i) => (
+      <li key={step.title} className="step-wrapper">
+        <div className="boutique-step-card">
+          <span className="step-num">Étape {i + 1}</span>
+          <p className="step-title">{step.title}</p>
+          {step.text && <p className="step-desc">{step.text}</p>}
+        </div>
+        {i < items.length - 1 && (
+          <span className="step-arrow" aria-hidden="true"><ArrowRight size={16} strokeWidth={2.4} /></span>
+        )}
+      </li>
+    ))}
+  </ol>
+);
+
+const Offers = ({ items, scrollTo }) => (
+  <ul className="offers-row">
+    {items.map(({ icon: Icon, name, price, text, feature, button, target, badge }) => (
+      <li key={name} className={`offer-card${badge ? ' featured' : ''}`}>
+        {badge && <span className="offer-badge">{badge}</span>}
+        <span className="cat-icon"><Icon size={20} strokeWidth={1.7} aria-hidden="true" /></span>
+        <p className="offer-name">{name}</p>
+        <p className="offer-price">{price}</p>
+        <p className="offer-desc">{text}</p>
+        {feature && <p className="offer-feature">{feature}</p>}
+        <button type="button" className="offer-btn" onClick={() => scrollTo(target)}>{button}</button>
+      </li>
+    ))}
+  </ul>
+);
 
 const Services = ({ scrollTo }) => {
-  const [selected, setSelected] = useState(null);
+  const { promo } = services;
 
   return (
     <section id="services" className="services-section">
@@ -52,68 +82,31 @@ const Services = ({ scrollTo }) => {
           <h2 className="sec-title">Nos services</h2>
         </div>
 
-        <div id="app-boutique" className="boutique-service sr">
+        <div id={services.cardId} className="boutique-service sr">
           <aside className="promo-side">
             <div className="promo-box">
-              <img src={boutiqueLogo} alt="Yobanté Boutique" className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
-              <p className="promo-desc">Achetez vos produits préférés à prix discount</p>
-              <button type="button" className="promo-btn" onClick={() => scrollTo('app-boutique')}>
-                Explorer nos rayons
+              <img src={promo.logo} alt={promo.alt} className="promo-logo" width="150" height="150" loading="lazy" decoding="async" />
+              <p className="promo-desc">{promo.text}</p>
+              <button type="button" className="promo-btn" onClick={() => scrollTo(promo.button.target)}>
+                {promo.button.label}
               </button>
             </div>
           </aside>
 
           <div className="service-body">
             <div className="service-title-row">
-              <span className="service-icon"><ShoppingBag size={26} strokeWidth={1.7} aria-hidden="true" /></span>
-              <h3 className="service-title">Yobanté Boutique</h3>
+              <span className="service-icon"><ServiceIcon size={24} strokeWidth={1.7} aria-hidden="true" /></span>
+              <h3 className="service-title">{services.title}</h3>
             </div>
 
-            <div className="service-block">
-              <p className="service-label">Nos rayons</p>
-              {selected && (
-                <div className="category-info" role="status" aria-live="polite">
-                  <strong>{selected.label}</strong>
-                  <p>{selected.description}</p>
-                </div>
-              )}
-              <div className="categories-grid">
-                {CATEGORIES.map((cat) => {
-                  const Icon = cat.icon;
-                  const isSelected = selected?.label === cat.label;
-                  return (
-                    <button
-                      key={cat.label}
-                      type="button"
-                      className={`category-pill${isSelected ? ' selected' : ''}`}
-                      aria-pressed={isSelected}
-                      onClick={() => setSelected(cat)}
-                    >
-                      <span className="cat-icon"><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></span>
-                      <span className="cat-label">{cat.label}</span>
-                    </button>
-                  );
-                })}
+            {services.blocks.map((block) => (
+              <div key={block.label} className="service-block">
+                <p className="service-label">{block.label}</p>
+                {block.type === 'tiles' && <Tiles items={block.items} />}
+                {block.type === 'steps' && <Steps items={block.items} />}
+                {block.type === 'offers' && <Offers items={block.items} scrollTo={scrollTo} />}
               </div>
-            </div>
-
-            <div className="service-block">
-              <p className="service-label">Parcours client</p>
-              <ol className="steps-row">
-                {STEPS.map((step, i) => (
-                  <li key={step.title} className="step-wrapper">
-                    <div className="boutique-step-card">
-                      <span className="step-num">Étape {i + 1}</span>
-                      <p className="step-title">{step.title}</p>
-                      {step.desc && <p className="step-desc">{step.desc}</p>}
-                    </div>
-                    {i < STEPS.length - 1 && (
-                      <span className="step-arrow" aria-hidden="true"><ArrowRight size={16} strokeWidth={2.4} /></span>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -153,14 +146,14 @@ const Services = ({ scrollTo }) => {
           text-align: center;
         }
         .promo-logo {
-          width: 140px;
+          width: 120px;
           height: auto;
           border-radius: 20px;
           box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
         }
         .promo-desc {
           color: #fff;
-          font-size: clamp(18px, 1.7vw, 21px);
+          font-size: clamp(17px, 1.5vw, 19px);
           font-weight: 700;
           line-height: 1.4;
         }
@@ -187,8 +180,8 @@ const Services = ({ scrollTo }) => {
         .service-body {
           display: flex;
           flex-direction: column;
-          gap: 32px;
-          padding: 38px;
+          gap: 28px;
+          padding: 34px;
           background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
         }
 
@@ -197,15 +190,15 @@ const Services = ({ scrollTo }) => {
           display: grid;
           flex-shrink: 0;
           place-items: center;
-          width: 56px;
-          height: 56px;
-          border-radius: 16px;
+          width: 50px;
+          height: 50px;
+          border-radius: 14px;
           background: var(--gold);
           color: var(--blue);
         }
         .service-title {
           color: #fff;
-          font-size: clamp(24px, 2.4vw, 30px);
+          font-size: clamp(22px, 2.1vw, 27px);
           font-weight: 800;
           line-height: 1.1;
         }
@@ -242,8 +235,8 @@ const Services = ({ scrollTo }) => {
           flex-direction: column;
           align-items: center;
           gap: 10px;
-          min-height: 108px;
-          padding: 16px 8px 14px;
+          min-height: 100px;
+          padding: 14px 8px 12px;
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 14px;
           background: rgba(255, 255, 255, 0.05);
@@ -260,8 +253,8 @@ const Services = ({ scrollTo }) => {
         .cat-icon {
           display: grid;
           place-items: center;
-          width: 44px;
-          height: 44px;
+          width: 42px;
+          height: 42px;
           border-radius: 12px;
           background: rgba(246, 197, 55, 0.14);
           color: var(--gold);
@@ -302,8 +295,8 @@ const Services = ({ scrollTo }) => {
           flex: 1;
           flex-direction: column;
           align-items: center;
-          min-height: 176px;
-          padding: 24px 18px;
+          min-height: 160px;
+          padding: 22px 16px;
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 16px;
           background: rgba(255, 255, 255, 0.05);
@@ -336,6 +329,57 @@ const Services = ({ scrollTo }) => {
           color: var(--gold);
         }
 
+        /* Tarifs */
+        .offers-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; }
+        .offer-card {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          padding: 24px 16px 18px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.05);
+          text-align: center;
+        }
+        .offer-card.featured { border-color: var(--gold); background: rgba(246, 197, 55, 0.1); }
+        .offer-badge {
+          position: absolute;
+          top: -11px;
+          left: 50%;
+          padding: 3px 12px;
+          border-radius: 999px;
+          background: var(--gold);
+          color: var(--blue);
+          font-size: 10.5px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          transform: translateX(-50%);
+        }
+        .offer-card .cat-icon { margin-bottom: 6px; }
+        .offer-name { color: #fff; font-size: 15px; font-weight: 700; }
+        .offer-price { color: var(--gold); font-size: 13px; font-weight: 700; }
+        .offer-desc { flex: 1; color: rgba(255, 255, 255, 0.72); font-size: 13px; line-height: 1.5; }
+        .offer-feature { color: #fff; font-size: 12.5px; font-weight: 600; }
+        .offer-btn {
+          width: 100%;
+          min-height: 42px;
+          margin-top: 10px;
+          padding: 0 12px;
+          border: 0;
+          border-radius: 999px;
+          background: var(--gold);
+          color: var(--blue);
+          font-size: 13.5px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s ease;
+        }
+        .offer-btn:hover { background: #F8D255; }
+
         @media (max-width: 1024px) {
           .boutique-service { grid-template-columns: 1fr; }
           .promo-box { padding: 36px 24px; }
@@ -352,6 +396,7 @@ const Services = ({ scrollTo }) => {
           .step-wrapper, .step-wrapper:last-child { flex: none; flex-direction: column; align-items: center; }
           .boutique-step-card { width: 100%; min-height: 0; }
           .step-arrow { margin: 8px 0; transform: rotate(90deg); }
+          .offers-row { grid-template-columns: 1fr; gap: 18px; }
         }
 
         @media (max-width: 480px) {

@@ -1,27 +1,21 @@
-import { Package, ShoppingBag, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
-import appPreview from '../../assets/images/maquette-app-store-boutique.webp';
+// Section Applications — identique sur les deux sites ; le contenu vient de src/data/content.js.
+import { ArrowRight } from 'lucide-react';
+import { apps } from '../../data/content';
 
-const APP_STORE_URL = 'https://apps.apple.com';
-const PLAY_STORE_URL = 'https://play.google.com';
-
-const FEATURES = [
-  { icon: ShieldCheck, title: 'Produits authentiques', description: 'Une sélection de produits de qualité.' },
-  { icon: Package, title: 'Achats en gros', description: 'Des offres adaptées aux commandes en volume.' },
-  { icon: Truck, title: 'Livraison au Sénégal', description: "Suivez votre commande jusqu'à destination." },
-];
+const ChipIcon = apps.chip.icon;
 
 const openStore = (url) => window.open(url, '_blank', 'noopener,noreferrer');
 
 const Applications = () => (
   <section id="apps" className="apps-section">
     <div className="container">
-      <div className="apps-grid">
+      <div id={apps.anchorId} className="apps-grid">
         <div className="apps-visual sr-l">
           <img
-            src={appPreview}
-            alt="Application Yobante Boutique et catalogue de produits"
-            width="1230"
-            height="1278"
+            src={apps.image.src}
+            alt={apps.image.alt}
+            width={apps.image.width}
+            height={apps.image.height}
             loading="lazy"
             decoding="async"
           />
@@ -29,38 +23,35 @@ const Applications = () => (
 
         <div className="apps-content sr-r">
           <p className="apps-chip">
-            <ShoppingBag size={14} strokeWidth={2} aria-hidden="true" />
-            Boutique en ligne
+            <ChipIcon size={14} strokeWidth={2} aria-hidden="true" />
+            {apps.chip.label}
           </p>
 
           <h2 className="featured-title">
-            Téléchargez <span>Yobanté dès maintenant !</span>
+            {apps.title} <span>{apps.titleAccent}</span>
           </h2>
 
-          <p className="apps-desc">
-            Achetez vos produits préférés à prix discount et faites-les livrer directement au Sénégal.
-            Découvrez une sélection de produits authentiques et profitez d’une expérience d’achat simple et pratique.
-          </p>
+          <p className="apps-desc">{apps.text}</p>
 
           <ul className="featured-features">
-            {FEATURES.map(({ icon: Icon, title, description }) => (
+            {apps.features.map(({ icon: Icon, title, text }) => (
               <li className="featured-feature" key={title}>
                 <span className="featured-feature-icon"><Icon size={21} strokeWidth={2} aria-hidden="true" /></span>
                 <strong>{title}</strong>
-                <small>{description}</small>
+                <small>{text}</small>
               </li>
             ))}
           </ul>
 
           <div className="download-buttons">
-            <button type="button" className="download-btn" onClick={() => openStore(APP_STORE_URL)}>
+            <button type="button" className="download-btn" onClick={() => openStore(apps.appStoreUrl)}>
               <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
                 <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,22c-1.31,0.05-1.73,-0.75-3.23,-0.75c-1.49,0-1.96,0.73,-3.22,0.78c-1.33,0.05-2.29,-1.32-3.13,-2.53C4.37,17.18 3.05,12.35 4.81,9.31c0.88,-1.52 2.45,-2.48 4.16,-2.51c1.3,-0.02 2.53,0.88 3.32,0.88c0.79,0 2.27,-1.07 3.82,-0.91c0.65,0.03 2.47,0.26 3.64,1.98c-0.09,0.06 -2.17,1.28 -2.15,3.81c0.03,3.02 2.65,4.03 2.68,4.04c-0.03,0.07 -0.42,1.44 -1.38,2.83M15.97,4.17C16.63,3.37 17.07,2.28 16.95,1c-1.09,0.04 -2.41,0.72 -3.19,1.63c-0.67,0.77 -1.25,1.88 -1.09,3.14c1.21,0.09 2.47,-0.6 3.3,-1.6" />
               </svg>
               <span><small>Télécharger sur</small><strong>App Store</strong></span>
               <ArrowRight size={17} aria-hidden="true" />
             </button>
-            <button type="button" className="download-btn" onClick={() => openStore(PLAY_STORE_URL)}>
+            <button type="button" className="download-btn" onClick={() => openStore(apps.playStoreUrl)}>
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
                 <path d="M3.18 23.76c.37.21.8.22 1.2.04l11.9-6.53-2.58-2.58-10.52 9.07zM20.44 10.2L17.63 8.62 14.75 11.5l2.88 2.87 2.83-1.59c.8-.45.8-1.74-.02-2.18zM1.07 1.43C1.03 1.61 1 1.8 1 2v20c0 .2.03.38.07.56l11.44-11.13L1.07 1.43zM4.38.24L15.25 6.35l-2.58 2.58L2.39.3c.63-.32 1.36-.3 1.99-.06z" />
               </svg>
@@ -89,7 +80,7 @@ const Applications = () => (
       }
 
       .apps-visual { display: flex; justify-content: center; }
-      .apps-visual img { display: block; width: 100%; max-width: 520px; height: auto; }
+      .apps-visual img { display: block; width: auto; max-width: 100%; max-height: 560px; height: auto; }
 
       .apps-chip {
         display: inline-flex;
@@ -109,7 +100,7 @@ const Applications = () => (
       .featured-title {
         margin-bottom: 20px;
         color: var(--blue);
-        font-size: clamp(34px, 2.7vw, 46px);
+        font-size: var(--fs-h2);
         font-weight: 800;
         line-height: 1.08;
       }
@@ -119,7 +110,7 @@ const Applications = () => (
         max-width: 580px;
         margin-bottom: 32px;
         color: #0B3270;
-        font-size: clamp(15px, 1.35vw, 19px);
+        font-size: 16px;
         line-height: 1.5;
       }
 
@@ -134,8 +125,8 @@ const Applications = () => (
       .featured-feature-icon {
         display: grid;
         place-items: center;
-        width: 52px;
-        height: 52px;
+        width: 46px;
+        height: 46px;
         margin-bottom: 2px;
         border-radius: 50%;
         background: #F8D255;
@@ -150,7 +141,7 @@ const Applications = () => (
         flex: 1;
         align-items: center;
         gap: 12px;
-        min-height: 62px;
+        min-height: 56px;
         padding: 8px 18px;
         border: 0;
         border-radius: 14px;
@@ -163,7 +154,7 @@ const Applications = () => (
       .download-btn:hover { transform: translateY(-2px); background: #1a1a1a; }
       .download-btn span { display: flex; flex-direction: column; line-height: 1.1; }
       .download-btn small { font-size: 10.5px; opacity: 0.8; }
-      .download-btn strong { font-size: 17px; font-weight: 700; }
+      .download-btn strong { font-size: 16px; font-weight: 700; }
       .download-btn > svg:last-child { margin-left: auto; opacity: 0.7; }
 
       @media (max-width: 1024px) {
@@ -175,7 +166,7 @@ const Applications = () => (
 
       @media (max-width: 860px) {
         .apps-grid { grid-template-columns: 1fr; }
-        .apps-visual img { max-width: 420px; }
+        .apps-visual img { max-height: 440px; }
       }
 
       @media (max-width: 420px) {

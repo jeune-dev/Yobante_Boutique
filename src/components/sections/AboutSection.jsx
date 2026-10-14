@@ -1,4 +1,7 @@
+// Section « Qui sommes-nous ? » — identique sur YOBANTÉ Boutique et YOBANTÉ REK.
+// Le texte vient de src/data/site.js.
 import { ArrowLeftRight } from 'lucide-react';
+import { site } from '../../data/site';
 
 const FlagFR = () => (
   <svg className="about-flag" viewBox="0 0 3 2" aria-hidden="true">
@@ -27,18 +30,15 @@ const BrandMark = () => (
 );
 
 const AboutSection = () => (
-  <section id="about" className="about-section">
+  <section id="about" className="about-section yb-block">
     <BrandMark />
 
     <div className="container">
       <div className="about-header sr">
-        <p className="sec-eyebrow about-eyebrow">À propos</p>
+        <p className="yb-eyebrow about-eyebrow">À propos</p>
         <h2 className="about-title">Qui sommes-nous ?</h2>
 
-        <p className="about-description">
-          YOBANTÉ Boutique facilite vos achats en France et leur livraison au Sénégal grâce à une
-          sélection de produits fiables, accessibles et authentiques.
-        </p>
+        <p className="about-description">{site.about}</p>
 
         <div className="about-badges">
           <span className="about-badge"><FlagFR />France</span>
@@ -47,71 +47,6 @@ const AboutSection = () => (
         </div>
       </div>
     </div>
-
-    <style dangerouslySetInnerHTML={{ __html: `
-      .about-section {
-        position: relative;
-        padding: var(--section-y) 0;
-        overflow: hidden;
-        background: var(--blue);
-        color: #fff;
-      }
-
-      .about-mark {
-        position: absolute;
-        top: 50%;
-        right: max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)));
-        width: clamp(140px, 17vw, 220px);
-        height: auto;
-        color: rgba(255, 255, 255, 0.16);
-        transform: translateY(-50%);
-        pointer-events: none;
-      }
-      .about-mark-gold { fill: var(--gold); }
-
-      .about-header { position: relative; max-width: 720px; }
-
-      .about-eyebrow { color: var(--gold); }
-
-      .about-title {
-        margin-bottom: 24px;
-        color: #fff;
-        font-size: var(--fs-h2);
-        font-weight: 800;
-        line-height: 1.1;
-      }
-
-      .about-description {
-        margin-bottom: 32px;
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 17px;
-        line-height: 1.8;
-      }
-
-      .about-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-      .about-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 18px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.06);
-        font-size: 15px;
-        font-weight: 600;
-      }
-      .about-flag { width: 22px; height: 15px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); }
-      .about-badge-arrow { display: grid; place-items: center; color: var(--gold); }
-
-      @media (max-width: 860px) {
-        .about-mark { display: none; }
-      }
-
-      @media (max-width: 520px) {
-        .about-description { font-size: 15px; }
-        .about-badge { padding: 8px 14px; font-size: 14px; }
-      }
-    ` }} />
   </section>
 );
 

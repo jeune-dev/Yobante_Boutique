@@ -52,14 +52,14 @@
 
   --container-max: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
-  --nav-h: 72px;
-  --section-y: clamp(64px, 9vw, 104px);
+  --nav-h: 64px;
+  --section-y: clamp(56px, 7vw, 88px);
   --tap: 44px;
 
   --fab-gap: clamp(16px, 2.2vw, 28px);
   --fab-size: clamp(48px, 4.2vw, 56px);
 
-  --fs-h2: clamp(30px, 4vw, 44px);
+  --fs-h2: clamp(28px, 3vw, 38px);
   --fs-eyebrow: 12px;
   --space-1: 4px;
   --space-2: 8px;
@@ -72,7 +72,7 @@
 }
 
 @media (max-width: 900px) {
-  :root { --nav-h: 72px; }
+  :root { --nav-h: 64px; }
 }
 
 html {

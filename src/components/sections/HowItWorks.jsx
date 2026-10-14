@@ -1,44 +1,20 @@
-import { Search, ShoppingCart, ShieldCheck, Truck } from 'lucide-react';
-
-const STEPS = [
-  {
-    icon: Search,
-    title: 'Parcourez le catalogue',
-    text: 'Une sélection de produits authentiques, proposés à prix discount.',
-  },
-  {
-    icon: ShoppingCart,
-    title: 'Ajoutez au panier',
-    text: "Commandez à l'unité ou en gros, selon vos besoins.",
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Payez en toute sécurité',
-    text: 'Votre paiement est protégé, en toute confiance.',
-  },
-  {
-    icon: Truck,
-    title: 'Livraison au Sénégal',
-    text: "Suivez votre commande jusqu'à sa destination.",
-  },
-];
+// « Comment ça marche » — identique sur les deux sites ; le contenu vient de src/data/content.js.
+import { howItWorks } from '../../data/content';
 
 const HowItWorks = () => (
-  <section id="comment-commander" className="hiw-section">
+  <section id={howItWorks.id} className="hiw-section">
     <div className="container">
       <div className="sec-head sr">
-        <span className="sec-eyebrow">Comment commander</span>
-        <h2 className="sec-title">Commander en 4 étapes</h2>
-        <p className="sec-sub">
-          Faites vos achats en France et recevez vos produits au Sénégal, simplement.
-        </p>
+        <span className="sec-eyebrow">{howItWorks.eyebrow}</span>
+        <h2 className="sec-title">{howItWorks.title}</h2>
+        <p className="sec-sub">{howItWorks.text}</p>
       </div>
 
-      <ol className="hiw-grid">
-        {STEPS.map(({ icon: Icon, title, text }, i) => (
+      <ol className="hiw-grid" style={{ '--count': howItWorks.steps.length }}>
+        {howItWorks.steps.map(({ icon: Icon, title, text }, i) => (
           <li key={title} className={`hiw-card sr sr-d${i + 1}`}>
             <span className="hiw-num" aria-hidden="true">{i + 1}</span>
-            <span className="hiw-icon"><Icon size={24} strokeWidth={1.9} aria-hidden="true" /></span>
+            <span className="hiw-icon"><Icon size={22} strokeWidth={1.9} aria-hidden="true" /></span>
             <h3>{title}</h3>
             <p>{text}</p>
           </li>
@@ -51,13 +27,13 @@ const HowItWorks = () => (
 
       .hiw-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(var(--count), minmax(0, 1fr));
         gap: 20px;
         list-style: none;
       }
       .hiw-card {
         position: relative;
-        padding: 32px 24px 28px;
+        padding: 28px 22px 24px;
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
         background: var(--white);
@@ -78,15 +54,15 @@ const HowItWorks = () => (
       .hiw-icon {
         display: grid;
         place-items: center;
-        width: 52px;
-        height: 52px;
-        margin-bottom: 20px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 18px;
         border-radius: 14px;
         background: var(--blue);
         color: #fff;
       }
-      .hiw-card h3 { margin-bottom: 8px; color: var(--blue); font-size: 17.5px; font-weight: 700; }
-      .hiw-card p { color: var(--text-light); font-size: 14.5px; line-height: 1.65; }
+      .hiw-card h3 { margin-bottom: 8px; color: var(--blue); font-size: 17px; font-weight: 700; }
+      .hiw-card p { color: var(--text-light); font-size: 14px; line-height: 1.65; }
 
       @media (max-width: 1024px) { .hiw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       @media (max-width: 560px) {

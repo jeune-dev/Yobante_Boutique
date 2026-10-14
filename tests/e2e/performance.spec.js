@@ -7,7 +7,8 @@ import { scrollThroughPage } from './utils/helpers.js';
 
 test.skip(({ browserName }) => browserName !== 'chromium', 'Les API de mesure (LCP, CLS) sont celles de Chromium.');
 
-const LIMITS = { js: 320_000, css: 20_000, firstLoadRequests: 25 };
+// CSS : 24 ko depuis l'ajout des blocs communs (src/styles/blocks.css : contact, pied de page, pages légales).
+const LIMITS = { js: 320_000, css: 24_000, firstLoadRequests: 25 };
 
 test.describe('Performance', () => {
   test('poids du JavaScript et du CSS, nombre de requêtes au chargement', async ({ page }) => {

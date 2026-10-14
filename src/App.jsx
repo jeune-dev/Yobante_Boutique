@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import './styles/global.css';
+import './styles/blocks.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WhatsAppFloat from './components/layout/WhatsAppFloat';
@@ -8,7 +9,7 @@ import Hero from './components/sections/Hero';
 import TrustBar from './components/sections/TrustBar';
 import Services from './components/sections/Services';
 import HowItWorks from './components/sections/HowItWorks';
-import ShopCategories from './components/sections/ShopCategories';
+import Highlights from './components/sections/Highlights';
 import Applications from './components/sections/Applications';
 import Faq from './components/sections/Faq';
 import Contact from './components/sections/Contact';
@@ -84,7 +85,7 @@ function App() {
         <TrustBar />
         <Services scrollTo={scrollTo} />
         <HowItWorks />
-        <ShopCategories />
+        <Highlights />
         <Applications />
         <Faq />
         <Contact />

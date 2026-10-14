@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import logo from '../../assets/images/Logo Yobante Boutique - Fond Blanc.webp';
+import { navbar } from '../../data/content';
 
 const navItems = [
   { label: 'Services', id: 'services' },
@@ -82,11 +82,11 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
 
           <button className="logo" onClick={() => handleScroll('hero')}>
             <img
-              src={logo}
+              src={navbar.logo}
               alt="YOBANTÉ Logo"
               className="logo-img"
-              width="600"
-              height="262"
+              width={navbar.logoSize.width}
+              height={navbar.logoSize.height}
               decoding="async"
             />
           </button>
@@ -191,10 +191,11 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           flex-shrink: 0;
         }
 
+        /* Logo recadré au plus près : même hauteur visible sur les deux sites. */
         .navbar .logo-img {
-          height: calc(var(--nav-h) - 12px);
+          display: block;
+          height: 36px;
           width: auto;
-          object-fit: contain;
         }
 
         .desktop-links {
@@ -207,7 +208,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           border: none;
           background: transparent;
           cursor: pointer;
-          font-size: 15px;
+          font-size: 14.5px;
           font-weight: 600;
           color: var(--text-dark);
           white-space: nowrap;
@@ -243,8 +244,8 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
           border: none;
           background: var(--blue);
           color: white;
-          min-height: 42px;
-          padding: 0 20px;
+          min-height: 40px;
+          padding: 0 18px;
           border-radius: 999px;
           font-size: 14px;
           font-weight: 700;
@@ -378,9 +379,7 @@ const Navbar = ({ scrolled, hidden, scrollTo }) => {
         }
 
         @media (max-width: 480px) {
-          .navbar .logo-img {
-            height: calc(var(--nav-h) - 14px);
-          }
+          .navbar .logo-img { height: 32px; }
         }
       ` }} />
     </>

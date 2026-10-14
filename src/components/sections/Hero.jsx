@@ -1,6 +1,10 @@
-import { ArrowRight, ShoppingCart, Smartphone, ShieldCheck, Truck, Headphones, BadgeCheck } from 'lucide-react';
-import heroBanner from '../../assets/images/banniere-hero-boutique.webp';
+// Hero — identique sur YOBANTÉ Boutique et YOBANTÉ REK.
+// Textes, icônes et thème (fond du visuel) viennent de src/data/content.js.
+// Le visuel est servi depuis public/images/hero-visuel.webp (préchargé dans index.html).
+import { ArrowRight } from 'lucide-react';
+import { hero } from '../../data/content';
 
+const HERO_IMAGE = '/images/hero-visuel.webp';
 const APP_STORE_URL = 'https://apps.apple.com';
 const PLAY_STORE_URL = 'https://play.google.com';
 
@@ -16,282 +20,299 @@ const PlayStoreIcon = () => (
   </svg>
 );
 
-const FEATURES = [
-  { icon: BadgeCheck, title: 'Produits de marque', text: 'Les meilleures marques au meilleur prix' },
-  { icon: Truck, title: 'Livraison rapide', text: 'Partout au Sénégal' },
-  { icon: ShieldCheck, title: 'Paiement sécurisé', text: 'En toute confiance' },
-  { icon: Headphones, title: 'Service client', text: 'Toujours à votre écoute' },
-];
+const Hero = ({ scrollTo }) => {
+  const { badge, primary, secondary } = hero;
+  const BadgeIcon = badge.icon;
+  const PrimaryIcon = primary.icon;
+  const SecondaryIcon = secondary.icon;
 
-const Hero = ({ scrollTo }) => (
-  <section id="hero" className="hero">
-    <div className="hero-banner-bg" style={{ backgroundImage: `url(${heroBanner})` }} aria-hidden="true" />
+  return (
+    <section id="hero" className={`hero hero--${hero.theme}`} style={{ '--hero-bg': hero.background }}>
+      <div className="hero-container">
+        <div className="hero-content">
+          <div className="hero-text">
+            <p className="hero-badge">
+              <BadgeIcon size={14} strokeWidth={2.2} aria-hidden="true" />
+              {badge.label}
+            </p>
 
-    <div className="hero-container">
-      <div className="hero-content">
-        <div className="hero-text">
-          <p className="hero-badge">
-            <ShoppingCart size={14} strokeWidth={2.2} aria-hidden="true" />
-            Boutique officielle sur mobile
-          </p>
+            <h1 className="hero-title">
+              {hero.title.map(({ text, accent }) => (
+                <span key={text} className={accent ? 'hero-accent' : undefined}>{text}</span>
+              ))}
+            </h1>
 
-          <h1 className="hero-title">
-            <span>Vos grandes</span>
-            <span>marques,</span>
-            <span className="hero-accent">à prix réduits.</span>
-          </h1>
+            <p className="hero-sub">{hero.text}</p>
 
-          <p className="hero-sub">
-            Retrouvez vos produits préférés, découvrez nos offres exclusives et
-            commandez facilement depuis l'application YOBANTE.
-          </p>
+            <div className="hero-actions">
+              <button type="button" className="hero-btn hero-btn-primary" onClick={() => scrollTo(primary.target)}>
+                <PrimaryIcon size={16} strokeWidth={2.2} aria-hidden="true" />
+                {primary.label}
+                <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+              </button>
+              <button type="button" className="hero-btn hero-btn-outline" onClick={() => scrollTo(secondary.target)}>
+                <SecondaryIcon size={16} strokeWidth={2} aria-hidden="true" />
+                {secondary.label}
+              </button>
+            </div>
 
-          <div className="hero-actions">
-            <button type="button" className="hero-btn hero-btn-primary" onClick={() => scrollTo('app-boutique')}>
-              <ShoppingCart size={16} strokeWidth={2.2} aria-hidden="true" />
-              Découvrir notre boutique
-              <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
-            </button>
-            <button type="button" className="hero-btn hero-btn-outline" onClick={() => scrollTo('apps')}>
-              <Smartphone size={16} strokeWidth={2} aria-hidden="true" />
-              Télécharger l'application
-            </button>
+            <div className="store-buttons">
+              <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="store-btn">
+                <AppStoreIcon />
+                <span className="store-text"><small>Télécharger sur</small><strong>App Store</strong></span>
+              </a>
+              <a href={PLAY_STORE_URL} target="_blank" rel="noreferrer" className="store-btn">
+                <PlayStoreIcon />
+                <span className="store-text"><small>Disponible sur</small><strong>Google Play</strong></span>
+              </a>
+            </div>
           </div>
 
-          <div className="store-buttons">
-            <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="store-btn">
-              <AppStoreIcon />
-              <span className="store-text"><small>Télécharger sur</small><strong>App Store</strong></span>
-            </a>
-            <a href={PLAY_STORE_URL} target="_blank" rel="noreferrer" className="store-btn">
-              <PlayStoreIcon />
-              <span className="store-text"><small>Disponible sur</small><strong>Google Play</strong></span>
-            </a>
+          <div className="hero-image">
+            <img
+              src={HERO_IMAGE}
+              alt={hero.image.alt}
+              width="1400"
+              height="955"
+              decoding="async"
+              fetchpriority="high"
+            />
           </div>
         </div>
 
-        <div className="hero-image">
-          <img
-            src={heroBanner}
-            alt="Application YOBANTÉ Boutique et produits high-tech"
-            width="1621"
-            height="970"
-            decoding="async"
-          />
-        </div>
+        <ul className="hero-features" style={{ '--count': hero.features.length }}>
+          {hero.features.map(({ icon: Icon, title, text }) => (
+            <li key={title} className="hero-feature">
+              <span className="hero-feature-icon"><Icon size={20} strokeWidth={1.8} aria-hidden="true" /></span>
+              <span><strong>{title}</strong><span>{text}</span></span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <ul className="hero-features">
-        {FEATURES.map(({ icon: Icon, title, text }) => (
-          <li key={title} className="hero-feature">
-            <span className="hero-feature-icon"><Icon size={22} strokeWidth={1.8} aria-hidden="true" /></span>
-            <span><strong>{title}</strong><span>{text}</span></span>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .hero {
+          /* Thème « dark » : visuel sur fond bleu. */
+          --hero-text: #fff;
+          --hero-text-soft: rgba(255, 255, 255, 0.86);
+          --hero-line: rgba(255, 255, 255, 0.16);
+          --hero-outline: rgba(255, 255, 255, 0.6);
+          --hero-outline-hover: rgba(255, 255, 255, 0.08);
+          --hero-feature-bg: rgba(246, 197, 55, 0.14);
+          --hero-feature-icon: var(--gold);
 
-    <style dangerouslySetInnerHTML={{ __html: `
-      .hero {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        min-height: calc(100vh - var(--nav-h));
-        min-height: calc(100svh - var(--nav-h));
-        margin-top: var(--nav-h);
-        scroll-margin-top: var(--nav-h);
-        overflow: hidden;
-        background: linear-gradient(90deg, #063A91 0%, #0A45A1 60%, #0B49A6 100%);
-      }
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          min-height: min(calc(100vh - var(--nav-h)), 820px);
+          min-height: min(calc(100svh - var(--nav-h)), 820px);
+          margin-top: var(--nav-h);
+          scroll-margin-top: var(--nav-h);
+          overflow: hidden;
+          background: var(--hero-bg);
+          color: var(--hero-text);
+        }
+        /* Thème « light » : visuel sur fond blanc. */
+        .hero--light {
+          --hero-text: var(--blue);
+          --hero-text-soft: var(--text-mid);
+          --hero-line: var(--border);
+          --hero-outline: var(--blue);
+          --hero-outline-hover: var(--blue-50);
+          --hero-feature-bg: var(--gold-50);
+          --hero-feature-icon: var(--blue);
+        }
 
-      /* La moitié gauche de la bannière est un aplat bleu : le texte s'y pose. */
-      .hero-banner-bg {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        height: 90%;
-        aspect-ratio: 1621 / 970;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        transform: translateY(-50%);
-        -webkit-mask-image: linear-gradient(to right, transparent, #000 18%), linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-        -webkit-mask-composite: source-in;
-        mask-image: linear-gradient(to right, transparent, #000 18%), linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-        mask-composite: intersect;
-      }
+        .hero-container {
+          width: 100%;
+          max-width: var(--container-max);
+          margin-inline: auto;
+          padding: clamp(28px, 3.5vw, 48px) var(--gutter) clamp(28px, 3vw, 40px);
+        }
 
-      .hero-container {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 1400px;
-        padding: clamp(32px, 4vw, 56px) clamp(var(--gutter), 3vw, 40px) clamp(36px, 4vw, 48px);
-      }
+        .hero-content {
+          display: flex;
+          align-items: center;
+          min-height: clamp(400px, 38vw, 520px);
+        }
 
-      .hero-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-      }
+        .hero-text {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex: 0 0 50%;
+          flex-direction: column;
+          justify-content: center;
+          max-width: 540px;
+        }
 
-      .hero-text {
-        display: flex;
-        flex: 0 0 46%;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 560px;
-        min-height: 480px;
-      }
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          width: fit-content;
+          margin-bottom: 20px;
+          padding: 6px 13px;
+          border-radius: 999px;
+          background: var(--gold);
+          color: var(--blue);
+          font-size: 12.5px;
+          font-weight: 700;
+        }
 
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: fit-content;
-        margin-bottom: 24px;
-        padding: 7px 14px;
-        border-radius: 999px;
-        background: var(--gold);
-        color: var(--blue);
-        font-size: 12.5px;
-        font-weight: 700;
-      }
+        .hero-title {
+          margin-bottom: 20px;
+          color: var(--hero-text);
+          font-size: clamp(38px, 4.2vw, 60px);
+          font-weight: 800;
+          line-height: 1.04;
+          letter-spacing: -0.035em;
+        }
+        .hero-title span { display: block; }
+        .hero-title .hero-accent { color: var(--gold); }
+        .hero--light .hero-title .hero-accent { color: var(--gold-dark); }
 
-      .hero-title {
-        margin-bottom: 24px;
-        color: #fff;
-        font-size: clamp(48px, 5.4vw, 84px);
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -0.04em;
-      }
-      .hero-title span { display: block; }
-      .hero-title .hero-accent { color: var(--gold); }
+        .hero-sub {
+          max-width: 440px;
+          margin-bottom: 26px;
+          color: var(--hero-text-soft);
+          font-size: 16px;
+          line-height: 1.6;
+        }
 
-      .hero-sub {
-        max-width: 440px;
-        margin-bottom: 28px;
-        color: rgba(255, 255, 255, 0.86);
-        font-size: 16.5px;
-        line-height: 1.6;
-      }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
 
-      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .hero-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 9px;
+          min-height: 48px;
+          padding: 0 22px;
+          border-radius: 999px;
+          font-size: 14.5px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
+        }
+        .hero-btn-primary { border: 0; background: var(--gold); color: var(--blue); }
+        .hero-btn-primary:hover { background: #F8D255; transform: translateY(-1px); }
+        .hero-btn-outline { border: 1.5px solid var(--hero-outline); background: transparent; color: var(--hero-text); }
+        .hero-btn-outline:hover { background: var(--hero-outline-hover); }
 
-      .hero-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-        min-height: 50px;
-        padding: 0 24px;
-        border-radius: 999px;
-        font-size: 14.5px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
-      }
-      .hero-btn-primary { border: 0; background: var(--gold); color: var(--blue); }
-      .hero-btn-primary:hover { background: #F8D255; transform: translateY(-1px); }
-      .hero-btn-outline { border: 1.5px solid rgba(255, 255, 255, 0.6); background: transparent; color: #fff; }
-      .hero-btn-outline:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+        .store-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+        .store-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          min-width: 144px;
+          min-height: 46px;
+          padding: 0 16px;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          border-radius: 12px;
+          background: #000;
+          color: #fff;
+          text-decoration: none;
+          transition: transform 0.2s var(--ease), border-color 0.2s ease;
+        }
+        .store-btn:hover { transform: translateY(-1px); border-color: rgba(255, 255, 255, 0.55); }
+        .store-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .store-text small { font-size: 10px; opacity: 0.75; }
+        .store-text strong { font-size: 15px; font-weight: 700; }
 
-      .store-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+        /* Visuel : à droite du texte, jusqu'au bord de l'écran, bords fondus dans le fond. */
+        .hero-image img {
+          display: block;
+          width: 100%;
+          height: auto;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%);
+          -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%);
+          mask-composite: intersect;
+        }
+        @media (min-width: 1025px) {
+          .hero-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 46%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            pointer-events: none;
+          }
+          .hero-image img { width: auto; max-width: 100%; max-height: min(100%, 720px); }
+        }
 
-      .store-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 150px;
-        min-height: 48px;
-        padding: 0 16px;
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        border-radius: 12px;
-        background: #000;
-        color: #fff;
-        text-decoration: none;
-        transition: transform 0.2s var(--ease), border-color 0.2s ease;
-      }
-      .store-btn:hover { transform: translateY(-1px); border-color: rgba(255, 255, 255, 0.55); }
-      .store-text { display: flex; flex-direction: column; line-height: 1.1; }
-      .store-text small { font-size: 10px; opacity: 0.75; }
-      .store-text strong { font-size: 15px; font-weight: 700; }
+        .hero-features {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+          margin-top: 32px;
+          padding-top: 24px;
+          border-top: 1px solid var(--hero-line);
+          list-style: none;
+        }
+        .hero-feature {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 0 20px;
+          border-left: 1px solid var(--hero-line);
+          color: var(--hero-text);
+        }
+        .hero-feature:first-child { padding-left: 0; border-left: 0; }
+        .hero-feature-icon {
+          display: grid;
+          flex-shrink: 0;
+          place-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          background: var(--hero-feature-bg);
+          color: var(--hero-feature-icon);
+        }
+        .hero-feature strong { display: block; font-size: 14px; font-weight: 700; }
+        .hero-feature strong + span { display: block; margin-top: 2px; font-size: 12.5px; opacity: 0.75; }
 
-      .hero-image { display: none; }
-      .hero-image img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        object-position: 100% center;
-        -webkit-mask-image: radial-gradient(ellipse 60% 58% at 55% 52%, #000 55%, transparent 100%);
-        mask-image: radial-gradient(ellipse 60% 58% at 55% 52%, #000 55%, transparent 100%);
-      }
+        @media (max-width: 1024px) {
+          .hero { min-height: auto; }
+          .hero-content { flex-direction: column; gap: 28px; min-height: 0; text-align: center; }
+          .hero-text { flex: none; align-items: center; max-width: 600px; }
+          .hero-sub { margin-inline: auto; }
+          .hero-actions, .store-buttons { justify-content: center; }
+          .hero-image { width: 100%; max-width: 640px; margin-inline: auto; }
+          .hero-image img {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+          }
+          .hero-features { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 0; text-align: left; }
+          .hero-feature:nth-child(odd) { padding-left: 0; border-left: 0; }
+          .hero-feature:last-child:nth-child(odd) { grid-column: 1 / -1; justify-content: center; }
+        }
 
-      .hero-features {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        margin-top: 40px;
-        padding-top: 28px;
-        border-top: 1px solid rgba(255, 255, 255, 0.14);
-        list-style: none;
-      }
-      .hero-feature {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 0 20px;
-        border-left: 1px solid rgba(255, 255, 255, 0.14);
-        color: #fff;
-      }
-      .hero-feature:first-child { padding-left: 0; border-left: 0; }
-      .hero-feature-icon {
-        display: grid;
-        flex-shrink: 0;
-        place-items: center;
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        background: rgba(246, 197, 55, 0.14);
-        color: var(--gold);
-      }
-      .hero-feature strong { display: block; font-size: 14px; font-weight: 700; }
-      .hero-feature strong + span { display: block; margin-top: 2px; font-size: 12.5px; opacity: 0.75; }
+        @media (max-width: 520px) {
+          .hero-title { font-size: 36px; line-height: 1.06; }
+          .hero-actions, .store-buttons { flex-direction: column; width: 100%; max-width: 340px; }
+          .hero-btn, .store-btn { width: 100%; }
+          .store-btn { justify-content: center; min-height: 52px; }
+          .hero-feature { gap: 10px; padding: 0 10px; }
+          .hero-feature-icon { width: 36px; height: 36px; border-radius: 10px; }
+          .hero-feature strong { font-size: 12.5px; }
+          .hero-feature strong + span { display: none; }
+        }
 
-      @media (max-width: 1180px) {
-        .hero { min-height: auto; }
-        .hero-banner-bg { display: none; }
-        .hero-content { flex-direction: column; gap: 36px; text-align: center; }
-        .hero-text { align-items: center; max-width: 600px; min-height: 0; }
-        .hero-title { font-size: clamp(36px, 3vw + 24px, 56px); }
-        .hero-sub { margin-inline: auto; }
-        .hero-actions, .store-buttons { justify-content: center; }
-        .hero { background: #0A429D; }
-        .hero-image { display: block; width: 100%; max-width: 600px; margin-inline: auto; }
-        .hero-features { grid-template-columns: repeat(2, 1fr); gap: 20px 0; text-align: left; }
-        .hero-feature:nth-child(3) { padding-left: 0; border-left: 0; }
-      }
-
-      @media (max-width: 520px) {
-        .hero-title { line-height: 1.05; }
-        .hero-actions, .store-buttons { flex-direction: column; width: 100%; max-width: 340px; }
-        .hero-btn, .store-btn { width: 100%; }
-        .store-btn { justify-content: center; min-height: 54px; }
-        .hero-feature { gap: 10px; padding: 0 10px; }
-        .hero-feature-icon { width: 36px; height: 36px; border-radius: 10px; }
-        .hero-feature strong { font-size: 12.5px; }
-        .hero-feature strong + span { display: none; }
-      }
-
-      @media (max-width: 380px) {
-        .hero-badge { font-size: 11px; }
-      }
-    ` }} />
-  </section>
-);
+        @media (max-width: 380px) {
+          .hero-badge { font-size: 11px; }
+        }
+      ` }} />
+    </section>
+  );
+};
 
 export default Hero;

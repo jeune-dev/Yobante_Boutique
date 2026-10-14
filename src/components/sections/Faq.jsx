@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 
-const FAQS = [
-  { q: 'Quels produits puis-je commander ?', a: "YOBANTÉ Boutique propose des produits alimentaires, de mode, de maison, d'électronique, d'hygiène et de sport selon les disponibilités du catalogue." },
-  { q: 'Comment passer une commande ?', a: 'Sélectionnez vos produits, validez votre panier puis choisissez votre mode de paiement et votre adresse de livraison.' },
-  { q: 'Quels sont les moyens de paiement acceptés ?', a: 'Le paiement peut être effectué avec Orange Money, Wave ou carte bancaire.' },
-];
+// Questions et réponses : src/data/content.js. Composant identique sur les deux sites.
+import { faq } from '../../data/content';
 
 const Faq = () => {
   const [active, setActive] = useState(0);
@@ -18,7 +15,7 @@ const Faq = () => {
         </div>
 
         <div className="faq-list">
-          {FAQS.map((faq, i) => {
+          {faq.map((faq, i) => {
             const open = active === i;
             return (
               <div key={faq.q} className={`faq-item${open ? ' open' : ''}`}>
@@ -68,7 +65,7 @@ const Faq = () => {
           gap: 18px;
           width: 100%;
           min-height: var(--tap);
-          padding: 20px 24px;
+          padding: 18px 22px;
           border: 0;
           background: transparent;
           text-align: left;
@@ -90,7 +87,7 @@ const Faq = () => {
         }
         .faq-item.open .faq-number { background: var(--blue); color: #fff; }
 
-        .faq-question { flex: 1; color: var(--text-dark); font-size: 16px; font-weight: 600; line-height: 1.45; }
+        .faq-question { flex: 1; color: var(--text-dark); font-size: 15.5px; font-weight: 600; line-height: 1.45; }
 
         .faq-icon {
           display: grid;
@@ -106,9 +103,9 @@ const Faq = () => {
         .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold); color: var(--blue); }
 
         .faq-answer {
-          padding: 0 24px 22px 82px;
+          padding: 0 22px 20px 80px;
           color: var(--text-mid);
-          font-size: 15px;
+          font-size: 14.5px;
           line-height: 1.75;
         }
 
