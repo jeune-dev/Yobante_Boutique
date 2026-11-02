@@ -89,28 +89,18 @@ export const services = {
         { icon: ShoppingBag, label: 'Mode & Textile', text: 'Vêtements, chaussures et accessoires pour toute la famille.' },
       ],
     },
-    {
-      type: 'steps',
-      label: 'Parcours client',
-      items: [
-        { title: 'Parcourez nos rayons et sélectionnez vos produits', text: '' },
-        { title: 'Validez votre panier', text: 'Règlement possible par Orange Money, Wave ou carte bancaire.' },
-        { title: 'Programmez vos livraisons', text: "Recevez directement votre commande à l'adresse de votre choix." },
-      ],
-    },
   ],
 };
 
 export const howItWorks = {
   id: 'comment-commander',
   eyebrow: 'Comment commander',
-  title: 'Commander en 4 étapes',
+  title: 'Commander facilement',
   text: 'Faites vos achats en France et recevez vos produits au Sénégal, simplement.',
   steps: [
-    { icon: Search, title: 'Parcourez le catalogue', text: 'Une sélection de produits authentiques, proposés à prix discount.' },
-    { icon: ShoppingCart, title: 'Ajoutez au panier', text: "Commandez à l'unité ou en gros, selon vos besoins." },
-    { icon: ShieldCheck, title: 'Payez en toute sécurité', text: 'Votre paiement est protégé, en toute confiance.' },
-    { icon: Truck, title: 'Livraison au Sénégal', text: "Suivez votre commande jusqu'à sa destination." },
+    { icon: Search, title: 'Parcourez nos rayons et sélectionnez vos produits', text: '' },
+    { icon: ShoppingCart, title: 'Validez votre panier', text: 'Règlement possible par Orange Money, Wave ou carte bancaire.' },
+    { icon: Truck, title: 'Programmez vos livraisons', text: "Recevez directement votre commande à l'adresse de votre choix." },
   ],
 };
 
@@ -120,10 +110,10 @@ export const highlights = {
   title: "Tout ce qu'il vous faut, au meilleur prix",
   text: 'Des grandes marques à prix réduits, livrées directement au Sénégal.',
   cards: [
+    { icon: ShoppingBasket, title: 'Vos produits du quotidien', text: "Lessives, produits d'entretien, petit déjeuner, huiles, épicerie, salé." },
     { icon: WashingMachine, title: 'Électroménager', text: 'Réfrigérateurs, micro-ondes, machines à laver et appareils du quotidien.' },
     { icon: Laptop, title: 'Informatique', text: 'Ordinateurs portables et accessoires pour le travail et les études.' },
     { icon: Headphones, title: 'High-Tech & audio', text: 'Écouteurs, téléphones et équipements connectés des grandes marques.' },
-    { icon: ShoppingBasket, title: 'Lessives & grande consommation', text: "Lessives, produits d'entretien et produits du quotidien, y compris en gros." },
   ],
   cta: { label: "Découvrir l'application", href: '#apps', icon: ArrowRight },
 };

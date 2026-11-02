@@ -16,7 +16,7 @@ const HowItWorks = () => (
             <span className="hiw-num" aria-hidden="true">{i + 1}</span>
             <span className="hiw-icon"><Icon size={22} strokeWidth={1.9} aria-hidden="true" /></span>
             <h3>{title}</h3>
-            <p>{text}</p>
+            {text && <p>{text}</p>}
           </li>
         ))}
       </ol>
@@ -64,7 +64,7 @@ const HowItWorks = () => (
       .hiw-card h3 { margin-bottom: 8px; color: var(--blue); font-size: 17px; font-weight: 700; }
       .hiw-card p { color: var(--text-light); font-size: 14px; line-height: 1.65; }
 
-      @media (max-width: 1024px) { .hiw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      @media (max-width: 760px) { .hiw-grid { grid-template-columns: 1fr; } }
       @media (max-width: 560px) {
         .hiw-grid { grid-template-columns: 1fr; gap: 14px; }
         .hiw-card { padding: 26px 20px 22px; }
