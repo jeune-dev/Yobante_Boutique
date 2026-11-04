@@ -1,4 +1,5 @@
 // Bandeau d'engagements — identique sur les deux sites ; les textes viennent de src/data/content.js.
+// Section à part entière : une bande bleu nuit entre le Hero (blanc) et « Nos services » (gris clair).
 import { trust } from '../../data/content';
 
 const TrustBar = () => (
@@ -17,9 +18,11 @@ const TrustBar = () => (
     <style dangerouslySetInnerHTML={{ __html: `
       .trust-wrapper {
         position: relative;
-        padding: 22px 0;
-        border-bottom: 1px solid var(--border);
-        background: var(--white);
+        overflow: hidden;
+        padding: 30px 0;
+        background:
+          radial-gradient(120% 160% at 100% 0%, rgba(246, 197, 55, 0.12) 0%, transparent 45%),
+          linear-gradient(120deg, var(--blue-deep) 0%, var(--blue) 100%);
       }
 
       .trust-track {
@@ -37,7 +40,7 @@ const TrustBar = () => (
         justify-content: center;
         gap: 10px;
         padding: 4px 16px;
-        border-left: 1px solid var(--border);
+        border-left: 1px solid rgba(255, 255, 255, 0.16);
       }
       .trust-item:first-child { border-left: 0; }
 
@@ -45,16 +48,17 @@ const TrustBar = () => (
         display: grid;
         flex-shrink: 0;
         place-items: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: var(--blue-50);
-        color: var(--blue);
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(246, 197, 55, 0.14);
+        color: var(--gold);
+        box-shadow: inset 0 0 0 1px rgba(246, 197, 55, 0.28);
       }
 
       .trust-text {
-        color: var(--text-dark);
-        font-size: 13.5px;
+        color: #fff;
+        font-size: 14px;
         font-weight: 600;
         white-space: nowrap;
       }
@@ -65,7 +69,8 @@ const TrustBar = () => (
       }
 
       @media (max-width: 900px) {
-        .trust-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+        .trust-wrapper { padding: 26px 0; }
+        .trust-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 16px; }
         .trust-item { justify-content: flex-start; padding: 0; border-left: 0; }
         .trust-item:last-child { grid-column: 1 / -1; justify-content: center; }
         .trust-text { white-space: normal; }

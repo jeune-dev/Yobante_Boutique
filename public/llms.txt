@@ -1,0 +1,26 @@
+# YOBANTÉ Boutique
+
+> YOBANTÉ Boutique est la boutique en ligne de la marque YOBANTÉ : des produits achetés en France à prix discount et livrés au Sénégal. On commande depuis le site www.yobante-boutique.com ou depuis l'application mobile YOBANTÉ Boutique (iOS et Android).
+
+## Ce que propose YOBANTÉ Boutique
+
+- Produits du quotidien : lessives, produits d'entretien, petit déjeuner, huiles, épicerie.
+- Électroménager : réfrigérateurs, micro-ondes, machines à laver.
+- Informatique : ordinateurs portables et accessoires.
+- High-tech et audio : téléphones, écouteurs, objets connectés.
+- Mode, maison, hygiène et sport, selon les disponibilités du catalogue.
+
+## Comment commander
+
+1. Parcourir les rayons et sélectionner ses produits.
+2. Valider son panier : paiement par Orange Money, Wave ou carte bancaire.
+3. Programmer sa livraison à l'adresse de son choix au Sénégal.
+
+## Contact
+
+- Site : https://www.yobante-boutique.com/
+- E-mail : contact@yobanteboutique.com
+
+## Marque YOBANTÉ
+
+YOBANTÉ Boutique fait partie de la marque YOBANTÉ, avec YOBANTÉ REK (https://www.yobanterek.com/), le service d'expédition de colis entre la France et le Sénégal.

@@ -27,7 +27,7 @@ const Faq = () => {
                   aria-expanded={open}
                   aria-controls={`faq-panel-${i}`}
                 >
-                  <span className="faq-number" aria-hidden="true">0{i + 1}</span>
+                  <span className="faq-number" aria-hidden="true" data-nosnippet="">0{i + 1}</span>
                   <span className="faq-question">{faq.q}</span>
                   <span className="faq-icon" aria-hidden="true"><Plus size={18} strokeWidth={2.2} /></span>
                 </button>

@@ -13,7 +13,7 @@ const HowItWorks = () => (
       <ol className="hiw-grid" style={{ '--count': howItWorks.steps.length }}>
         {howItWorks.steps.map(({ icon: Icon, title, text }, i) => (
           <li key={title} className={`hiw-card sr sr-d${i + 1}`}>
-            <span className="hiw-num" aria-hidden="true">{i + 1}</span>
+            <span className="hiw-num" aria-hidden="true" data-nosnippet="">{i + 1}</span>
             <span className="hiw-icon"><Icon size={22} strokeWidth={1.9} aria-hidden="true" /></span>
             <h3>{title}</h3>
             {text && <p>{text}</p>}
