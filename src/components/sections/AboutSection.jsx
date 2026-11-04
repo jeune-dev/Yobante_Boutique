@@ -1,6 +1,7 @@
 // Section « Qui sommes-nous ? » — identique sur YOBANTÉ Boutique et YOBANTÉ REK.
-// Le texte vient de src/data/site.js.
-import { ArrowLeftRight } from 'lucide-react';
+// Le texte (et les engagements facultatifs) viennent de src/data/site.js.
+// Mise en page centrée, inspirée de la bande de fin de page de SaamBiz.
+import { CheckCircle2, HeartHandshake, Package } from 'lucide-react';
 import { site } from '../../data/site';
 
 const FlagFR = () => (
@@ -21,8 +22,8 @@ const FlagSN = () => (
 );
 
 /* Pictogramme de la marque, en filigrane */
-const BrandMark = () => (
-  <svg className="about-mark" viewBox="0 0 334 400" aria-hidden="true">
+const BrandMark = ({ className }) => (
+  <svg className={`about-mark ${className}`} viewBox="0 0 334 400" aria-hidden="true">
     <path d="M0 0h108a110 120 0 0 0 110 120v120A228 240 0 0 1 0 0z" fill="currentColor" />
     <rect className="about-mark-gold" x="228" y="0" width="106" height="116" />
     <rect x="228" y="284" width="106" height="116" fill="currentColor" />
@@ -31,20 +32,40 @@ const BrandMark = () => (
 
 const AboutSection = () => (
   <section id="about" className="about-section yb-block">
-    <BrandMark />
+    <BrandMark className="about-mark--right" />
 
     <div className="container">
-      <div className="about-header sr">
-        <p className="yb-eyebrow about-eyebrow">À propos</p>
+      <div className="about-inner">
+        <p className="about-kicker">
+          <HeartHandshake size={16} strokeWidth={2.2} aria-hidden="true" />
+          À propos
+        </p>
         <h2 className="about-title">Qui sommes-nous ?</h2>
 
         <p className="about-description">{site.about}</p>
 
-        <div className="about-badges">
+        {/* Le trajet France ⇄ Sénégal */}
+        <div className="about-route">
           <span className="about-badge"><FlagFR />France</span>
-          <span className="about-badge-arrow"><ArrowLeftRight size={18} strokeWidth={2.2} aria-hidden="true" /></span>
+          <span className="about-route-line" aria-hidden="true">
+            <span className="about-route-icon"><Package size={16} strokeWidth={2.2} /></span>
+          </span>
           <span className="about-badge"><FlagSN />Sénégal</span>
         </div>
+
+        {site.values?.length > 0 && (
+          <>
+            <p className="about-sep"><span>Nos engagements</span></p>
+            <ul className="about-values">
+              {site.values.map((value) => (
+                <li key={value}>
+                  <CheckCircle2 size={17} strokeWidth={2.2} aria-hidden="true" />
+                  {value}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   </section>

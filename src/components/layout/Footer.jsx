@@ -1,8 +1,8 @@
 // Pied de page — identique sur YOBANTÉ Boutique et YOBANTÉ REK.
 // Logo et coordonnées viennent de src/data/site.js. Les lignes de contact
-// vides ne sont pas affichées.
+// vides ne sont pas affichées. Mise en page inspirée du pied de page de SaamBiz.
 import { useCallback, useEffect, useState } from 'react';
-import { Zap, Lock, Headphones, Smartphone } from 'lucide-react';
+import { ArrowUp, Zap, Lock, Headphones, Smartphone } from 'lucide-react';
 import { site } from '../../data/site';
 import { phoneHref, whatsappHref, emailHref, YOBANTE_SITES, LEGAL_EVENT, LEGAL_HASHES } from '../../data/links';
 import LegalModal from './LegalModal';
@@ -21,6 +21,11 @@ const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
   { label: 'Qui sommes-nous ?', href: '#about' },
 ];
+
+const backToTop = () => window.scrollTo({
+  top: 0,
+  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+});
 
 const docFromHash = () =>
   Object.keys(LEGAL_HASHES).find((doc) => window.location.hash === `#${LEGAL_HASHES[doc]}`) || null;
@@ -129,6 +134,10 @@ const Footer = () => {
               </button>
             </li>
           </ul>
+          <button type="button" className="footer-top" onClick={backToTop}>
+            Haut de page
+            <ArrowUp size={16} strokeWidth={2.4} aria-hidden="true" />
+          </button>
         </div>
       </div>
 

@@ -3,18 +3,20 @@
 // seul ce fichier (avec site.js) change d'un site à l'autre.
 
 import {
-  Apple, ArrowRight, Baby, BadgeCheck, Coffee, Cookie, Droplets, Dumbbell, Egg, Fish, FlaskConical,
+  Apple, ArrowRight, Baby, Coffee, Cookie, Droplets, Dumbbell, Egg, Fish, FlaskConical,
   Gamepad2, GlassWater, Headphones, Home, Laptop, Lock, MapPin, MessageCircle, Package, PawPrint, Search,
   ShieldCheck, Shirt, ShoppingBag, ShoppingBasket, ShoppingCart, Smartphone, Snowflake, SprayCan, Tag, Truck,
   Tv, UtensilsCrossed, WashingMachine, Wheat, Zap,
 } from 'lucide-react';
-import navLogo from '../assets/images/logo-nav.webp';
+// Logo sans fond : se pose directement sur la navbar blanche.
+import navLogo from '../assets/images/logo_boutique_demarrage.png';
 import promoLogo from '../assets/images/Logo Yobante Boutique.webp';
-import appPreview from '../assets/images/maquette-app-store-boutique.webp';
+// Maquette détourée (fond transparent) : se pose sur la bande jaune de la section Applications.
+import appPreview from '../assets/images/maquette-app-store-boutique-detouree.webp';
 
 export const navbar = {
   logo: navLogo,
-  logoSize: { width: 560, height: 163 },
+  logoSize: { width: 1200, height: 394 },
 };
 
 export const hero = {
@@ -31,12 +33,8 @@ export const hero = {
   primary: { icon: ShoppingCart, label: 'Découvrir notre boutique', target: 'app-boutique' },
   secondary: { icon: Smartphone, label: "Télécharger l'application", target: 'apps' },
   image: { alt: 'Application YOBANTÉ Boutique et produits high-tech' },
-  features: [
-    { icon: BadgeCheck, title: 'Produits de marque', text: 'Les meilleures marques au meilleur prix' },
-    { icon: Truck, title: 'Livraison rapide', text: 'Partout au Sénégal' },
-    { icon: ShieldCheck, title: 'Paiement sécurisé', text: 'En toute confiance' },
-    { icon: Headphones, title: 'Service client', text: 'Toujours à votre écoute' },
-  ],
+  // Rangée d'engagements en bas du Hero : vide = non affichée.
+  features: [],
 };
 
 export const trust = [
@@ -119,7 +117,7 @@ export const highlights = {
 };
 
 export const apps = {
-  image: { src: appPreview, width: 1230, height: 1278, alt: 'Application Yobante Boutique et catalogue de produits' },
+  image: { src: appPreview, width: 715, height: 1209, alt: 'Application Yobante Boutique et catalogue de produits' },
   chip: { icon: ShoppingBag, label: 'Boutique en ligne' },
   title: 'Téléchargez',
   titleAccent: 'Yobanté dès maintenant !',

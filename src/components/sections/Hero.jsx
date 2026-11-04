@@ -80,6 +80,7 @@ const Hero = ({ scrollTo }) => {
           </div>
         </div>
 
+        {hero.features.length > 0 && (
         <ul className="hero-features" style={{ '--count': hero.features.length }}>
           {hero.features.map(({ icon: Icon, title, text }) => (
             <li key={title} className="hero-feature">
@@ -88,6 +89,7 @@ const Hero = ({ scrollTo }) => {
             </li>
           ))}
         </ul>
+        )}
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -106,10 +108,10 @@ const Hero = ({ scrollTo }) => {
           align-items: center;
           justify-content: center;
           width: 100%;
-          min-height: min(calc(100vh - var(--nav-h)), 820px);
-          min-height: min(calc(100svh - var(--nav-h)), 820px);
-          margin-top: var(--nav-h);
-          scroll-margin-top: var(--nav-h);
+          /* Le Hero passe sous la navbar flottante : la capsule se pose sur le fond bleu. */
+          min-height: min(100vh, calc(820px + var(--nav-h)));
+          min-height: min(100svh, calc(820px + var(--nav-h)));
+          padding-top: var(--nav-h);
           overflow: hidden;
           background: var(--hero-bg);
           color: var(--hero-text);
@@ -235,7 +237,7 @@ const Hero = ({ scrollTo }) => {
         @media (min-width: 1025px) {
           .hero-image {
             position: absolute;
-            top: 0;
+            top: var(--nav-h);
             right: 0;
             bottom: 0;
             left: 46%;
@@ -298,9 +300,11 @@ const Hero = ({ scrollTo }) => {
 
         @media (max-width: 520px) {
           .hero-title { font-size: 36px; line-height: 1.06; }
-          .hero-actions, .store-buttons { flex-direction: column; width: 100%; max-width: 340px; }
-          .hero-btn, .store-btn { width: 100%; }
-          .store-btn { justify-content: center; min-height: 52px; }
+          .hero-actions { flex-direction: column; width: 100%; max-width: 360px; }
+          .hero-btn { width: 100%; }
+          /* Badges des magasins côte à côte, comme sur SaamBiz */
+          .store-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; max-width: 360px; }
+          .store-btn { min-width: 0; justify-content: center; min-height: 52px; padding: 0 10px; }
           .hero-feature { gap: 10px; padding: 0 10px; }
           .hero-feature-icon { width: 36px; height: 36px; border-radius: 10px; }
           .hero-feature strong { font-size: 12.5px; }
@@ -309,6 +313,8 @@ const Hero = ({ scrollTo }) => {
 
         @media (max-width: 380px) {
           .hero-badge { font-size: 11px; }
+          .store-btn { gap: 8px; }
+          .store-text strong { font-size: 14px; }
         }
       ` }} />
     </section>

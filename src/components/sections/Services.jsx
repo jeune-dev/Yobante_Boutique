@@ -141,10 +141,12 @@ const Services = ({ scrollTo }) => {
           max-width: 300px;
           padding: 36px 26px;
           border-radius: 24px;
-          background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-          box-shadow: 0 16px 36px rgba(5, 61, 143, 0.22);
+          /* Jaune de la marque : contraste avec le panneau bleu des rayons */
+          background: linear-gradient(135deg, #F8D255 0%, var(--gold) 100%);
+          box-shadow: 0 16px 36px rgba(176, 133, 11, 0.28);
           text-align: center;
         }
+        .boutique-service .promo-box :focus-visible { outline-color: var(--blue); }
         .promo-logo {
           width: 120px;
           height: auto;
@@ -152,7 +154,7 @@ const Services = ({ scrollTo }) => {
           box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
         }
         .promo-desc {
-          color: #fff;
+          color: var(--blue-deep);
           font-size: clamp(17px, 1.5vw, 19px);
           font-weight: 700;
           line-height: 1.4;
@@ -167,14 +169,14 @@ const Services = ({ scrollTo }) => {
           padding: 0 24px;
           border: 0;
           border-radius: 999px;
-          background: var(--gold);
-          color: var(--blue);
+          background: var(--blue);
+          color: #fff;
           font-size: 14.5px;
           font-weight: 700;
           cursor: pointer;
           transition: background 0.2s ease, transform 0.2s var(--ease);
         }
-        .promo-btn:hover { background: #F8D255; transform: translateY(-1px); }
+        .promo-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
         /* Contenu */
         .service-body {
@@ -390,8 +392,10 @@ const Services = ({ scrollTo }) => {
           .service-body { gap: 28px; padding: 26px 18px; }
           .promo-side { padding: 16px; }
           .promo-box { max-width: 100%; }
-          .categories-grid { grid-template-columns: repeat(2, 1fr); }
-          .category-pill:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 96px; }
+          /* Mobile : 3 rayons par ligne (même densité que sur ordinateur, page bien plus courte) */
+          .categories-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+          .category-pill { min-height: 92px; }
+          .category-pill:last-child:nth-child(3n + 1) { grid-column: 1 / -1; min-height: 76px; }
           .steps-row { flex-direction: column; }
           .step-wrapper, .step-wrapper:last-child { flex: none; flex-direction: column; align-items: center; }
           .boutique-step-card { width: 100%; min-height: 0; }
@@ -402,10 +406,17 @@ const Services = ({ scrollTo }) => {
         @media (max-width: 480px) {
           .service-body { padding: 20px 14px; }
           .service-icon { width: 48px; height: 48px; border-radius: 14px; }
-          .category-pill { padding: 14px 6px 12px; }
-          .cat-icon { width: 40px; height: 40px; }
+          .category-pill { gap: 8px; padding: 12px 5px 10px; }
+          .cat-icon { width: 36px; height: 36px; border-radius: 10px; }
           .cat-label { font-size: 11.5px; hyphens: auto; }
           .promo-desc { font-size: 16px; }
+        }
+
+        /* Très petits écrans : retour à 2 rayons par ligne */
+        @media (max-width: 339px) {
+          .categories-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .category-pill:last-child:nth-child(3n + 1) { grid-column: auto; min-height: 92px; }
+          .category-pill:last-child:nth-child(odd) { grid-column: 1 / -1; }
         }
       ` }} />
     </section>

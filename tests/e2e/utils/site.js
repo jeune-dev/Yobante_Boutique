@@ -25,8 +25,7 @@ export const site = {
     { name: /Télécharger l.application/, target: 'apps' },
   ],
   // Exclusions axe documentées : problèmes connus et assumés, JAMAIS des erreurs masquées.
-  // Le jaune de la marque sur fond blanc (« Yobanté dès maintenant ! », version mobile) est sous
-  // les 3:1 requis pour un grand texte : décision de design en attente du propriétaire du site.
-  // Titres en jaune de la marque sur fond blanc : choix graphique assumé.
-  axeExclude: ['.featured-title > span', '.hero--light .hero-accent'],
+  // Titre du Hero en jaune de la marque sur fond blanc (thème « light ») : choix graphique assumé.
+  // (Le titre « Yobanté dès maintenant ! » est désormais bleu sur la bande jaune : plus d'exclusion.)
+  axeExclude: ['.hero--light .hero-accent'],
 };

@@ -275,95 +275,191 @@
 }
 
 /* ══ QUI SOMMES-NOUS ? ═════════════════════════════════════════════════ */
+/* Bande bleue centrée (inspirée de la fin de page SaamBiz). */
 .about-section {
   position: relative;
-  padding: var(--yb-section-y) 0;
+  padding: clamp(72px, 11vh, 112px) 0;
   overflow: hidden;
-  background: var(--yb-blue);
+  background:
+    radial-gradient(60% 80% at 50% 115%, rgba(246, 197, 55, 0.14), transparent 70%),
+    var(--yb-blue);
   color: #fff;
+  text-align: center;
 }
 
 .about-mark {
   position: absolute;
   top: 50%;
-  right: max(var(--gutter, 32px), calc((100vw - var(--container-max, 1200px)) / 2 + var(--gutter, 32px)));
-  width: clamp(140px, 17vw, 220px);
+  width: clamp(150px, 16vw, 230px);
   height: auto;
-  color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
 .about-mark-gold { fill: var(--yb-gold); }
+.about-mark--right { right: max(var(--gutter, 32px), calc((100vw - var(--container-max, 1200px)) / 2 + var(--gutter, 32px))); transform: translateY(-50%); }
 
-.about-header { position: relative; max-width: 720px; }
-.about-section .about-eyebrow { color: var(--yb-gold); }
+.about-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.about-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  color: #FFD15C;
+  font-size: 13.5px;
+  font-weight: 700;
+}
 
 .about-section .about-title {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   color: #fff;
-  font-size: var(--yb-h2);
+  font-size: clamp(28px, 3.4vw, 42px);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
 }
 
 .about-section .about-description {
-  max-width: none;
-  margin-bottom: 32px;
+  max-width: 580px;
+  margin: 0 auto 34px;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 17px;
-  line-height: 1.8;
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.75;
 }
 
-.about-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+/* Trajet France ⇄ Sénégal */
+.about-route {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+}
 .about-section .about-badge {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 10px;
   padding: 10px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0;
 }
 .about-flag { width: 22px; height: 15px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); }
-.about-badge-arrow { display: grid; place-items: center; color: var(--yb-gold); }
+.about-route-line {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-width: 48px;
+  height: 36px;
+}
+.about-route-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 2px dashed rgba(246, 197, 55, 0.55);
+}
+.about-route-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--yb-gold);
+  color: var(--yb-blue-deep);
+  box-shadow: 0 0 0 6px var(--yb-blue);
+}
 
-@media (max-width: 860px) {
+/* Engagements */
+.about-sep {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 460px;
+  margin: 40px auto 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+}
+.about-sep::before,
+.about-sep::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.16); }
+.about-values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+}
+.about-values li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.about-values svg { flex-shrink: 0; color: var(--yb-gold); }
+
+/* Le filigrane ne doit jamais passer sous le texte centré */
+@media (max-width: 1180px) {
   .about-mark { display: none; }
 }
 
 @media (max-width: 520px) {
-  .about-section .about-description { font-size: 15px; }
-  .about-section .about-badge { padding: 8px 14px; font-size: 14px; }
+  .about-route { gap: 8px; }
+  .about-section .about-badge { gap: 8px; padding: 8px 13px; font-size: 14px; }
+  .about-route-line { min-width: 36px; }
+  .about-route-icon { width: 32px; height: 32px; }
+  .about-values { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+  .about-values li { justify-content: center; }
 }
 
 /* ══ PIED DE PAGE ══════════════════════════════════════════════════════ */
+/* Mise en page inspirée de SaamBiz : colonnes aérées, liens blancs. */
 .footer.yb-block {
   position: relative;
-  padding-top: clamp(44px, 6vw, 64px);
+  margin-top: -1px;
+  padding-top: clamp(56px, 3rem + 1.5vw, 72px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   overflow: visible;
   background: var(--yb-blue-deep);
-  color: #fff;
+  color: #C3CCE0;
 }
 
 .footer-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  /* La colonne « Nous joindre » est la plus large : l'adresse email tient sur une ligne. */
+  grid-template-columns: minmax(0, 2.6fr) minmax(0, 1.6fr) minmax(0, 2.1fr) minmax(0, 2.5fr);
   gap: 36px clamp(24px, 4vw, 48px);
   padding-bottom: 40px;
 }
 
-.footer-logo { display: block; width: auto; height: 46px; margin-bottom: 18px; }
+.footer-logo { display: block; width: auto; height: 46px; margin-bottom: 16px; }
 .footer-description {
   max-width: 320px;
   margin: 0 0 20px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  line-height: 1.65;
+  color: #C3CCE0;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .footer-trust {
@@ -376,38 +472,37 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 13px;
+  color: #fff;
+  font-size: 13.5px;
   font-weight: 600;
 }
 .footer-trust svg { flex-shrink: 0; color: var(--yb-gold); }
 
 .footer-col h2 {
   margin-bottom: 12px;
-  color: var(--yb-gold);
-  font-size: 12px;
+  color: #9AA8C7;
+  font-family: inherit;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0;
 }
 .footer-col ul { display: grid; gap: 2px; list-style: none; }
 .footer-col a,
 .footer-col li > span {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 14px;
+  min-height: 32px;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
   text-decoration: none;
   overflow-wrap: anywhere;
-  transition: color 0.2s ease;
 }
-.footer-col a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-.footer-site { display: flex; flex-direction: column; margin-bottom: 6px; }
-.footer-site > span { color: #fff; font-weight: 700; }
-.footer-site a { font-weight: 600; }
-.footer-site small { color: rgba(255, 255, 255, 0.55); font-size: 12.5px; line-height: 1.4; }
-.footer-muted { padding-top: 6px; color: rgba(255, 255, 255, 0.6); font-size: 13.5px; line-height: 1.5; }
+.footer-col a:hover { text-decoration: underline 2px; text-underline-offset: 4px; }
+.footer-site { display: flex; flex-direction: column; margin-bottom: 8px; }
+.footer-col .footer-site > span { color: var(--yb-gold); }
+.footer-site small { color: #9AA8C7; font-size: 13px; line-height: 1.45; }
+.footer-muted { padding-top: 6px; color: #C3CCE0; font-size: 14px; line-height: 1.5; }
 .footer-hours { white-space: pre-line; }
 
 .footer-bottom {
@@ -416,36 +511,62 @@
   align-items: center;
   justify-content: space-between;
   gap: 4px 24px;
-  padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 64px 10px 0; /* place pour les boutons flottants */
+  border-top: 1px solid rgba(195, 204, 224, 0.2);
 }
-.footer .copyright { color: rgba(255, 255, 255, 0.55); font-size: 13px; }
+.footer .copyright { color: #9AA8C7; font-size: 14px; }
 .footer-legal { display: flex; flex-wrap: wrap; gap: 0 24px; list-style: none; }
-.footer-legal button {
+.footer-legal button,
+.footer-top {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   min-height: var(--yb-tap);
   padding: 0;
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.75);
+  color: #C3CCE0;
   font: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.footer-legal button:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.footer-legal button {
+  text-decoration: underline;
+  text-decoration-color: rgba(195, 204, 224, 0.4);
+  text-underline-offset: 4px;
+}
+.footer-legal button:hover { color: #fff; text-decoration-color: #fff; }
+.footer-top { color: #fff; font-weight: 700; }
+.footer-top:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-@media (max-width: 980px) {
-  .footer-main { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Colonne de marque étroite (portables) : engagements sur une seule colonne */
+@media (min-width: 1024px) and (max-width: 1240px) {
+  .footer-trust { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1023px) {
+  .footer-main { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1.25fr); }
   .footer-brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 640px) {
+/* Tablettes et mobiles : bas de page centré, liens légaux d'abord (comme SaamBiz) */
+@media (max-width: 900px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 12px 0 18px;
+    text-align: center;
+  }
+  .footer-legal { order: -1; justify-content: center; }
+  .footer-top { display: none; }
+}
+
+@media (max-width: 760px) {
   .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 20px; }
   .footer-col:last-child { grid-column: 1 / -1; }
   .footer-col a, .footer-col li > span { min-height: var(--yb-tap); }
-  .footer-bottom { flex-direction: column-reverse; align-items: flex-start; padding-bottom: 18px; }
 }
 
 @media (max-width: 380px) {

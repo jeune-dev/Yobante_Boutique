@@ -34,6 +34,8 @@ export const site = {
   // ── Section Qui sommes-nous ? ─────────────────────────────────────────
   about:
     'YOBANTÉ Boutique facilite vos achats en France et leur livraison au Sénégal grâce à une sélection de produits fiables, accessibles et authentiques.',
+  // Engagements affichés sous le texte (facultatif : laisser [] pour les masquer).
+  values: ['Produits fiables', 'Prix accessibles', 'Produits authentiques'],
 
   // ── Pied de page ──────────────────────────────────────────────────────
   footerLogo,
